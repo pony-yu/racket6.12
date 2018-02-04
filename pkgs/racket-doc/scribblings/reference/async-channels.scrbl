@@ -7,16 +7,28 @@
        (the-eval '(require racket/async-channel))
        the-eval)))
 
-@title[#:tag "async-channel"]{Buffered Asynchronous Channels}
+@;@title[#:tag "async-channel"]{Buffered Asynchronous Channels}
+@title[#:tag "async-channel"]{缓冲异步通道}
 
 @note-lib-only[racket/async-channel]
 
-@section{Creating and Using Asynchronous Channels}
+@;@section{Creating and Using Asynchronous Channels}
+@section{创建和使用异步通道}
 
-@margin-note/ref{See also @secref["threadmbox"].}
+@margin-note/ref{参见@secref["threadmbox"].}
 
-An @deftech{asynchronous channel} is like a @tech{channel}, but it buffers
+@;{An @deftech{asynchronous channel} is like a @tech{channel}, but it buffers
 values so that a send operation does not wait on a receive operation.
+
+In addition to its use with procedures that are specific to
+asynchronous channels, an asynchronous channel can be used as a
+@tech{synchronizable event} (see @secref["sync"]).  An asynchronous
+channel is @tech{ready for synchronization} when
+@racket[async-channel-get] would not block; the asynchronous channel's
+@tech{synchronization result} is the same as the
+@racket[async-channel-get] result.}
+
+一个@deftech{异步信道（asynchronous channel）} 就像一个@tech{通道}, 但它缓冲值，以便一个发送操作不在一个接收操作中等待。
 
 In addition to its use with procedures that are specific to
 asynchronous channels, an asynchronous channel can be used as a
