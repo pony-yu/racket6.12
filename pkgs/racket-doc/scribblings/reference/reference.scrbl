@@ -22,21 +22,25 @@
                    (make-css-addition "extras.css")
                    (make-tex-addition "extras.tex"))))
 
-@title[#:style (extras)]{The Racket Reference}
+@title[#:style (extras)]{Racket参考}
 
 @author["Matthew Flatt" "PLT"]
+@author["张恒源（译）"]
 
-This manual defines the core Racket language and describes its
+@;{This manual defines the core Racket language and describes its
 most prominent libraries. The companion manual @|Guide| provides a
 friendlier (though less precise and less complete) overview of the
-language.
+language.}
+本手册定义了核心Racket语言，并描述了它最杰出的库。指南手册《@|Guide|》提供一个更友好（虽然不太精确，也不太完整）的语言概述。
 
-@margin-note{The source of this manual is available on
-@hyperlink["https://github.com/racket/racket/tree/master/pkgs/racket-doc/scribblings/reference"]{GitHub}.}
+@;{@margin-note{The source of this manual is available on
+@hyperlink["https://github.com/racket/racket/tree/master/pkgs/racket-doc/scribblings/reference"]{GitHub}.}}
+@margin-note{本手册的来源可查阅@hyperlink["https://github.com/racket/racket/tree/master/pkgs/racket-doc/scribblings/reference"]{GitHub}。}
 
 @defmodulelang*[(racket/base racket)
                 ;; Use sources for overlap with `scheme' and `mzscheme':
-                #:use-sources ('#%kernel
+                ;;与“scheme”和“mzscheme”重叠使用来源：
+                #:use-sources ('#%kernel
                                racket/private/more-scheme
                                racket/private/misc
                                racket/private/qqstx
@@ -48,16 +52,17 @@ language.
                                racket/private/list
                                racket/private/base)]{
 
-Unless otherwise noted, the bindings defined in this manual are
+@;{Unless otherwise noted, the bindings defined in this manual are
 exported by the @racketmodname[racket/base] and @racketmodname[racket]
 languages.}
+除非另有说明，本手册中定义的绑定是导出的@racketmodname[racket/base]和@racketmodname[racket]语言。}
 
-
-@margin-note{The @racketmodname[racket/base] library is much smaller than
+@;{@margin-note{The @racketmodname[racket/base] library is much smaller than
 the @racketmodname[racket] library and will typically load faster.
 
 The @racketmodname[racket] library combines
-@racketmodname[racket/base]@racket-extra-libs[].}
+@racketmodname[racket/base]@racket-extra-libs[].}}
+@margin-note{@racketmodname[racket/base]库是远小于@racketmodname[racket]库并且通常加载速度更快。}
 
 @table-of-contents[]
 
