@@ -20,28 +20,31 @@
 @#,racket[_language]
 ]
 
-the @racket[_language] determines the way that the rest of the module
+@;{the @racket[_language] determines the way that the rest of the module
 is parsed at the @tech{reader} level. The @tech{reader}-level parse
 must produce a @racket[module] form as a @tech{syntax object}. As
 always, the second sub-form after @racket[module] specifies the
 @tech{module language} that controls the meaning of the module's body
 forms. Thus, a @racket[_language] specified after @hash-lang[]
 controls both the @tech{reader}-level and @tech{expander}-level
-parsing of a module.
+parsing of a module.}
+该@racket[_language]决定了模块的其余部分在@tech{读取器（reader）}级别上被解析的方式。@tech{读取器（reader）}级别解析必须生成一个@racket[module]（模块）表作为一个@tech{语法对象（syntax object）}。与以往一样，@racket[module]（模块）后面的第二个子表指定了@tech{模块语言（module language）}来控制模块主体表的含义。因此，一种@racket[_language]（语言）被指定在@hash-lang[]控制@tech{读取器（reader）}级和@tech{扩展器（expander）}级的一个模块的解析之后。
 
 @local-table-of-contents[]
 
 @; ----------------------------------------
-@section[#:tag "hash-lang syntax"]{Designating a @hash-lang[] Language}
+@;{@section[#:tag "hash-lang syntax"]{Designating a @hash-lang[] Language}}
+@section[#:tag "hash-lang syntax"]{指定一个@hash-lang[]语言}
 
-The syntax of a @racket[_language] intentionally overlaps with the
+@;{The syntax of a @racket[_language] intentionally overlaps with the
 syntax of a module path as used in @racket[require] or as a
 @tech{module language}, so that names like @racketmodname[racket],
 @racketmodname[racket/base], @racketmodname[slideshow], or
 @racketmodname[scribble/manual] can be used both as @hash-lang[]
-languages and as module paths.
+languages and as module paths.}
+一种@racket[_language]的语法故意与一个模块路径的语法重叠，以作为用于@racket[require]或作为一个@tech{模块语言（module language）}，这样的名字像@racketmodname[racket]、@racketmodname[racket/base]、@racketmodname[slideshow]或@racketmodname[scribble/manual]可以用于作为@hash-lang[]语言和模块路径。
 
-At the same time, the syntax of @racket[_language] is far more
+@;{At the same time, the syntax of @racket[_language] is far more
 restricted than a module path, because only @litchar{a}-@litchar{z},
 @litchar{A}-@litchar{Z}, @litchar{0}-@litchar{9},
 @litchar{/} (not at the start or end),
@@ -53,18 +56,20 @@ inflexible and non-extensible; the @hash-lang[] protocol allows a
 @racket[_language] to refine and define syntax in a practically
 unconstrained way, but the @hash-lang[] protocol itself must remain
 fixed so that various different tools can ``boot'' into the extended
-world.
+world.}
+同时，@racket[_language]的语法的限制比模块路径远远多，因为只@litchar{a}-@litchar{z}、@litchar{A}-@litchar{Z}、@litchar{0}-@litchar{9}、@litchar{/}（不在开始或结束）、@litchar{_}、@litchar{-}和@litchar{+}在一个@racket[_language]（语言）名称中被允许。这些限制使@hash-lang[]语法尽量简单。保持@hash-lang[]简单，相应地，语法又很重要，因为语法是固有不变和非可扩展的；@hash-lang[]协议允许语言精炼，在几乎无约束的方式定义的语法，但@hash-lang[]协议本身必须保持固定，使各种不同的工具可以“引导（boot）”到扩展的世界。
 
-Fortunately, the @hash-lang[] protocol provides a natural way to refer
+@;{Fortunately, the @hash-lang[] protocol provides a natural way to refer
 to languages in ways other than the rigid @racket[_language] syntax:
 by defining a @racket[_language] that implements its own nested
 protocol. We have already seen one example (in @secref["s-exp"]): the
 @racketmodname[s-exp] @racket[_language] allows a programmer to
 specify a @tech{module language} using the general @tech{module path}
 syntax. Meanwhile, @racketmodname[s-exp] takes care of the
-@tech{reader}-level responsibilities of a @hash-lang[] language.
+@tech{reader}-level responsibilities of a @hash-lang[] language.}
+幸运的是，这@hash-lang[]协议提供了一个参考其它比刚性语言语法方面语言的自然方式：通过定义一种@racket[_language]，实现自己的嵌套协议。我们已经看到一个例子（在@secref["s-exp"]里）：该@racketmodname[s-exp]的@racket[_language]允许程序员使用通用@tech{模块路径（module path）}语法指定一个@tech{模块语言（module language）}。同时，@racketmodname[s-exp]照顾了一个@hash-lang[]语言@tech{读取器（reader）}级的职责。
 
-Unlike @racketmodname[racket], @racketmodname[s-exp] cannot be used as a
+@;{Unlike @racketmodname[racket], @racketmodname[s-exp] cannot be used as a
 module path with @racket[require]. Although the syntax of
 @racket[_language] for @hash-lang[] overlaps with the syntax of module
 paths, a @racket[_language] is not used directly as a module
@@ -75,63 +80,75 @@ then @racket[_language]  is suffixed with @racketidfont{/lang/reader}.
 (If neither is a valid module path, an error is raised.) The resulting 
 module supplies @racketidfont{read} and @racketidfont{read-syntax}
 functions using a protocol that is similar to the one for
-@racketmetafont{#reader}.
+@racketmetafont{#reader}.}
+不同于@racketmodname[racket]，@racketmodname[s-exp]不能作为一个带@racket[require]的模块路径。虽然@hash-lang[]为重叠模块路径语法的@racket[_language]的语法，一个@racket[_language]是不能直接作为一个模块的路径。相反，一个@racket[_language]在两个地点获得模块路径：第一，它寻找一个@racket[_language]的@racketidfont{读取器（reader）}的主模块的子模块。如果这不是一个有效的模块路径，那么@racket[_language]用@racketidfont{/lang/reader}添加后缀。（如果不是一个有效的模块路径，引发错误。）作为结果的模块提供@racketidfont{read}和@racketidfont{read-syntax}函数使用一个协议，它类似于@racketmetafont{#reader}的一个。
 
-@guideother{@secref["hash-reader"] introduces @racketmetafont{#reader}.}
+@;{@guideother{@secref["hash-reader"] introduces @racketmetafont{#reader}.}}
+@guideother{《@secref["hash-reader"]》介绍了@racketmetafont{#reader}.}
 
-A consequence of the way that a @hash-lang[] @racket[_language] is
+@;{A consequence of the way that a @hash-lang[] @racket[_language] is
 turned into a module path is that the language must be installed in a
 @tech{collection}, similar to the way that @filepath{racket} or
 @filepath{slideshow} are collections that are distributed with Racket.
 Again, however, there's an escape from this restriction: the
 @racketmodname[reader] language lets you specify a @tech{reader}-level
-implementation of a language using a general @tech{module path}.
+implementation of a language using a general @tech{module path}.}
+一个@hash-lang[]的@racket[_language]变成了一个模块路径的方式的结果是，语言必须被安装在一个@tech{集合（collection）}里，类似于@filepath{racket}或@filepath{slideshow}的方式是用Racket分发的集合。然而，还有一种方法可以避免这种限制：@racketmodname[reader]（读取器）语言允许使用通用@tech{模块路径（module path）}指定语言的@tech{读取器（reader）}级实现。
 
 @; ----------------------------------------
-@section[#:tag "hash-lang reader"]{Using @racket[@#,hash-lang[] @#,racketmodname[reader]]}
+@；{@section[#:tag "hash-lang reader"]{Using @racket[@#,hash-lang[] @#,racketmodname[reader]]}}
+@section[#:tag "hash-lang reader"]{使用@racket[@#,hash-lang[] @#,racketmodname[reader]]}
 
-The @racketmodname[reader] language for @hash-lang[] is similar to
+@;{The @racketmodname[reader] language for @hash-lang[] is similar to
 @racketmodname[s-exp], in that it acts as a kind of meta-language.
 Whereas @racketmodname[s-exp] lets a programmer specify a @tech{module
 language} at the @tech{expander} layer of parsing,
 @racketmodname[reader] lets a programmer specify a language at the
-@tech{reader} level.
+@tech{reader} level.}
+对于@hash-lang[]的@racketmodname[reader]语言类似于@racketmodname[s-exp]，在它里边扮演一种元语言。而@racketmodname[s-exp]让一个程序员在解析的@tech{扩展器（expander）}层指定一个@tech{模块语言（module
+language）}，@racketmodname[reader]可以让一个程序员在@tech{读取器（reader）}层指定一个语言。
 
-A @racket[@#,hash-lang[] @#,racketmodname[reader]] must be followed by
+@;{A @racket[@#,hash-lang[] @#,racketmodname[reader]] must be followed by
 a module path, and the specified module must provide two functions:
 @racketidfont{read} and @racketidfont{read-syntax}. The protocol is
 the same as for a @racketmetafont{#reader} implementation, but for
 @hash-lang[], the @racketidfont{read} and @racketidfont{read-syntax}
 functions must produce a @racket[module] form that is based on the
-rest of the input file for the module.
+rest of the input file for the module.}
+一个@racket[@#,hash-lang[] @#,racketmodname[reader]]必须跟着一个模块路径，并指定模块必须提供两个函数：@racketidfont{read}和@racketidfont{read-syntax}。该协议是一个和@racketmetafont{#reader}实现相同的，但对于@hash-lang[]，@racketidfont{read}和@racketidfont{read-syntax}函数必须产生一个@racket[module]表，它基于对模块的输入文件的其余部分。
 
-The following @filepath{literal.rkt} module implements a language that
+@;{The following @filepath{literal.rkt} module implements a language that
 treats its entire body as literal text and exports the text as a
-@racketidfont{data} string:
+@racketidfont{data} string:}
+下面的@filepath{literal.rkt}模块实现了一种语言，它把整个主体作为字面文本并且导出文本作为@racketidfont{数据（data）}字符串：
 
 @racketmodfile["literal.rkt"]
 
-The @filepath{literal.rkt} language uses @racket[strip-context] on the
+@;{The @filepath{literal.rkt} language uses @racket[strip-context] on the
 generated @racket[module] expression, because a
 @racketidfont{read-syntax} function should return a syntax object with
 no lexical context. Also, the @filepath{literal.rkt} language creates
 a module named @racketidfont{anything}, which is an arbitrary choice;
 the language is intended to be used in a file, and the longhand module
-name is ignored when it appears in a @racket[require]d file.
+name is ignored when it appears in a @racket[require]d file.}
+@filepath{literal.rkt}语言在生成@racket[module]表达式上使用@racket[strip-context]，因为一个@racketidfont{read-syntax}函数应该返回一个没有词汇语境的语法对象。同时，@filepath{literal.rkt}语言创建一个模块命名@racketidfont{任何东西（anything）}，这是一种随意的选择；语言的目的是要在文件中使用，并在它出现在一个被@racket[require]的文件里时，普通的模块名被忽略。
 
-The @filepath{literal.rkt} language can be used in a module
-@filepath{tuvalu.rkt}:
+@;{The @filepath{literal.rkt} language can be used in a module
+@filepath{tuvalu.rkt}:}
+@filepath{literal.rkt}语言可以用在一个模块@filepath{tuvalu.rkt}中：
 
 @racketmodfile["tuvalu.rkt"]
 
-Importing @filepath{tuvalu.rkt} binds @racketidfont{data} to a
-string version of the module content:
+@;{Importing @filepath{tuvalu.rkt} binds @racketidfont{data} to a
+string version of the module content:}
+导入@filepath{tuvalu.rkt}绑定@racketidfont{数据（data）}给一个模块内容的字符串版本：
 
 @interaction[
 (require "tuvalu.rkt")
 data
 ]
 
+@;????????????????????????????????????????????????????????????????????????
 @; ----------------------------------------
 @section[#:tag "syntax/module-reader"]{Using @racket[@#,hash-lang[] @#,racketmodname[s-exp] @#,racketmodname[syntax/module-reader]]}
 
