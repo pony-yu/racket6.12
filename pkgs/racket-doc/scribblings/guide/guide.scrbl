@@ -1,22 +1,27 @@
 #lang scribble/manual
 @(require scribble/eval "guide-utils.rkt")
 
-@title{The Racket Guide}
+@;{title{The Racket Guide}}
+@title{Racket指南}
 
 @author["Matthew Flatt" "Robert Bruce Findler" "PLT"]
+@author["张恒源 译"]
 
-This guide is intended for programmers who are new to Racket or new to
+@;{This guide is intended for programmers who are new to Racket or new to
 some part of Racket. It assumes programming experience, so if you are
 new to programming, consider instead reading @|HtDP|. If you want an
-especially quick introduction to Racket, start with @|Quick|.
+especially quick introduction to Racket, start with @|Quick|.}
+本指南适用于新的Racket程序员或部分新的Racket程序员。本指南假定你是有编程经验的。如果您是新学习编程，那么请阅读《如何设计程序》（@|HtDP|）这部分。如果你想特别快地了解Racket语言，从这里开始：《快速：Racket的图片编程介绍》（@|Quick|）这部分。
 
-@seclink["to-scheme"]{Chapter 2} provides a brief introduction to
+@;{@seclink["to-scheme"]{Chapter 2} provides a brief introduction to
 Racket. From @seclink["datatypes"]{Chapter 3} on, this guide dives
 into details---covering much of the Racket toolbox, but leaving
-precise details to @|Racket| and other reference manuals.
+precise details to @|Racket| and other reference manuals.}
+@seclink["to-scheme"]{第2章}简要介绍Racket语言。从@seclink["datatypes"]{第3章}开始，本指南深入讨论了大部分的Racket语言工具箱，但把更清晰的细节内容留给@|Racket|语言参考手册和其他参考手册介绍。
 
-@margin-note{The source of this manual is available on
-@hyperlink["https://github.com/racket/racket/tree/master/pkgs/racket-doc/scribblings/guide"]{GitHub}.}
+@;{@margin-note{The source of this manual is available on
+@hyperlink["https://github.com/racket/racket/tree/master/pkgs/racket-doc/scribblings/guide"]{GitHub}.}}
+@margin-note{本手册的来源可查阅@hyperlink["https://github.com/racket/racket/tree/master/pkgs/racket-doc/scribblings/guide"]{GitHub}.}
 
 @table-of-contents[]
 

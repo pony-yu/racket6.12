@@ -1,7 +1,7 @@
 #lang scribble/doc
 @(require scribble/manual "guide-utils.rkt")
 
-@;@title[#:tag "languages" #:style 'toc]{Creating Languages}
+@;{@title[#:tag "languages" #:style 'toc]{Creating Languages}}
 @title[#:tag "languages" #:style 'toc]{创造语言}
 
 @;{The @tech{macro} facilities defined in the preceding chapter let a
@@ -25,7 +25,7 @@ limited in two ways:}
 
 @;{@guideother{The distinction between the @tech{reader} and
 @tech{expander} layer is introduced in @secref["lists-and-syntax"].}}
-@guideother{读取器层和扩展器层之间的区别在《@secref [”lists-and-syntax”]》中介绍。}
+@guideother{读取器层和扩展器层之间的区别在《@secref["lists-and-syntax"]》中介绍。}
 
 @;{That is, a macro can only extend a language, and it can do so only at
 the @tech{expander} layer. Racket offers additional facilities for

@@ -10,9 +10,11 @@
 @(define-syntax !- (make-element-id-transformer (lambda (v) #'@tt{|-})))
 
 
-@title[#:tag "hash-languages" #:style 'toc]{Defining new @hash-lang[] Languages}
+@;{@title[#:tag "hash-languages" #:style 'toc]{Defining new @hash-lang[] Languages}}
+@title[#:tag "hash-languages" #:style 'toc]{定义新的@hash-lang[]语言}
 
-When loading a module as a source program that starts
+@;{When loading a module as a source program that starts}
+将模块加载为启动的源程序时
 
 @racketmod[
 @#,racket[_language]

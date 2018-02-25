@@ -1,0 +1,104 @@
+# WORDBOOK（字典）
+
+为统一翻译名称，建议采用以下词汇进行翻译（如有异议，可讨论）：
+## 常用词
+- Examples: 例如：（感觉这样翻译比“例子：”、“举例：”更贴近口语）
+- sequence 序列
+- Shorthand 速记
+- evaluate 求值
+- load 加载
+- import 导入
+- export 导出
+- access 存取（这个词有保存、读取双功能，不译作访问是为了传达的意思更明确）
+- dissect 解析
+- describe 叙述
+- consume 接受
+- to blame 归咎于(如：the client is to blame 译为：应归咎于客户机)
+- mandatory 强制（如：mandatory argument强制参数、mandatory keywords强制关键字）
+- signal 依赖
+- require 依赖
+- shape 形态
+- call 调用
+- flow across 传递
+- module boundary 模块范围内
+- produce 产生
+- create 创建
+- clauses 从句（程序从句）
+- binding 绑定
+- reference 引用　
+- source 源码
+- projection 推断
+- primitives 基本类型
+- build 构建
+- exercise 运用
+- escape 转义
+- matche 匹配
+- alternate 替代
+- caught 捕获
+- wrap 封装
+- shadow 覆盖
+- link 链接
+- bound 约束
+
+## 内置数据名称
+- boolean 布尔值
+- number 数值
+- character 字符
+- strings 字符串
+- byte 字节
+- symbol 符号
+- keyword 关键字
+- pair 配对
+- list 列表
+- vector 向量
+- hash Table 哈希表
+- box 格子（不翻译为“盒子”是因为我认为数据是平面、线性的，用“格子”更贴切）
+- void 空值
+- undefined 未定义值
+
+## 扩展数据类型
+- struct 结构
+
+## 程序术语
+- curried function 咖喱函数（带有临时使用性质的函数，就像当佐料的咖喱一样，这里直接命名为咖喱函数）
+- module 模块
+- function 函数
+- method 方法
+- procedure 程序
+- required argument 必需参数
+- optional argument 可选参数
+- rest argument 剩余参数
+- server 服务器
+- client 客户机（不翻译为客户端是因为客户机可以和服务器对应，更合理）
+- contract 合约（有合同、约定双重字面意义，更符合编程带约定的工作内涵）
+- contract-monitoring system 合约监控系统
+- domain 定义域
+- range 值域
+- S-expression S表达式
+- regular expression 正则表达式
+- contract-implementing function 合约执行函数
+- clause 从句
+- indy dependent contract 印依赖合约
+- element 元素
+- predicate 判定（不翻译为断言，是因为断言不直白，判定更简单易懂）
+- field 字段
+- wrapper function 包装函数
+- variable 变量
+- metacharacter 元字符
+- metasequence 元序列
+- succession 演替（借用生物学上的名词译作演替）
+- pattern 模式（模式，指事物的标准样式。如：发展模式。）
+- cluster 簇（代表模式匹配的样板聚集的状态，翻译成簇更合适。）
+- modifier 修饰符
+- cloister 回廊
+- sink 池（比如数据池。感觉翻译成“池”比“槽”更通俗易懂一些）
+- exception 异常
+- superclass 基类（不翻译成父类，因为基类更准确也更专业化，应该更能表达本质意义）
+- mixin 混合
+- trait 特征
+- unit 单元
+- namespace 命名空间（翻译为“名称空间”也可以，但这里统一翻译为“命名空间”）
+- Phase 阶段（作为一个专有词考虑）
+- level 等级
+- Phase level 阶段等级
+- taint 污染
