@@ -148,23 +148,25 @@ string version of the module content:}
 data
 ]
 
-@;????????????????????????????????????????????????????????????????????????
 @; ----------------------------------------
-@section[#:tag "syntax/module-reader"]{Using @racket[@#,hash-lang[] @#,racketmodname[s-exp] @#,racketmodname[syntax/module-reader]]}
+@;{@section[#:tag "syntax/module-reader"]{Using @racket[@#,hash-lang[] @#,racketmodname[s-exp] @#,racketmodname[syntax/module-reader]]}}
+@section[#:tag "syntax/module-reader"]{使用@racket[@#,hash-lang[] @#,racketmodname[s-exp] @#,racketmodname[syntax/module-reader]]}
 
-Parsing a module body is usually not as trivial as in
+@;{Parsing a module body is usually not as trivial as in
 @filepath{literal.rkt}. A more typical module parser must iterate to
 parse multiple forms for a module body. A language is also more likely
 to extend Racket syntax---perhaps through a @tech{readtable}---instead
-of replacing Racket syntax completely.
+of replacing Racket syntax completely.}
+在@filepath{literal.rkt}里解析模块主体通常不是无足轻重的。一个更典型的模块解析器必须迭代解析模块主体的多个表。一个语言也更可能扩展Racket语法——可能通过@tech{读取表格（readtable）}——而不是彻底更换Racket语法。
 
-The @racketmodname[syntax/module-reader] @tech{module language}
+@;{The @racketmodname[syntax/module-reader] @tech{module language}
 abstracts over common parts of a language implementation to simplify
 the creation of new languages. In its most basic form, a language
 implemented with @racketmodname[syntax/module-reader] simply specifies
 the @tech{module language} to be used for the language, in which case
 the @tech{reader} layer of the language is the same as Racket. For
-example, with
+example, with}
+@racketmodname[syntax/module-reader]@tech{模块语言（module language）}抽象语言实现的公共部分，以简化新语言的创建。在其最基础的表里，用@racketmodname[syntax/module-reader]实现的语言简单地指定用于该语言的@tech{模块语言（module language）}，在这种情况下，语言的@tech{读取器（reader）}层与Racket相同。例如，
 
 @racketmod[
 #:file "raquet-mlang.rkt"
@@ -173,7 +175,8 @@ racket
          (rename-out [lambda function]))
 ]
 
-and
+@;{and}
+以及
 
 @racketmod[
 #:file "raquet.rkt"
@@ -181,7 +184,8 @@ s-exp syntax/module-reader
 "raquet-mlang.rkt"
 ]
 
-then
+@;{then}
+那么
 
 @racketmod[
 reader "raquet.rkt"
@@ -189,11 +193,12 @@ reader "raquet.rkt"
 (provide identity)
 ]
 
-implements and exports the @racket[identity] function, since
+@;{implements and exports the @racket[identity] function, since
 @filepath{raquet-mlang.rkt} exports @racket[lambda] as
-@racket[function].
+@racket[function].}
+实现和导出@racket[identity]函数，因为@filepath{raquet-mlang.rkt}导出@racket[lambda]函数。
 
-The @racketmodname[syntax/module-reader] language accepts many optional
+@;{The @racketmodname[syntax/module-reader] language accepts many optional
 specifications to adjust other features of the language. For example,
 an alternate @racketidfont{read} and @racketidfont{read-syntax} for
 parsing the language can be specified with @racket[#:read] and
@@ -201,24 +206,28 @@ parsing the language can be specified with @racket[#:read] and
 @filepath{dollar-racket.rkt} language uses @filepath{dollar.rkt} (see
 @secref["readtable"]) to build a language that is like
 @racketmodname[racket] but with a @litchar{$} escape to simple infix
-arithmetic:
+arithmetic:}
+@racketmodname[syntax/module-reader]语言接受许多可选规范来调整语言的其它特性。例如，另一个 解析语言的@racketidfont{read}和@racketidfont{read-syntax}可以用@racket[#:read]和@racket[#:read-syntax]分别指定。下面的@filepath{dollar-racket.rkt}语言运用@filepath{dollar.rkt}（见@secref["readtable"]）建立一个像@racketmodname[racket]但用一个@litchar{$}避开简单中缀算术的语言：
 
 @racketmodfile["dollar-racket.rkt"]
 
-The @racket[require] form appears at the end of the module,
+@;{The @racket[require] form appears at the end of the module,
 because all of the keyword-tagged optional specifications for
 @racketmodname[syntax/module-reader] must appear before any helper
-imports or definitions.
+imports or definitions.}
+@racket[require]表出现在模块的结尾，因为所有@racketmodname[syntax/module-reader]的关键字标记可选规范必须出现在任何助手导入或定义之前。
 
-The following module uses @filepath{dollar-racket.rkt} to implement a
-@racket[cost] function using a @litchar{$} escape:
+@;{The following module uses @filepath{dollar-racket.rkt} to implement a
+@racket[cost] function using a @litchar{$} escape:}
+以下模块采用@filepath{dollar-racket.rkt}使用一个@litchar{$}实现一个@racket[cost]函数逃逸：
 
 @racketmodfile["store.rkt"]
 
 @; ----------------------------------------
-@section[#:tag "language-collection"]{Installing a Language}
+@;{@section[#:tag "language-collection"]{Installing a Language}}
+@section[#:tag "language-collection"]{安装一门语言}
 
-So far, we have used the @racketmodname[reader] meta-language to
+@;{So far, we have used the @racketmodname[reader] meta-language to
 access languages like @filepath{literal.rkt} and
 @filepath{dollar-racket.rkt}. If you want to use something like
 @racket[@#,hash-lang[] literal] directly, then you must move
@@ -226,17 +235,20 @@ access languages like @filepath{literal.rkt} and
 @filepath{literal} (see also @secref["link-collection"]).
 Specifically, move @filepath{literal.rkt} to a @racketidfont{reader} 
 submodule of @filepath{literal/main.rkt} for any directory name
-@filepath{literal}, like so:
+@filepath{literal}, like so:}
+到目前为止，我们已经使用了@racketmodname[reader]的元语言来访问语言如@filepath{literal.rkt}和@filepath{dollar-racket.rkt}。如果你想直接使用像@racket[@#,hash-lang[] literal]这样的，然后你必须把@filepath{literal.rkt}移入一个命名为@filepath{literal}的Racket@tech{集合（collection）}（参见@secref["link-collection"]）。具体而言，将@filepath{literal.rkt}移入@filepath{literal/main.rkt}的一个@racketidfont{读取器（reader）}子模块给任何目录名@filepath{literal}，像这样：
 
 @racketmodfile["literal-main.rkt" "literal/main.rkt"]
 
-Then, install the @filepath{literal}
-directory as a package:
+@;{Then, install the @filepath{literal}
+directory as a package:}
+然后，将@filepath{literal}目录安装为一个包：
 
 @commandline{cd /path/to/literal ; raco pkg install}
 
-After moving the file and installing the package, you can use
-@racket[literal] directly after @hash-lang[]:
+@;{After moving the file and installing the package, you can use
+@racket[literal] directly after @hash-lang[]:}
+移动文件并安装包后，可以在@hash-lang[]后面直接使用@racket[literal]。
 
 @racketmod[
 @#,racket[literal]
@@ -245,36 +257,43 @@ System!
 Perfect!
 ]
 
-@margin-note{See @other-manual['(lib "scribblings/raco/raco.scrbl")]
-for more information on using @exec{raco}.}
+@;{@margin-note{See @other-manual['(lib "scribblings/raco/raco.scrbl")]
+for more information on using @exec{raco}.}}
+@margin-note{参见@other-manual['(lib "scribblings/raco/raco.scrbl")]以在使用@exec{宏（raco）}时得到更多信息。}
 
-You can also make your language available for others to install by
+@;{You can also make your language available for others to install by
 using the Racket package manager (see @other-doc['(lib
 "pkg/scribblings/pkg.scrbl")]). After you create a @filepath{literal}
 package and register it with the Racket package catalog (see
 @secref["concept:catalog" #:doc '(lib "pkg/scribblings/pkg.scrbl")]),
-others can install it using @exec{raco pkg}:
+others can install it using @exec{raco pkg}:}
+你也可以让你的语言通过使用Racket安装包管理器提供给他人去安装（参见@other-doc['(lib
+"pkg/scribblings/pkg.scrbl")]）。你创造了一个@filepath{literal}包并用Racket包目录登记后（见@secref["concept:catalog" #:doc '(lib "pkg/scribblings/pkg.scrbl")]），其他人就可以使用@exec{raco pkg}安装它：
 
 @commandline{raco pkg install literal}
 
-Once installed, others can invoke the language the same way: by using
-@racket[@#,hash-lang[] literal] at the top of a source file.
+@;{Once installed, others can invoke the language the same way: by using
+@racket[@#,hash-lang[] literal] at the top of a source file.}
+一旦安装，其他人可以用同样的方式调用该语言：通过在一个源文件的顶部使用@racket[@#,hash-lang[] literal]。
 
 If you use a public source repository (e.g., GitHub), you can link
 your package to the source. As you improve the package, others can
 update their version using @exec{raco pkg}:
+如果你使用一个公共的源库（例如，GitHub），你可以将你的包链接到这个源。当你升级这个包，其他人可以使用@exec{raco pkg}更新他们的版本：
 
 @commandline{raco pkg update literal}
 
-@margin-note{See @other-doc['(lib "pkg/scribblings/pkg.scrbl")] for more
-information about the Racket package manager.}
+@;{@margin-note{See @other-doc['(lib "pkg/scribblings/pkg.scrbl")] for more
+information about the Racket package manager.}}
+@margin-note{参见@other-doc['(lib "pkg/scribblings/pkg.scrbl")]以了解有关Racket包管理器的更多信息。}
 
 @; ----------------------------------------
-@section[#:tag "language-get-info"]{Source-Handling Configuration}
+@section[#:tag "language-get-info"]{源处理配置}
 
-The Racket distribution includes a Scribble language for writing prose
+@；{The Racket distribution includes a Scribble language for writing prose
 documents, where Scribble extends the normal Racket to better support
-text. Here is an example Scribble document:
+text. Here is an example Scribble document:}
+Racket分发包括一个用于编写单调的文档的Scribble语言，这里Scribble扩展了通常的Racket以更好地支持文本。这里有一个Scribble文档例子：
 
 @verbatim[#:indent 2]|{
 #lang scribble/base
@@ -286,13 +305,14 @@ text. Here is an example Scribble document:
 The title of this document is ``@(get-name).''
 }|
 
-If you put that program in DrRacket's @tech{definitions area} and
+@;{If you put that program in DrRacket's @tech{definitions area} and
 click @onscreen{Run}, then nothing much appears to happen. The
 @racketmodname[scribble/base] language just binds and exports
 @racketidfont{doc} as a description of a document, similar to the way
-that @filepath{literal.rkt} exports a string as @racketidfont{data}.
+that @filepath{literal.rkt} exports a string as @racketidfont{data}.}
+如果你把程序放入DrRacket的@tech{定义区域（definitions area）}并点击@onscreen{Run（运行）}，那么不会有更多的呈现会发生。@racketmodname[scribble/base]语言只是绑定和导出@racketidfont{doc（文档）}作为一个文档的一种描述，类似于@filepath{literal.rkt}导出一个字符串作为@racketidfont{data（数据）}。
 
-Simply opening a module with the language
+@;{Simply opening a module with the language
 @racketmodname[scribble/base] in DrRacket, however, causes a
 @onscreen{Scribble HTML} button to appear. Furthermore, DrRacket knows
 how to colorize Scribble syntax by coloring green those parts of the
@@ -300,17 +320,19 @@ document that correspond to literal text. The language name
 @racketmodname[scribble/base] is not hard-wired into
 DrRacket. Instead, the implementation of the
 @racketmodname[scribble/base] language provides button and
-syntax-coloring information in response to a query from DrRacket.
+syntax-coloring information in response to a query from DrRacket.}
+然而，在DrRacket里简单地打开一个带@racketmodname[scribble/base]的模块，会引起一个@onscreen{Scribble HTML}按钮出现。此外，DrRacket知道如何通过着色绿色所对应的文本文档的部分着色Scribble的语法。语言名称@racketmodname[scribble/base]不是硬连接到DrRacket里的。相反，@racketmodname[scribble/base]语言的实现提供按钮和语法着色信息响应来自DrRacket查询。
 
-If you have installed the @racket[literal] language as described in
+@;{If you have installed the @racket[literal] language as described in
 @secref["language-collection"], then you can adjust
 @filepath{literal/main.rkt} so that DrRacket treats the content
 of a module in the @racket[literal] language as plain text instead of
-(erroneously) as Racket syntax:
+(erroneously) as Racket syntax:}
+如果你已经安装了@racket[literal]（文字）语言作为@secref["language-collection"]（语言集合）中的描述，那你可以调整@filepath{literal/main.rkt}使DrRacket把@racket[literal]（文字）语言里一个模块的内容作为纯文本对待，而不是（错误地）作为Racket的语法：
 
 @racketmodfile["literal-main-get-info.rkt" "literal/main.rkt"]
 
-This revised @racket[literal] implementation provides a
+@;{This revised @racket[literal] implementation provides a
 @racketidfont{get-info} function. The @racketidfont{get-info} function
 is called by @racket[read-language] (which DrRacket calls) with the 
 source input stream and location information,
@@ -320,34 +342,40 @@ result of @racketidfont{get-info} is a function of two arguments. The
 first argument is always a symbol, indicating the kind of information
 that a tool requests from the language; the second argument is the
 default result to be returned if the language does not recognize the
-query or has no information for it.
+query or has no information for it.}
+修改后的@racket[literal]（文字）实现提供了一个@racketidfont{get-info}函数。这个@racketidfont{get-info}函数称为@racket[read-language]（那是DrRacket称谓）与源输入流和位置信息，如果查询结果应该取决于语言名称后的这个模块的内容（这是没有@racket[literal]（文字）的情况下）。@racketidfont{get-info}的结果是一个带两个参数的函数。第一个参数总是符号，指示那种一个从语言请求的工具的信息类型；第二个参数是如果语言不识别查询或没有信息的话将返回的默认结果。
 
-After DrRacket obtains the result of @racketidfont{get-info} for a
+@;{After DrRacket obtains the result of @racketidfont{get-info} for a
 language, it calls the function with a @racket['color-lexer] query;
 the result should be a function that implements syntax-coloring
 parsing on an input stream. For @racket[literal], the
 @racketmodname[syntax-color/default-lexer] module provides a
 @racket[default-lexer] syntax-coloring parser that is suitable for
 plain text, so @racket[literal] loads and returns that parser in
-response to a @racket['color-lexer] query.
+response to a @racket['color-lexer] query.}
+在DrRacket为一个语言获得@racketidfont{get-info}的结果后，它用一个@racket['color-lexer]请求调用函数；结果应该是一个在输入流上实现语法着色解析的函数。对于@racket[literal]@racketmodname[syntax-color/default-lexer]模块提供了一个适用于纯文本的@racket[default-lexer]语法着色解析器，所以@racket[literal]加载和返回在对一个@racket['color-lexer]请求的响应里的解析器。
 
-The set of symbols that a programming tool uses for queries
+@;{The set of symbols that a programming tool uses for queries
 is entirely between the tool and the languages that choose to
 cooperate with it. For example, in addition to @racket['color-lexer],
 DrRacket uses a @racket['drracket:toolbar-buttons] query to determine
 which buttons should be available in the toolbar to operate on modules
-using the language.
+using the language.}
+编程工具用于查询的符号集完全位于选择与之合作的工具和语言之间。例如，除了@racket['color-lexer]之外，DrRacket采用一种@racket['drracket:toolbar-buttons]查询以确定哪个按钮在工具栏上应该可用于在使用这个语言的模块上操作。
 
-The @racketmodname[syntax/module-reader] language lets you specify
+@;{The @racketmodname[syntax/module-reader] language lets you specify
 @racketidfont{get-info} handling through a @racket[#:info] optional
 specification. The protocol for an @racket[#:info] function is
 slightly different from the raw @racketidfont{get-info} protocol; the
 revised protocol allows @racketmodname[syntax/module-reader] the
 possibility of handling future language-information queries
-automatically.
+automatically.}
+@racketmodname[syntax/module-reader]语言可以让你指定@racketidfont{get-info}通过一个@racket[#:info]可选说明处理。一个@racket[#:info]函数协议与原生的@racketidfont{get-info}协议略有不同；修订后的协议允许@racketmodname[syntax/module-reader]自动处理未来语言信息查询的可能性。
 
 @; ----------------------------------------
-@section[#:tag "module-runtime-config"]{Module-Handling Configuration}
+@;{@section[#:tag "module-runtime-config"]{Module-Handling Configuration}}
+@section[#:tag "module-runtime-config"]{模块处理配置}
+@;?????????????????????????????????????????????????????
 
 Suppose that the file @filepath{death-list-5.rkt} contains
 
