@@ -8,22 +8,27 @@
 
 @(define reference-doc '(lib "scribblings/reference/reference.scrbl"))
 
-@title[#:tag "concurrency"]{Concurrency and Synchronization}
+@;{@title[#:tag "concurrency"]{Concurrency and Synchronization}}
+@title[#:tag "concurrency"]{并发与同步}
 
-Racket provides @deftech{concurrency} in the form of
+@;{Racket provides @deftech{concurrency} in the form of
 @deftech{threads}, and it provides a general @racket[sync] function
 that can be used to synchronize both threads and other implicit forms of
-concurrency, such as @tech{ports}.
+concurrency, such as @tech{ports}.}
+Racket以@deftech{线程（threads）}的形式提供@deftech{并发性（concurrency）}，它提供了一个通用的@racket[sync]（同步）函数，可用于同步线程和其它隐式并发形式，如@tech{端口（ports）}。
 
-Threads run concurrently in the sense that one thread can preempt
+@;{Threads run concurrently in the sense that one thread can preempt
 another without its cooperation, but threads do not run in parallel in
 the sense of using multiple hardware processors.  See
-@secref["parallelism"] for information on parallelism in Racket.
+@secref["parallelism"] for information on parallelism in Racket.}
+在一个线程能够不需要协作地抢占另一个这个意义上讲线程同时运行，但是在使用多硬件处理器这个意义上讲线程不并行运行。参见@secref["parallelism"]以获取Racket的并行信息。
 
-@section{Threads}
+@;{@section{Threads}}
+@section{线程（thread）}
 
-To execute a procedure concurrently, use @racket[thread].  The
-following example creates two new threads from the main thread:
+@;{To execute a procedure concurrently, use @racket[thread].  The
+following example creates two new threads from the main thread:}
+要同时执行一个过程，使用@racket[thread]（线程）。下面的示例从主线程创建两个新线程：
 
 @racketblock[
 (displayln "This is the original thread")
@@ -31,9 +36,10 @@ following example creates two new threads from the main thread:
 (thread (lambda () (displayln "This is another new thread.")))
 ]
 
-The next example creates a new thread that would otherwise loop forever, but
+@;{The next example creates a new thread that would otherwise loop forever, but
 the main thread uses @racket[sleep] to pause itself for 2.5 seconds, then
-uses @racket[kill-thread] to terminate the worker thread:
+uses @racket[kill-thread] to terminate the worker thread:}
+下一个示例创建一个新线程，否则线程将永远循环，但主线程使用@racket[sleep]暂停2.5秒，然后使用@racket[kill-thread]终止工作线程：
 
 @racketblock[
 (define worker (thread (lambda ()
@@ -45,14 +51,16 @@ uses @racket[kill-thread] to terminate the worker thread:
 (kill-thread worker)
 ]
 
-@margin-note{In DrRacket, the main thread keeps going until the Stop button is
-clicked, so in DrRacket the @racket[thread-wait] is not necessary.}
+@;{@margin-note{In DrRacket, the main thread keeps going until the Stop button is
+clicked, so in DrRacket the @racket[thread-wait] is not necessary.}}
+@margin-note{在DrRacket里，主线程一直到Stop（停止）按钮被点击，所以在DrRacket里的@racket[thread-wait]（线程等待）是没有必要的。}
 
-If the main thread finishes or is killed, the application exits, even if
+@;{If the main thread finishes or is killed, the application exits, even if
 other threads are still running.  A thread can use @racket[thread-wait] to
 wait for another thread to finish.  Here, the main thread uses
 @racket[thread-wait] to make sure the worker thread finishes before the main
-thread exits:
+thread exits:}
+如果主线程完成或被杀死，应用程序将退出，即使其它线程仍在运行。一个线程可以使用@racket[thread-wait]（线程等待）来等待另一个线程完成。在这里，主线程使用@racket[thread-wait]（线程等待）以确保工作线程在主线程退出之前完成：
 
 @racketblock[
 (define worker (thread
@@ -63,15 +71,17 @@ thread exits:
 (displayln "Worker finished")
 ]
 
-@section{Thread Mailboxes}
+@;{@section{Thread Mailboxes}}
+@section{线程的邮箱}
 
-Each thread has a mailbox for receiving messages.  The @racket[thread-send] function
+@;{Each thread has a mailbox for receiving messages.  The @racket[thread-send] function
 asynchronously sends a message to another thread's mailbox, while
 @racket[thread-receive] returns the oldest message from the current
 thread's mailbox, blocking to wait for a message if necessary.  In the
 following example, the main thread sends data to the worker thread to be
 processed, then sends a @racket['done] message when there is no more data and
-waits for the worker thread to finish.
+waits for the worker thread to finish.}
+每个线程都有一个邮箱来接收消息。@racket[thread-send]函数异步发送一个消息到另一个线程的邮箱，而@racket[thread-receive]返回当前线程邮箱中最以前的消息，如果需要的话阻塞以等待一个消息。在下面的示例中，主线程将数据发送到工作线程以被处理，然后在没有更多数据并等待工作线程完成时发送一个发送一个@racket['done]消息。
 
 @racketblock[
 (define worker-thread (thread
@@ -89,9 +99,10 @@ waits for the worker thread to finish.
 (thread-wait worker-thread)
 ]
 
-In the next example, the main thread delegates work to multiple arithmetic
+@;{In the next example, the main thread delegates work to multiple arithmetic
 threads, then waits to receive the results.  The arithmetic threads process work
-items then send the results to the main thread.
+items then send the results to the main thread.}
+在下一个示例中，主线程将工作委托给多个算术线程，然后等待接收结果。算术线程处理工作项，然后将结果发送到主线程。
 
 @racketblock[
 (define (make-arithmetic-thread operation)
@@ -123,7 +134,9 @@ items then send the results to the main thread.
   (displayln (thread-receive)))
 ]
 
-@section{Semaphores}
+@;{@section{Semaphores}}
+@section{信号}
+@;??????????????????????????????
 
 Semaphores facilitate synchronized access to an arbitrary shared resource.
 Use semaphores when multiple threads must perform non-atomic operations on a

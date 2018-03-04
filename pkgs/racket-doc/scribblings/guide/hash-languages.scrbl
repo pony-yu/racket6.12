@@ -96,7 +96,7 @@ implementation of a language using a general @tech{module path}.}
 一个@hash-lang[]的@racket[_language]变成了一个模块路径的方式的结果是，语言必须被安装在一个@tech{集合（collection）}里，类似于@filepath{racket}或@filepath{slideshow}的方式是用Racket分发的集合。然而，还有一种方法可以避免这种限制：@racketmodname[reader]（读取器）语言允许使用通用@tech{模块路径（module path）}指定语言的@tech{读取器（reader）}级实现。
 
 @; ----------------------------------------
-@；{@section[#:tag "hash-lang reader"]{Using @racket[@#,hash-lang[] @#,racketmodname[reader]]}}
+@;{@section[#:tag "hash-lang reader"]{Using @racket[@#,hash-lang[] @#,racketmodname[reader]]}}
 @section[#:tag "hash-lang reader"]{使用@racket[@#,hash-lang[] @#,racketmodname[reader]]}
 
 @;{The @racketmodname[reader] language for @hash-lang[] is similar to
@@ -276,9 +276,9 @@ others can install it using @exec{raco pkg}:}
 @racket[@#,hash-lang[] literal] at the top of a source file.}
 一旦安装，其他人可以用同样的方式调用该语言：通过在一个源文件的顶部使用@racket[@#,hash-lang[] literal]。
 
-If you use a public source repository (e.g., GitHub), you can link
+@;{If you use a public source repository (e.g., GitHub), you can link
 your package to the source. As you improve the package, others can
-update their version using @exec{raco pkg}:
+update their version using @exec{raco pkg}:}
 如果你使用一个公共的源库（例如，GitHub），你可以将你的包链接到这个源。当你升级这个包，其他人可以使用@exec{raco pkg}更新他们的版本：
 
 @commandline{raco pkg update literal}
@@ -290,7 +290,7 @@ information about the Racket package manager.}}
 @; ----------------------------------------
 @section[#:tag "language-get-info"]{源处理配置}
 
-@；{The Racket distribution includes a Scribble language for writing prose
+@;{The Racket distribution includes a Scribble language for writing prose
 documents, where Scribble extends the normal Racket to better support
 text. Here is an example Scribble document:}
 Racket分发包括一个用于编写单调的文档的Scribble语言，这里Scribble扩展了通常的Racket以更好地支持文本。这里有一个Scribble文档例子：
@@ -375,46 +375,51 @@ automatically.}
 @; ----------------------------------------
 @;{@section[#:tag "module-runtime-config"]{Module-Handling Configuration}}
 @section[#:tag "module-runtime-config"]{模块处理配置}
-@;?????????????????????????????????????????????????????
 
-Suppose that the file @filepath{death-list-5.rkt} contains
+@;{Suppose that the file @filepath{death-list-5.rkt} contains}
+假设文件@filepath{death-list-5.rkt}包含
 
 @racketmodfile["death-list-5.rkt"]
 
-If you @racket[require] @filepath{death-list-5.rkt} directly, then it
-prints the list in the usual Racket result format:
+@;{If you @racket[require] @filepath{death-list-5.rkt} directly, then it
+prints the list in the usual Racket result format:}
+如果你直接@racket[require] @filepath{death-list-5.rkt}，那么它用通常的Racket结果格式打印列表：
 
 @interaction[
 (require "death-list-5.rkt")
 ]
 
-However, if @filepath{death-list-5.rkt} is required by a
+@;{However, if @filepath{death-list-5.rkt} is required by a
 @filepath{kiddo.rkt} that is implemented with @racketmodname[scheme]
-instead of @racketmodname[racket]:
+instead of @racketmodname[racket]:}
+但是，如果@filepath{death-list-5.rkt}是被一个@filepath{kiddo.rkt}所需求，而不是用@racketmodname[scheme]代替@racketmodname[racket]实现：
 
 @racketmodfile["kiddo.rkt"]
 
-then, if you run @filepath{kiddo.rkt} file in DrRacket or if you run it
+@;{then, if you run @filepath{kiddo.rkt} file in DrRacket or if you run it
 directly with @exec{racket}, @filepath{kiddo.rkt} causes
 @filepath{death-list-5.rkt} to print its list in traditional Scheme
-format, without the leading quote:
+format, without the leading quote:}
+然后，如果你在DrRacket中运行@filepath{kiddo.rkt}文件或如果你用@exec{racket}直接运行它，@filepath{kiddo.rkt}导致@filepath{death-list-5.rkt}用传统Scheme的格式打印列表，不带前列的引用：
 
 @racketblock[
 @#,racketoutput{("O-Ren Ishii" "Vernita Green" "Budd" "Elle Driver" "Bill")}
 ]
 
-The @filepath{kiddo.rkt} example illustrates how the format for
+@;{The @filepath{kiddo.rkt} example illustrates how the format for
 printing a result value can depend on the main module of a program
-instead of the language that is used to implement it.
+instead of the language that is used to implement it.}
+这个@filepath{kiddo.rkt}的例子说明了打印一个结果值的格式如何取决于一个程序的主模块，而不是用来实现它的语言。
 
-More broadly, certain features of a language are only invoked when
+@;{More broadly, certain features of a language are only invoked when
 a module written in that language is run directly with @exec{racket}
 (as opposed to being imported into another module). One example is
 result-printing style (as shown above). Another example is REPL
 behavior. These features are part of what's called the
-@deftech{run-time configuration} of a language.
+@deftech{run-time configuration} of a language.}
+更广泛地说，只有当用该语言编写的模块直接用@exec{racket}运行（而不是导入另一个模块）时，才会调用某些语言的某些特性。一个例子是结果打印样式（如上所示）。另一个例子是REPL行为。这些特性是所谓的语言@deftech{运行时配置（run-time configuration）}的一部分。
 
-Unlike the syntax-coloring property of a language (as described in
+@;{Unlike the syntax-coloring property of a language (as described in
 @secref["language-get-info"]), the run-time configuration is a
 property of a @emph{module} per se as opposed to a property of
 the @emph{source text} representing the module.
@@ -423,9 +428,10 @@ module needs to be available even if the module is compiled
 to bytecode form and the source is unavailable. Therefore,
 run-time configuration cannot be handled by the
 @racketidfont{get-info} function we're exporting from the language's
-parser module.
+parser module.}
+与一个语言的语法着色属性不同（如@secref["language-get-info"]中所描述的），运行时配置本身是一个@emph{模块（module）}的一个属性，而不是表示模块的@emph{源文本(source text)}的属性。出于这个原因，即使模块编译成字节码形式且源不可用，模块的运行时配置也需要可用。因此，运行时配置不能通过我们从语言解析器模块导出的@racketidfont{get-info}函数来处理。
 
-Instead, it will be handled by a new
+@;{Instead, it will be handled by a new
 @racket[configure-runtime] submodule that we'll add inside
 the parsed @racket[module] form. When a module is run directly
 with @exec{racket}, @exec{racket} looks for a
@@ -435,16 +441,18 @@ the @racket['configure-runtime] submodule is ignored. (And if the
 @racket[configure-runtime] submodule doesn't exist, @exec{racket}
 just evaluates the module as usual.) That means that the
 @racket[configure-runtime] submodule can be used for any special
-setup tasks that need to happen when the module is run directly.
+setup tasks that need to happen when the module is run directly.}
+相反，它将由一个新的@racket[configure-runtime](配置运行时)子模块处理，我们会在里面添加解析@racket[module]（模块）表。当一个模块直接用@exec{racket}运行，@exec{racket}查找@racket[configure-runtime]（配置运行时）子模块。如果它存在，@exec{racket}就运行它。但如果这个模块被导入到另一个模块，这个 @racket['configure-runtime]（配置运行时）子模块被忽略。（如果@racket['configure-runtime]（配置运行时）子模块不存在，@exec{racket}只是像通常一样对模块求值。）那意味着@racket['configure-runtime]（配置运行时）子模块可用于任何特殊设置任务，它在模块直接运行时需要出现。
 
-Going back to the @racket[literal] language (see
+@;{Going back to the @racket[literal] language (see
 @secref["language-get-info"]), we can adjust the language so that
 directly running a @racket[literal] module causes it to print out its
 string, while using a @racket[literal] module in a larger program
 simply provides @racketidfont{data} without printing. To make this
 work, we will need an extra module. (For clarity here, we will implement 
 this module as a separate file. But it could equally well be 
-a submodule of an existing file.)
+a submodule of an existing file.)}
+回到@racket[literal]（字面）语言（参见@secref["language-get-info"]），我们可以调整语言，这样直接运行一个@racket[literal]（文字）模块造成它打印出它的字符串，而在一个较大的程序中使用一个@racket[literal]（文字）模块只提供@racketidfont{数据（data）}而不打印。为了使这项工作，我们将需要一个额外的模块。（为了清楚起见，我们将把这个模块作为一个单独的文件来实现。但它同样可以是一个已存在的文件的一个模块。）
 
 @racketblock[
 .... @#,elem{(the main installation or the user's space)}
@@ -455,31 +463,35 @@ a submodule of an existing file.)
 
 @itemlist[
 
- @item{The @filepath{literal/show.rkt} module will provide a
+ @;{@item{The @filepath{literal/show.rkt} module will provide a
        @racketidfont{show} function to be applied to the string
        content of a @racket[literal] module, and also provide a
        @racketidfont{show-enabled} parameter that controls whether
-       @racketidfont{show} actually prints the result.}
+       @racketidfont{show} actually prints the result.}}
+  @item{@filepath{literal/show.rkt}模块将提供一个@racketidfont{show}函数以被应用到一个@racket[literal]（文本）模块的字符串内容，同时也提供一个@racketidfont{show-enabled}参数，它控制是否@racketidfont{show}的实际打印结果。}
 
- @item{The new @racket[configure-runtime] submodule in
+ @;{@item{The new @racket[configure-runtime] submodule in
        @filepath{literal/main.rkt} will set the
        @racketidfont{show-enabled} parameter to @racket[#t]. The
        net effect is that @racketidfont{show} will print the strings
        that it's given, but only when a module using the @racket[literal]
        language is run directly (because only then will the
-       @racket[configure-runtime] submodule be invoked).}
+       @racket[configure-runtime] submodule be invoked).}}
+@item{在@filepath{literal/main.rkt}中的新的@racket[configure-runtime]（配置运行时）子模块将设置@racketidfont{show-enabled}参数为@racket[#t]。净效果是@racketidfont{show}将打印给定的字符串，但只有当一个模块使用@racket[literal]（文字）语言直接运行时（因为只有决定@racket[configure-runtime]（配置运行时）子模块被调用）。}
 
 ]
 
 
-These changes are implemented in the following revised
-@filepath{literal/main.rkt}:
+@;{These changes are implemented in the following revised
+@filepath{literal/main.rkt}:}
+这些变化在以下修订过的@filepath{literal/main.rkt}中被实现：
 
 @racketmodfile["literal-main-language-info.rkt" "literal/main.rkt"]
 
-Then the @filepath{literal/show.rkt} module must provide
+@;{Then the @filepath{literal/show.rkt} module must provide
 the @racketidfont{show-enabled} parameter and @racketidfont{show}
-function:
+function:}
+那么@filepath{literal/show.rkt}模块必须提供@racketidfont{show-enabled}参数和@racketidfont{show}函数：
 
 @racketmod[
 #:file "literal/show.rkt"
@@ -494,9 +506,10 @@ racket
     (display v)))
 ]
 
-With all of the pieces for @racket[literal] in place, try running the
+@;{With all of the pieces for @racket[literal] in place, try running the
 following variant of @filepath{tuvalu.rkt} directly and through a
-@racket[require] from another module:
+@racket[require] from another module:}
+在恰当的位置用所有为@racket[literal]编写的片段，试图运行以下@filepath{tuvalu.rkt}的变体，直接地和通过一个来自另一个模块的@racket[require]：
 
 @racketmod[
 #:file "tuvalu.rkt"
@@ -506,9 +519,10 @@ System!
 Perfect!
 ]
 
-When run directly, we'll see the result printed like so, because
+@;{When run directly, we'll see the result printed like so, because
 our @racket[configure-runtime] submodule will have set the
-@racketidfont{show-enabled} parameter to @racket[#t]:
+@racketidfont{show-enabled} parameter to @racket[#t]:}
+当直接运行时，我们会看到结果打印像这样，因为我们的@racket[configure-runtime](配置运行时)子模块将设置@racketidfont{show-enabled}参数为@racket[#t]：
 
 @racketblock[
 @#,racketoutput{Technology!
@@ -516,7 +530,8 @@ our @racket[configure-runtime] submodule will have set the
 @(linebreak)Perfect!}
 ]
 
-But when imported into another module, printing will be suppressed,
+@;{But when imported into another module, printing will be suppressed,
 because the @racket[configure-runtime] submodule will not be invoked,
 and therefore the @racketidfont{show-enabled} parameter will remain
-at its default value of @racket[#f].
+at its default value of @racket[#f].}
+但当导入到另一个模块时，打印将被抑制，因为@racket[configure-runtime]（配置运行时）子模块将不会被调用，因此@racketidfont{show-enabled}参数将保持其默认值@racket[#f]。
