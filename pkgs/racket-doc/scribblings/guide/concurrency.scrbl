@@ -135,20 +135,21 @@ items then send the results to the main thread.}
 ]
 
 @;{@section{Semaphores}}
-@section{信号}
-@;??????????????????????????????
+@section{信号（Semaphores）}
 
-Semaphores facilitate synchronized access to an arbitrary shared resource.
+@;{Semaphores facilitate synchronized access to an arbitrary shared resource.
 Use semaphores when multiple threads must perform non-atomic operations on a
-single resource.
+single resource.}
+信号进行同步访问任意共享资源。使用信号时，多个线程必须在一个单一的资源执行非原子操作。
 
-In the following example, multiple threads print to standard output
+@;{In the following example, multiple threads print to standard output
 concurrently.  Without synchronization, a line printed by one thread might
 appear in the middle of a line printed by another thread.  By using a semaphore
 initialized with a count of @racket[1], only one thread will print at a time.
 The @racket[semaphore-wait] function blocks until the semaphore's internal counter is
 non-zero, then decrements the counter and returns. The @racket[semaphore-post] function
-increments the counter so that another thread can unblock and then print.
+increments the counter so that another thread can unblock and then print.}
+在下面的示例中，多个线程同时打印到标准输出。如果没有同步，一个线程打印的行可能出现在另一个线程打印的行的中间。通过使用计数为@racket[1]初始化的信号量，每次只能打印一个线程。@racket[semaphore-wait]函数块，直到信号的内部计数器不为零，然后递减计数器并返回。@racket[semaphore-post]函数递增计数器以便另一个线程可以解锁然后打印增量。
 
 @racketblock[
 (define output-semaphore (make-semaphore 1))
@@ -163,10 +164,11 @@ increments the counter so that another thread can unblock and then print.
 (for-each thread-wait threads)
 ]
 
-The pattern of waiting on a semaphore, working, and posting to the
+@;{The pattern of waiting on a semaphore, working, and posting to the
 semaphore can also be expressed using
 @racket[call-with-semaphore],which has the advantage of posting to the
-semaphore if control escapes (e.g., due to an exception):
+semaphore if control escapes (e.g., due to an exception):}
+等待信号、工作和张贴到信号的模式也可以用@racket[call-with-semaphore]来表示，如果控制中断（例如由于异常），它具有张贴到信号的优势：
 
 @racketblock[
 (define output-semaphore (make-semaphore 1))
@@ -182,23 +184,27 @@ semaphore if control escapes (e.g., due to an exception):
 (for-each thread-wait threads)
 ]
 
-Semaphores are a low-level technique.  Often, a better solution is to restrict
+@;{Semaphores are a low-level technique.  Often, a better solution is to restrict
 resource access to a single thread.  For example, synchronizing access to
 standard output might be better accomplished by having a dedicated thread for
-printing output.
+printing output.}
+信号是一个低级别的技术。通常，一个更好的解决方案是限制对一个单线程的资源访问。例如，通过为打印输出提供专用线程，可以更好地实现对标准输出的同步访问。
 
-@section{Channels}
+@;{@section{Channels}}
+@section{通道（Channels）}
 
-Channels synchronize two threads while a value is passed from one thread to the
+@;{Channels synchronize two threads while a value is passed from one thread to the
 other.  Unlike a thread mailbox, multiple threads can get items from a single
 channel, so channels should be used when multiple threads need to consume items
-from a single work queue.
+from a single work queue.}
+当一个值从一个线程传递给另一个线程时，通道同步两个线程。与线程邮箱不同，多个线程可以从单个通道获得条目，因此当多个线程需要从单个工作队列中接受条目时，应该使用通道。
 
-In the following example, the main thread adds items to a channel using
+@;{In the following example, the main thread adds items to a channel using
 @racket[channel-put], while multiple worker threads consume those items using
 @racket[channel-get].  Each call to either procedure blocks until another
 thread calls the other procedure with the same channel.  The workers process
-the items and then pass their results to the result thread via the @racket[result-channel].
+the items and then pass their results to the result thread via the @racket[result-channel].}
+在下面的示例中，主线程使用@racket[channel-put]将条目添加到通道，而多个工作线程使用@racket[channel-get]来接受这些条目。对任一过程的每个调用都会阻塞，直到另一个线程使用相同的通道调用另一个过程。工作进程处理这些条目，然后通过@racket[result-channel]传递它们的结果到结果线程。
 
 @racketblock[
 (define result-channel (make-channel))
@@ -230,19 +236,22 @@ the items and then pass their results to the result thread via the @racket[resul
 (for-each thread-wait work-threads)
 ]
 
-@section{Buffered Asynchronous Channels}
+@;{@section{Buffered Asynchronous Channels}}
+@section{缓冲异步通道}
 
-Buffered asynchronous channels are similar to the channels described above, but
+@;{Buffered asynchronous channels are similar to the channels described above, but
 the ``put'' operation of asynchronous channels does not block---unless the given
 channel was created with a buffer limit and the limit has been reached.  The
 asynchronous-put operation is therefore somewhat similar to
 @racket[thread-send], but unlike thread mailboxes, asynchronous channels allow
-multiple threads to consume items from a single channel.
+multiple threads to consume items from a single channel.}
+缓冲的异步通道类似于上面描述的通道，但是异步通道的“放置（put）”操作不会阻塞——除非给定的通道是用缓冲区限制创建的，并且达到了极限。因此，异步放置（asynchronous-put）操作类似于@racket[thread-send]，但与线程邮箱不同，异步通道允许多个线程从单个通道中接受条目。
 
-In the following
+@;{In the following
 example, the main thread adds items to the work channel, which holds a maximum
 of three items at a time.  The worker threads process items from this channel and
-then send results to the print thread.
+then send results to the print thread.}
+在下面的示例中，主线程将条目添加到工作通道，该通道每次最多容纳三个条目。工作线程从该通道处理条目，然后将结果发送到打印线程。
 
 @racketblock[
 (require racket/async-channel)
@@ -270,23 +279,27 @@ then send results to the print thread.
   (async-channel-put work-channel item))
 ]
 
-Note the above example lacks any synchronization to verify that all items were
+@;{Note the above example lacks any synchronization to verify that all items were
 processed.  If the main thread were to exit without such synchronization, it is
 possible that the worker threads will not finish processing some items or the
-print thread will not print all items.
+print thread will not print all items.}
+注意，上面的例子缺少任何同步来验证所有的条目都被处理了。如果主线程没有同步地退出，则工作线程可能无法完成某些条目的处理，否则打印线程将不会打印所有条目。
 
-@section{Synchronizable Events and @racket[sync]}
+@;{@section{Synchronizable Events and @racket[sync]}}
+@section{同步事件和@racket[sync]}
 
-There are other ways to synchronize threads.  The @racket[sync] function allows
+@;{There are other ways to synchronize threads.  The @racket[sync] function allows
 threads to coordinate via @tech[#:doc reference-doc]{synchronizable events}.
 Many values double as events, allowing a uniform way to synchronize threads
 using different types.  Examples of events include channels, ports, threads,
-and alarms.
+and alarms.}
+还有其他方法来同步线程。@racket[sync]函数允许线程通过@tech[#:doc reference-doc]{同步事件（synchronizable events）}的协调。许多值作为事件的两倍，允许统一的方式使用不同类型同步线程。事件的例子包括通道、端口、线程和警报。
 
-In the next example, a channel and an alarm are used as synchronizable events.
+@;{In the next example, a channel and an alarm are used as synchronizable events.
 The workers @racket[sync] on both so that they can process channel items until the
 alarm is activated.  The channel items are processed, and then results are sent back
-to the main thread.
+to the main thread.}
+在下面的例子中，一个通道和一个报警作为同步事件。工作@racket[sync]在在两个同步上，以便它们能够处理通道条目，直到警报被激活。对通道条目进行处理，然后将结果发送回主线程。
 
 @racketblock[
 (define main-thread (current-thread))
@@ -318,14 +331,15 @@ to the main thread.
      (loop)]))
 ]
 
-The next example shows a function for use in a simple TCP echo server.  The
+@;{The next example shows a function for use in a simple TCP echo server.  The
 function uses @racket[sync/timeout] to synchronize on input from the given port
 or a message in the thread's mailbox.  The first argument to @racket[sync/timeout]
 specifies the maximum number of seconds it should wait on the given events. The
 @racket[read-line-evt] function returns an event that is ready when a line of input is
 available in the given input port.  The result of @racket[thread-receive-evt] is ready when
 @racket[thread-receive] would not block.  In a real application, the messages
-received in the thread mailbox could be used for control messages, etc.
+received in the thread mailbox could be used for control messages, etc.}
+下一个示例显示了在简单的TCP回声服务器中使用的函数。该函数使用@racket[sync/timeout]对给定端口的输入或线程邮箱中的消息进行同步。@racket[sync/timeout]的第一个参数指定在给定事件中应该等待的最大秒数。@racket[read-line-evt]函数返回一个事件，当在给定的输入端口里一行输入可获得时它被准备。当@racket[thread-receive]不会阻止@racket[thread-receive-evt]的结果被准备。在实际应用程序中，线程邮箱中接收到的消息可用于控制消息等。
 
 @racketblock[
 (define (serve in-port out-port)
@@ -356,6 +370,7 @@ two seconds, closing the ports, which allows @racket[copy-port] to finish and th
 client to exit.  The main thread uses @racket[thread-wait] to wait for the
 client thread to exit (since, without @racket[thread-wait], the main thread might
 exit before the other threads are finished).
+@;??????????????????????????????????????????????????????????????
 
 @racketblock[
 (define port-num 4321)
