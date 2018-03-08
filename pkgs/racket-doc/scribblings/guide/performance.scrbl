@@ -5,29 +5,34 @@
                      racket/performance-hint
                      ffi/unsafe))
 
-@title[#:tag "performance"]{Performance}
+@;{@title[#:tag "performance"]{Performance}}
+@title[#:tag "performance"]{性能（Performance）}
 
 @section-index["benchmarking"]
 @section-index["speed"]
 
-Alan Perlis famously quipped ``Lisp programmers know the value of
+@;{Alan Perlis famously quipped ``Lisp programmers know the value of
 everything and the cost of nothing.'' A Racket programmer knows, for
 example, that a @racket[lambda] anywhere in a program produces a value
 that is closed over its lexical environment---but how much does
 allocating that value cost? While most programmers have a reasonable
 grasp of the cost of various operations and data structures at the
 machine level, the gap between the Racket language model and the
-underlying computing machinery can be quite large.
+underlying computing machinery can be quite large.}
+Alan Perlis著名佳句：”Lisp程序员知道一切的价值和虚无的代价（Lisp programmers know the value of
+everything and the cost of nothing）。“一个Racket程序员知道，例如，一个@racket[lambda]程序中的任何地方都会生成一个在词法环境中封闭的值——但是分配这个值要多少代价呢？程序员有一个合理而且必须掌握的在机器的水平的各种操作的成本和数据结构，Racket语言模型和优先计算机械之间的差距可以是相当大的。
 
-In this chapter, we narrow the gap by explaining details of the
+@;{In this chapter, we narrow the gap by explaining details of the
 Racket compiler and run-time system and how they affect the run-time
-and memory performance of Racket code.
+and memory performance of Racket code.}
+在这一章中，我们通过解释Racket编译器和运行时系统的细节以及它们如何影响Racket代码的运行时间和内存性能来缩小这一差距。
 
 @; ----------------------------------------------------------------------
 
-@section[#:tag "DrRacket-perf"]{Performance in DrRacket}
+@;{@section[#:tag "DrRacket-perf"]{Performance in DrRacket}}
+@section[#:tag "DrRacket-perf"]{DrRacket中的性能}
 
-By default, DrRacket instruments programs for debugging, and
+@;{By default, DrRacket instruments programs for debugging, and
 debugging instrumentation (provided by the
 @other-doc['(lib "errortrace/scribblings/errortrace.scrbl")]
 library) can significantly degrade performance for
@@ -36,9 +41,10 @@ some programs. Even when debugging is disabled through the
 the @onscreen{Preserve stacktrace} checkbox is clicked by default,
 which also affects performance. Disabling debugging and stacktrace
 preservation provides performance results that are more consistent
-with running in plain @exec{racket}.
+with running in plain @exec{racket}.}
+默认情况下，用于调试和调试工具的DrRacket工具程序（由@other-doc['(lib "errortrace/scribblings/errortrace.scrbl")]库所提供）能为一些程序显著地降低性能。即使调试在通过@onscreen{Choose Language...}对话框的@onscreen{Show Details（显示详细信息）}面板被禁用，@onscreen{Preserve stacktrace}复选框默认被点击选择，这也会影响性能。禁用调试堆栈保存提供性能结果，它更符合在朴实无华的@exec{racket}中运行。
 
-Even so, DrRacket and programs developed within DrRacket use the same
+@;{Even so, DrRacket and programs developed within DrRacket use the same
 Racket virtual machine, so garbage collection times (see
 @secref["gc-perf"]) may be longer in DrRacket than when a program is
 run by itself, and DrRacket threads may impede execution of program
@@ -46,13 +52,15 @@ threads. @bold{For the most reliable timing results for a program, run in
 plain @exec{racket} instead of in the DrRacket development environment.}
 Non-interactive mode should be used instead of the
 @tech["REPL"] to benefit from the module system. See
-@secref["modules-performance"] for details.
+@secref["modules-performance"] for details.}
+即便如此，DrRacket和开发的程序在DrRacket中使用相同的Racket虚拟机，所以在DrRacket的垃圾收集时间（见@secref["gc-perf"]）可能会比程序本身运行时间更长，同时DrRacket线程可能妨碍程序线程的执行。@bold{对于一个程序的最可靠的计时结果，是在普通的@exec{racket}中运行而不是在DrRacket开发环境中运行。}对模块的系统的效益来讲非交互式模式应该用来代替@tech["REPL"]。详情请参见@secref["modules-performance"]。
 
 @; ----------------------------------------------------------------------
 
-@section[#:tag "JIT"]{The Bytecode and Just-in-Time (JIT) Compilers}
+@;{@section[#:tag "JIT"]{The Bytecode and Just-in-Time (JIT) Compilers}}
+@section[#:tag "JIT"]{字节码和即时（JIT）编译器}
 
-Every definition or expression to be evaluated by Racket is compiled
+@;{Every definition or expression to be evaluated by Racket is compiled
 to an internal bytecode format. In interactive mode, this compilation
 occurs automatically and on-the-fly. Tools like @exec{raco make} and
 @exec{raco setup} marshal compiled bytecode to a file, so that you do
@@ -60,35 +68,42 @@ not have to compile from source every time that you run a
 program. (Most of the time required to compile a file is actually in
 macro expansion; generating bytecode from fully expanded code is
 relatively fast.) See @secref["compile"] for more information on
-generating bytecode files.
+generating bytecode files.}
+将要被Racket求值的每个定义或表达式都编译成一个内部字节码格式。在交互模式下，这种编译是自动进行并且快速。同时，@exec{raco make}和@exec{raco setup}这样的工具将编译的字节码编组到一个文件中，因此你不必每次你运行一个程序时从源代码中编译。（被需要去编译一个文件的大部分时间实际上是处于宏扩展中；完全展开的代码生成的字节码是比较快的。）参见@secref["compile"]获取生成字节码文件的更多信息。
 
-The bytecode compiler applies all standard optimizations, such as
+@;{The bytecode compiler applies all standard optimizations, such as
 constant propagation, constant folding, inlining, and dead-code
 elimination. For example, in an environment where @racket[+] has its
 usual binding, the expression @racket[(let ([x 1] [y (lambda () 4)]) (+
-1 (y)))] is compiled the same as the constant @racket[5].
+1 (y)))] is compiled the same as the constant @racket[5].}
+字节码编译器应用所有标准的优化，比如常量传输、常量折叠、内联，和死代码消除。例如，在一个@racket[+]有其通常的绑定的环境中，表达式@racket[(let ([x 1] [y (lambda () 4)]) (+
+1 (y)))]被编译成常量 @racket[5]。
 
-On some platforms, bytecode is further compiled to native code via a
+@;{On some platforms, bytecode is further compiled to native code via a
 @deftech{just-in-time} or @deftech{JIT} compiler. The @tech{JIT}
 compiler substantially speeds programs that execute tight loops,
 arithmetic on small integers, and arithmetic on inexact real
 numbers. Currently, @tech{JIT} compilation is supported for x86,
 x86_64 (a.k.a. AMD64), ARM, and 32-bit PowerPC processors. The @tech{JIT}
 compiler can be disabled via the @racket[eval-jit-enabled] parameter
-or the @DFlag{no-jit}/@Flag{j} command-line flag for @exec{racket}.
+or the @DFlag{no-jit}/@Flag{j} command-line flag for @exec{racket}.}
+在一些平台上，字节码通过一个@deftech{just-in-time}编译器或@tech{JIT}编译器进一步编译成本机代码。JIT编译器充分加快执行紧凑的循环的程序、小整数算法以及不精确实数算法。目前，@tech{JIT}编译支持x86、x86_64（也叫作AMD64）、ARM和32位PowerPC处理器。@tech{JIT}编译器可以通过@racket[eval-jit-enabled]参数或者@DFlag{no-jit}/@Flag{j}命令行标志的@exec{racket}禁用。
 
-The @tech{JIT} compiler works incrementally as functions are applied,
+@;{The @tech{JIT} compiler works incrementally as functions are applied,
 but the @tech{JIT} compiler makes only limited use of run-time
 information when compiling procedures, since the code for a given
 module body or @racket[lambda] abstraction is compiled only once. The
 @tech{JIT}'s granularity of compilation is a single procedure body,
 not counting the bodies of any lexically nested procedures. The
 overhead for @tech{JIT} compilation is normally so small that it is
-difficult to detect.
+difficult to detect.}
+@tech{JIT}编译器随着函数的应用逐步地工作，但是@tech{JIT}编译器在编译过程时只对运行时信息进行有限的使用，因为给定的模块主体或@racket[lambda]抽象只编译一次。@tech{JIT}的编译的粒度是一个单一的程序体，不计算任何嵌套的程序的主体。@tech{JIT}编译的开销通常很小以致很难检测到。
 
 @; ----------------------------------------------------------------------
 
-@section[#:tag "modules-performance"]{Modules and Performance}
+@;{@section[#:tag "modules-performance"]{Modules and Performance}}
+@section[#:tag "modules-performance"]{模块和性能}
+@;???????????????????????????????????????????????
 
 The module system aids optimization by helping to ensure that
 identifiers have the usual bindings. That is, the @racket[+] provided

@@ -362,15 +362,15 @@ received in the thread mailbox could be used for control messages, etc.}
        (loop)])))
 ]
 
-The @racket[serve] function is used in the following example, which
+@;{The @racket[serve] function is used in the following example, which
 starts a server thread and a client thread that communicate over TCP.  The
 client prints three lines to the server, which echoes them back.  The client's
 @racket[copy-port] call blocks until EOF is received.  The server times out after
 two seconds, closing the ports, which allows @racket[copy-port] to finish and the
 client to exit.  The main thread uses @racket[thread-wait] to wait for the
 client thread to exit (since, without @racket[thread-wait], the main thread might
-exit before the other threads are finished).
-@;??????????????????????????????????????????????????????????????
+exit before the other threads are finished).}
+下面的例子中使用了@racket[serve]函数，它启动一个服务器线程和一个通过TCP通信的客户机线程。客户机向服务器输出三行，然后将它们返回。客户机的@racket[copy-port]调用阻塞直到接收到EOF为止。服务器在两秒钟后超时，关闭端口，允许@racket[copy-port]完成，客户机退出。主线程使用@racket[thread-wait]来等待客户机线程退出（因为没有@racket[thread-wait]，主线程可能在其它线程完成之前退出）。
 
 @racketblock[
 (define port-num 4321)
@@ -395,14 +395,15 @@ exit before the other threads are finished).
 (thread-wait client-thread)
 ]
 
-Sometimes, you want to attach result behavior directly to the event passed to
+@;{Sometimes, you want to attach result behavior directly to the event passed to
 @racket[sync].  In the following example, the worker thread synchronizes on three
 channels, but each channel must be handled differently.  Using
 @racket[handle-evt] associates a callback with the given event.  When
 @racket[sync] selects the given event, it calls the callback to generate the
 synchronization result, rather than using the event's normal synchronization
 result.  Since the event is handled in the callback, there is no need to
-dispatch on the return value of @racket[sync].
+dispatch on the return value of @racket[sync].}
+有时，你希望直接将结果行为附加到传递给@racket[sync]的事件。在下面的示例中，工作线程在三个通道上同步，但每个通道必须不同地处理。使用@racket[handle-evt]关联到一个给定的事件回调。当@racket[sync]选择给定事件时，它调用回调来生成同步结果，而不是使用事件的正常同步结果。由于事件是在回调中处理的，所以不需要在@racket[sync]的返回值上进行调度。
 
 @racketblock[
 (define add-channel (make-channel))
@@ -436,9 +437,10 @@ dispatch on the return value of @racket[sync].
 (channel-put append-channel '("a" "b"))
 ]
 
-The result of @racket[handle-evt] invokes its callback in tail position
+@;{The result of @racket[handle-evt] invokes its callback in tail position
 with respect to @racket[sync], so it is safe to
-use recursion as in the following example.
+use recursion as in the following example.}
+@racket[handle-evt]的结果调用回调相对于@racket[sync]尾的位置，所以它是安全的使用递归如下。
 
 @racketblock[
 (define control-channel (make-channel))
@@ -468,8 +470,8 @@ use recursion as in the following example.
 (thread-wait worker)
 ]
 
-The @racket[wrap-evt] function is like @racket[handle-evt], except
+@;{The @racket[wrap-evt] function is like @racket[handle-evt], except
 that its handler is not called in tail position with respect to
 @racket[sync]. At the same time, @racket[wrap-evt] disables break
-exceptions during its handler's invocation.
-
+exceptions during its handler's invocation.}
+@racket[wrap-evt]函数类似于@racket[handle-evt]，除了它的处理器不调用相对于@racket[sync]的尾位置。同时， @racket[wrap-evt]在处理程序调用期间禁用异常。
