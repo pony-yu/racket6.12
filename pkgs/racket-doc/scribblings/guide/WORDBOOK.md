@@ -102,3 +102,4 @@
 - level 等级
 - Phase level 阶段等级
 - taint 污染
+- literals 字面量

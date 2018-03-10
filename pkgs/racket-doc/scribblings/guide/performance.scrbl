@@ -103,23 +103,24 @@ difficult to detect.}
 
 @;{@section[#:tag "modules-performance"]{Modules and Performance}}
 @section[#:tag "modules-performance"]{模块和性能}
-@;???????????????????????????????????????????????
 
-The module system aids optimization by helping to ensure that
+@;{The module system aids optimization by helping to ensure that
 identifiers have the usual bindings. That is, the @racket[+] provided
 by @racketmodname[racket/base] can be recognized by the compiler and
 inlined, which is especially important for @tech{JIT}-compiled code.
 In contrast, in a traditional interactive Scheme system, the top-level
 @racket[+] binding might be redefined, so the compiler cannot assume a
 fixed @racket[+] binding (unless special flags or declarations
-are used to compensate for the lack of a module system).
+are used to compensate for the lack of a module system).}
+模块系统通过帮助确保标识符具有通常的绑定来帮助优化。那是，通过@racketmodname[racket/base]提供的@racket[+]可由编译器辨别并内联，这对@tech{JIT}编译的代码是特别重要的。相反，在一个传统的交互式Scheme系统中，顶层的@racket[+]绑定可能被重新定义，因此编译器不能假定一个固定的@racket[+]绑定（除非特殊的标志或声明用于弥补模块系统的不足）。
 
-Even in the top-level environment, importing with @racket[require]
+@;{Even in the top-level environment, importing with @racket[require]
 enables some inlining optimizations. Although a @racket[+] definition
 at the top level might shadow an imported @racket[+], the shadowing
-definition applies only to expressions evaluated later.
+definition applies only to expressions evaluated later.}
+即使在顶级环境中，带@racket[require]的导入使一些内联优化成为可能。尽管一个在顶层的@racket[+]定义可能会对覆盖一个导入的@racket[+]，但覆盖定义只适用于稍后求值的表达式。
 
-Within a module, inlining and constant-propagation optimizations take
+@;{Within a module, inlining and constant-propagation optimizations take
 additional advantage of the fact that definitions within a module
 cannot be mutated when no @racket[set!] is visible at compile
 time. Such optimizations are unavailable in the top-level
@@ -128,24 +129,29 @@ for performance, it hinders some forms of interactive development and
 exploration. The @racket[compile-enforce-module-constants] parameter
 disables the @tech{JIT} compiler's assumptions about module
 definitions when interactive exploration is more important. See
-@secref["module-set"] for more information.
+@secref["module-set"] for more information.}
+在模块中，内联和常数传输优化采取额外的优势，在模块中不能定义可以突变时没有@racket[set!]在编译时可见。此类优化在顶层环境中不可用。虽然模块内的优化对性能很重要，但它阻碍了一些交互开发和探索的形式。当交互探索更重要时，@racket[compile-enforce-module-constants]参数禁用@tech{JIT}编译器关于模块定义的假设。有关更多信息，请参阅@secref["module-set"]。
 
-The compiler may inline functions or propagate constants across module
+@;{The compiler may inline functions or propagate constants across module
 boundaries. To avoid generating too much code in the case of function
 inlining, the compiler is conservative when choosing candidates for
 cross-module inlining; see @secref["func-call-performance"] for
-information on providing inlining hints to the compiler.
+information on providing inlining hints to the compiler.}
+编译器可以内联函数或在模块边界上传播常量。为了避免在内联函数的情况下产生了太多的代码，编译器是保守的跨模块内联选择候选人；看到函数调用的优化提供给编译器内联提示信息。
 
-The later section @secref["letrec-performance"] provides some
-additional caveats concerning inlining of module bindings.
+@;{The later section @secref["letrec-performance"] provides some
+additional caveats concerning inlining of module bindings.}
+后边的章节@secref["letrec-performance"]提供一些额外的关于模块绑定内联的附加说明。
 
 @; ----------------------------------------------------------------------
 
-@section[#:tag "func-call-performance"]{Function-Call Optimizations}
+@;{@section[#:tag "func-call-performance"]{Function-Call Optimizations}}
+@section[#:tag "func-call-performance"]{函数调用优化}
 
-When the compiler detects a function call to an immediately visible
+@;{When the compiler detects a function call to an immediately visible
 function, it generates more efficient code than for a generic call,
-especially for tail calls. For example, given the program
+especially for tail calls. For example, given the program}
+当编译器检测到一个对即时可见函数的函数调用时，它生成的代码比一般调用更高效，尤其是对于尾部调用。例如，给定程序
 
 @racketblock[
 (letrec ([odd (lambda (x) 
@@ -159,28 +165,32 @@ especially for tail calls. For example, given the program
   (odd 40000000))
 ]
 
-the compiler can detect the @racket[odd]--@racket[even] loop and
+@;{the compiler can detect the @racket[odd]--@racket[even] loop and
 produce code that runs much faster via loop unrolling and related
-optimizations.
+optimizations.}
+编译器可以检测@racket[odd]--@racket[even]循环并通过循环展开和相关的优化产生运行速度更快的代码。
 
-Within a module form, @racket[define]d variables are lexically scoped
+@;{Within a module form, @racket[define]d variables are lexically scoped
 like @racket[letrec] bindings, and definitions within a module
-therefore permit call optimizations, so
+therefore permit call optimizations, so}
+在一个模块表里，@racket[define]变量是像@racket[letrec]绑定这样的词法作用域，并且定义在一个模块内因此允许调用优化，那么
 
 @racketblock[
 (define (odd x) ....)
 (define (even x) ....)
 ]
 
-within a module would perform the same as the @racket[letrec] version.
+@;{within a module would perform the same as the @racket[letrec] version.}
+其中一个模块可以执行相同的@racket[letrec]版本。
 
-For direct calls to functions with keyword arguments, the compiler can
+@;{For direct calls to functions with keyword arguments, the compiler can
 typically check keyword arguments statically and generate a direct
 call to a non-keyword variant of the function, which reduces the
 run-time overhead of keyword checking. This optimization applies only
-for keyword-accepting procedures that are bound with @racket[define].
+for keyword-accepting procedures that are bound with @racket[define].}
+对于带有关键字参数的函数的直接调用，编译器通常可以静态检查关键字参数并生成一个对函数非关键字变体的直接调用，从而减少关键字检查的运行时开销。此优化仅适用于用@racket[define]绑定的接受关键字的过程。
 
-For immediate calls to functions that are small enough, the compiler
+@;{For immediate calls to functions that are small enough, the compiler
 may inline the function call by replacing the call with the body of
 the function. In addition to the size of the target function's body,
 the compiler's heuristics take into account the amount of inlining
@@ -191,19 +201,23 @@ determined to be candidates for inlining into other modules; normally,
 only trivial functions are considered candidates for cross-module
 inlining, but a programmer can wrap a function definition with
 @racket[begin-encourage-inline] to encourage inlining
-of the function.
+of the function.}
+对于对足够小的函数的即时调用，编译器可以通过函数的主体替换调用来内联函数调用。除了目标函数体的大小之外，编译器的启发式考虑量已经进行内联调用站点上是否被调用函数本身调用其他比简单的基本操作函数。当一个模块被编译，在模块级定义一些函数确定为内联到其他模块的候选人；通常情况下，只有微不足道的功能被认为是跨模块内嵌的候选人，但程序员可以把函数定义开始鼓励鼓励内联内联函数。
 
-Primitive operations like @racket[pair?], @racket[car], and
+@;{Primitive operations like @racket[pair?], @racket[car], and
 @racket[cdr] are inlined at the machine-code level by the @tech{JIT}
 compiler. See also the later section @secref["fixnums+flonums"] for
-information about inlined arithmetic operations.
+information about inlined arithmetic operations.}
+像@racket[pair?]、@racket[car]和@racket[cdr]这样的原始操作是在机器代码级被@tech{JIT}编译器内联。参见后面的章节@secref["fixnums+flonums"]获取关于内联的算术运算的信息。
 
 @; ----------------------------------------------------------------------
 
-@section{Mutation and Performance}
+@;{@section{Mutation and Performance}}
+@section{突变和性能}
 
-Using @racket[set!] to mutate a variable can lead to bad
-performance. For example, the microbenchmark
+@;{Using @racket[set!] to mutate a variable can lead to bad
+performance. For example, the microbenchmark}
+利用@racket[set!]突变一个变量会导致坏的性能。例如，小规模基准测试
 
 @racketmod[
 racket/base
@@ -219,7 +233,8 @@ racket/base
         (loop (subtract-one n)))))
 ]
 
-runs much more slowly than the equivalent
+@;{runs much more slowly than the equivalent}
+比同等的慢得多
 
 @racketmod[
 racket/base
@@ -234,14 +249,16 @@ racket/base
         (loop (subtract-one n)))))
 ]
 
-In the first variant, a new location is allocated for @racket[x] on
+@;{In the first variant, a new location is allocated for @racket[x] on
 every iteration, leading to poor performance. A more clever compiler
 could unravel the use of @racket[set!] in the first example, but since
 mutation is discouraged (see @secref["using-set!"]), the compiler's
-effort is spent elsewhere.
+effort is spent elsewhere.}
+在第一个变量中，每次迭代都为@racket[x]分配一个新位置，导致性能不佳。一个更聪明的编译器可以解开在第一个示例中@racket[set!]的使用，由于不支持突变（参见@secref["using-set!"]），编译器的努力将花费在其它地方。
 
-More significantly, mutation can obscure bindings where inlining and
-constant-propagation might otherwise apply. For example, in
+@;{More significantly, mutation can obscure bindings where inlining and
+constant-propagation might otherwise apply. For example, in}
+更重要的是，突变可以掩盖在内联和传播常数可能应用的绑定。例如，在
 
 @racketblock[
 (let ([minus1 #f])
@@ -252,20 +269,24 @@ constant-propagation might otherwise apply. For example, in
         (loop (minus1 n)))))
 ]
 
-the @racket[set!] obscures the fact that @racket[minus1] is just
-another name for the built-in @racket[sub1].
+@;{the @racket[set!] obscures the fact that @racket[minus1] is just
+another name for the built-in @racket[sub1].}
+@racket[set!]掩盖了一个事实：@racket[minus1]只是给内置的@racket[sub1]的另一个名字。
 
 @; ----------------------------------------------------------------------
 
-@section[#:tag "letrec-performance"]{@racket[letrec] Performance}
+@;{@section[#:tag "letrec-performance"]{@racket[letrec] Performance}}
+@section[#:tag "letrec-performance"]{@racket[letrec]性能}
 
-When @racket[letrec] is used to bind only procedures and literals,
+@;{When @racket[letrec] is used to bind only procedures and literals,
 then the compiler can treat the bindings in an optimal manner,
 compiling uses of the bindings efficiently. When other kinds of
 bindings are mixed with procedures, the compiler may be less able to
-determine the control flow.
+determine the control flow.}
+当@racket[letrec]被用于仅绑定过程和字面量，那么编译器能够以最佳方式处理绑定，有效编译绑定的使用。当其它类型的绑定与程序混合时，编译器也许不太能确定控制流。
 
-For example,
+@;{For example,}
+例如，
 
 @racketblock[
 (letrec ([loop (lambda (x) 
@@ -277,7 +298,8 @@ For example,
   (loop 40000000))
 ]
 
-likely compiles to less efficient code than
+@;{likely compiles to less efficient code than}
+可能编译成比以下内容效率更低的代码
 
 @racketblock[
 (letrec ([loop (lambda (x) 
@@ -288,31 +310,36 @@ likely compiles to less efficient code than
   (loop 40000000))
 ]
 
-In the first case, the compiler likely does not know that
+@;{In the first case, the compiler likely does not know that
 @racket[display] does not call @racket[loop]. If it did, then
 @racket[loop] might refer to @racket[next] before the binding is
-available.
+available.}
+在第一种情况下，编译器可能不知道@racket[display]不调用@racket[loop]。如果是，那么@racket[loop]可能在绑定成为可获得的之前引用@racket[next]。
 
-This caveat about @racket[letrec] also applies to definitions of
+@;{This caveat about @racket[letrec] also applies to definitions of
 functions and constants as internal definitions or in modules. A
 definition sequence in a module body is analogous to a sequence of
 @racket[letrec] bindings, and non-constant expressions in a module
 body can interfere with the optimization of references to later
-bindings.
+bindings.}
+这关于@racket[letrec]的附加说明也适用于作为内部定义或模块的函数和常量的定义。在一个模块主体中的一个定义序列类似于一个@racket[letrec]绑定序列，同时在一个模块主体中的非常数表达式可以用后期绑定引用的优化干涉。
 
 @; ----------------------------------------------------------------------
 
-@section[#:tag "fixnums+flonums"]{Fixnum and Flonum Optimizations}
+@;{@section[#:tag "fixnums+flonums"]{Fixnum and Flonum Optimizations}}
+@section[#:tag "fixnums+flonums"]{Fixnum和Flonum优化}
 
-A @deftech{fixnum} is a small exact integer. In this case, ``small''
+@;{A @deftech{fixnum} is a small exact integer. In this case, ``small''
 depends on the platform. For a 32-bit machine, numbers that can be
 expressed in 30 bits plus a sign bit are represented as fixnums. On a
-64-bit machine, 62 bits plus a sign bit are available.
+64-bit machine, 62 bits plus a sign bit are available.}
+一个@deftech{fixnum}是一个小的精确的整数。在这种情况下，“小”取决于平台。对于一个32位的机器，可以在30位加一个符号位表示的数字代表fixnum。在64位机器上，可用62位加一个符号位。
 
-A @deftech{flonum} is used to represent any inexact real number. They
-correspond to 64-bit IEEE floating-point numbers on all platforms.
+@;{A @deftech{flonum} is used to represent any inexact real number. They
+correspond to 64-bit IEEE floating-point numbers on all platforms.}
+一个@deftech{flonum}用来表示任何不精确实数。它们对应于所有平台上的64位IEEE浮点数。
 
-Inlined fixnum and flonum arithmetic operations are among the most
+@;{Inlined fixnum and flonum arithmetic operations are among the most
 important advantages of the @tech{JIT} compiler. For example, when
 @racket[+] is applied to two arguments, the generated machine code
 tests whether the two arguments are fixnums, and if so, it uses the
@@ -322,19 +349,22 @@ both are flonums; in that case, the machine's floating-point
 operations are used directly. For functions that take any number of
 arguments, such as @racket[+], inlining works for two or more
 arguments (except for @racket[-], whose one-argument case is also
-inlined) when the arguments are either all fixnums or all flonums.
+inlined) when the arguments are either all fixnums or all flonums.}
+内联fixnum和flonum算术运算是@tech{JIT}编译器的最重要的好处。例如，当@racket[+]应用于两个参数，生成的机器代码的测试是否两参数是fixnum，如果是的话，它使用机器的指令添加数字（和溢出检查）。如果这两个数字都不fixnum，然后检查是否都flonum；在这种情况下，直接使用机器的浮点运算。当参数既是所有fixnum也是flonum时，对于函数可以接受任意数量的参数，如@racket[+]、对两个或两个以上参数的内联工作（除@racket[-]之外，其争论的焦点之一是内联）。
 
-Flonums are typically @defterm{boxed}, which means that memory is
+@;{Flonums are typically @defterm{boxed}, which means that memory is
 allocated to hold every result of a flonum computation. Fortunately,
 the generational garbage collector (described later in
 @secref["gc-perf"]) makes allocation for short-lived results
 reasonably cheap. Fixnums, in contrast are never boxed, so they are
-typically cheap to use.
+typically cheap to use.}
+flonum通常是@defterm{被装箱（boxed）}，这意味着内存被分配以容纳每一个flonum计算结果。幸运的是，世代的垃圾收集器（稍后在@secref["gc-perf"]中描述）为较短的结果廉价地做分配。fixnum相比之下没有被装箱，所以他们通常廉价地使用。
 
-@margin-note{See @secref["effective-futures"] for an example use of
-@tech{flonum}-specific operations.}
+@;{@margin-note{See @secref["effective-futures"] for an example use of
+@tech{flonum}-specific operations.}}
+@margin-note{见@secref["effective-futures"]以了解一个@tech{flonum}具体操作的使用例子。}
 
-The @racketmodname[racket/flonum] library provides flonum-specific
+@;{The @racketmodname[racket/flonum] library provides flonum-specific
 operations, and combinations of flonum operations allow the @tech{JIT}
 compiler to generate code that avoids boxing and unboxing intermediate
 results. Besides results within immediate combinations,
@@ -345,22 +375,27 @@ accumulators and avoid boxing of the accumulator. The bytecode
 decompiler (see @secref[#:doc '(lib "scribblings/raco/raco.scrbl")
 "decompile"]) annotates combinations where the JIT can avoid boxes with
 @racketidfont{#%flonum}, @racketidfont{#%as-flonum}, and
-@racketidfont{#%from-flonum}.
+@racketidfont{#%from-flonum}.}
+@racketmodname[racket/flonum]库提供flonum具体操作，以及flonum操作的组合允许@tech{JIT}编译器生成代码，它避免装箱和拆箱的中间结果。除了在即时的组合里结果，用@racket[let]绑定并被一个后来的具体flonum操作接受的flonum具体结果在临时存储之中被开箱。最后，编译器可以检测一些flonum值循环收集器并避免收集器的装箱。字节码反编译器（见@secref[#:doc '(lib "scribblings/raco/raco.scrbl")
+"decompile"]）诠释组合，那里JIT可以避免用@racketidfont{#%flonum}、@racketidfont{#%as-flonum}和@racketidfont{#%from-flonum}装箱。
 
-@margin-note{Unboxing of local bindings and accumulators is not
-supported by the JIT for PowerPC.}
+@;{@margin-note{Unboxing of local bindings and accumulators is not
+supported by the JIT for PowerPC.}}
+@margin-note{局部绑定和收集器的拆箱不被PowerPC的JIT支持。}
 
-The @racketmodname[racket/unsafe/ops] library provides unchecked
+@;{The @racketmodname[racket/unsafe/ops] library provides unchecked
 fixnum- and flonum-specific operations. Unchecked flonum-specific
 operations allow unboxing, and sometimes they allow the compiler to
 reorder expressions to improve performance. See also
-@secref["unchecked-unsafe"], especially the warnings about unsafety.
+@secref["unchecked-unsafe"], especially the warnings about unsafety.}
+@racketmodname[racket/unsafe/ops]库提供未经检查的fixnum和flonum具体操作。未经检查的的flonum具体操作允许拆箱，并且有时它们允许编译器重排表达式来提高性能。也参见@secref["unchecked-unsafe"]，特别是关于不安全的警告。
 
 @; ----------------------------------------------------------------------
 
-@section[#:tag "unchecked-unsafe"]{Unchecked, Unsafe Operations}
+@;{@section[#:tag "unchecked-unsafe"]{Unchecked, Unsafe Operations}}
+@section[#:tag "unchecked-unsafe"]{未检查的、不安全的操作}
 
-The @racketmodname[racket/unsafe/ops] library provides functions that
+@;{The @racketmodname[racket/unsafe/ops] library provides functions that
 are like other functions in @racketmodname[racket/base], but they
 assume (instead of checking) that provided arguments are of the right
 type. For example, @racket[unsafe-vector-ref] accesses an element from
@@ -368,17 +403,20 @@ a vector without checking that its first argument is actually a vector
 and without checking that the given index is in bounds. For tight
 loops that use these functions, avoiding checks can sometimes speed
 the computation, though the benefits vary for different unchecked
-functions and different contexts.
+functions and different contexts.}
+@racketmodname[racket/unsafe/ops]库提供类似于@racketmodname[racket/base]里的其它函数的函数，但它们假设（而不是检查）提供的参数是正确的类型。例如，@racket[unsafe-vector-ref]从一个向量中访问一个元素，而不检查它的第一个参数实际上是一个向量，而不检查给定的索引是否处于界限之内。对于使用这些函数的紧循环，避免检查有时可以加快计算速度，尽管不同的未检查函数和不同上下文的好处有所不同。
 
-Beware that, as ``unsafe'' in the library and function names suggest,
+@;{Beware that, as ``unsafe'' in the library and function names suggest,
 misusing the exports of @racketmodname[racket/unsafe/ops] can lead to
-crashes or memory corruption.
+crashes or memory corruption.}
+要小心的是，如同在库和函数名建议中的“不安全”，滥用@racketmodname[racket/unsafe/ops]导出会导致崩溃或内存损坏。
 
 @; ----------------------------------------------------------------------
 
-@section[#:tag "ffi-pointer-access"]{Foreign Pointers}
+@;{@section[#:tag "ffi-pointer-access"]{Foreign Pointers}}
+@section[#:tag "ffi-pointer-access"]{外来的指针}
 
-The @racketmodname[ffi/unsafe] library provides functions for unsafely
+@;{The @racketmodname[ffi/unsafe] library provides functions for unsafely
 reading and writing arbitrary pointer values. The JIT recognizes uses
 of @racket[ptr-ref] and @racket[ptr-set!] where the second argument is
 a direct reference to one of the following built-in C types:
@@ -386,22 +424,27 @@ a direct reference to one of the following built-in C types:
 @racket[_double], @racket[_float], and @racket[_pointer]. Then, if the
 first argument to @racket[ptr-ref] or @racket[ptr-set!] is a C pointer
 (not a byte string), then the pointer read or write is performed
-inline in the generated code.
+inline in the generated code.}
+@racketmodname[ffi/unsafe]库提供非安全读写任意指针值的函数。JIT承认@racket[ptr-ref]和@racket[ptr-set!]的使用其在第二个参数是一个对下面的一个内置C类型的直接引用：@racket[_int8]、@racket[_int16]、@racket[_int32]、@racket[_int64]、@racket[_double]、@racket[_float]和@racket[_pointer]。然后，，然后在生成的代码中执行指针读写操作。
 
-The bytecode compiler will optimize references to integer
+@;{The bytecode compiler will optimize references to integer
 abbreviations like @racket[_int] to C types like
 @racket[_int32]---where the representation sizes are constant across
 platforms---so the JIT can specialize access with those C types. C
 types such as @racket[_long] or @racket[_intptr] are not constant
 across platforms, so their uses are currently not specialized by the
-JIT.
+JIT.}
+字节码编译器会优化涉及整数的缩写的引用，像@racket[_int]对C类型像@racket[_int32]——其表现大小是静态的跨平台——所以JIT可以专门用那些C类型访问。C类型如@racket[_long]或@racket[_intptr]不是静态的跨平台使用，所以它们的使用目前没有被JIT专门化。
 
-Pointer reads and writes using @racket[_float] or @racket[_double] are
-not currently subject to unboxing optimizations.
+@;{Pointer reads and writes using @racket[_float] or @racket[_double] are
+not currently subject to unboxing optimizations.}
+指针使用@racket[_float]或@racket[_double]读取和写入目前没有受到拆箱的优化。
 
 @; ----------------------------------------------------------------------
 
-@section[#:tag "regexp-perf"]{Regular Expression Performance}
+@;{@section[#:tag "regexp-perf"]{Regular Expression Performance}}
+@section[#:tag "regexp-perf"]{正则表达式性能}
+@;???????????????????????????????????????????????????????????????????????????????/
 
 When a string or byte string is provided to a function like
 @racket[regexp-match], then the string is internally compiled into
