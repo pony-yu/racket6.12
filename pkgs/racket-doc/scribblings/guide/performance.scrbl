@@ -444,16 +444,16 @@ not currently subject to unboxing optimizations.}
 
 @;{@section[#:tag "regexp-perf"]{Regular Expression Performance}}
 @section[#:tag "regexp-perf"]{正则表达式性能}
-@;???????????????????????????????????????????????????????????????????????????????/
 
-When a string or byte string is provided to a function like
+@;{When a string or byte string is provided to a function like
 @racket[regexp-match], then the string is internally compiled into
 a @tech{regexp} value. Instead of supplying a string or byte string
 multiple times as a pattern for matching, compile the pattern once to
 a @tech{regexp} value using @racket[regexp], @racket[byte-regexp],
 @racket[pregexp], or @racket[byte-pregexp]. In place of a constant
 string or byte string, write a constant @tech{regexp} using an
-@litchar{#rx} or @litchar{#px} prefix.
+@litchar{#rx} or @litchar{#px} prefix.}
+当一个字符串或字节字符串提供一个类似@racket[regexp-match]的函数，然后这个字符串被内部编译成一个@tech{regexp}值。而是多次提供一个字符串或字节字符串作为一个匹配的模式，编译这个模式一次成为一个使用@racket[regexp]、@racket[byte-regexp]、@racket[pregexp]或@racket[byte-pregexp]的@tech{regexp}值。在一个常量字符串或字节字符串的地方，使用@litchar{#rx}或@litchar{#px}前缀写一个常数@tech{regexp}。
 
 @racketblock[
 (define (slow-matcher str)
@@ -475,21 +475,24 @@ string or byte string, write a constant @tech{regexp} using an
 
 @; ----------------------------------------------------------------------
 
-@section[#:tag "gc-perf"]{Memory Management}
+@;{@section[#:tag "gc-perf"]{Memory Management}}
+@section[#:tag "gc-perf"]{内存管理}
 
-The Racket implementation is available in two variants: @deftech{3m} and
+@;{The Racket implementation is available in two variants: @deftech{3m} and
 @deftech{CGC}. The @tech{3m} variant uses a modern,
 @deftech{generational garbage collector} that makes allocation
 relatively cheap for short-lived objects. The @tech{CGC} variant uses
 a @deftech{conservative garbage collector} which facilitates
 interaction with C code at the expense of both precision and speed for
-Racket memory management. The 3m variant is the standard one.
+Racket memory management. The 3m variant is the standard one.}
+Racket的实现在两个变种方面有表现：@tech{3m}和@deftech{CGC}。@tech{3m}变种使用了现代的@deftech{generational garbage collector（一代垃圾收集器）}，使得对短生存期对象的分配相对便宜。@tech{CGC}变种使用一个@deftech{conservative garbage collector（保守的垃圾收集器）}便于交互的C代码在Racket内存管理的精度和速度上的开销。3m变体是标准的。
 
-Although memory allocation is reasonably cheap, avoiding allocation
+@;{Although memory allocation is reasonably cheap, avoiding allocation
 altogether is normally faster. One particular place where allocation
 can be avoided sometimes is in @deftech{closures}, which are the
 run-time representation of functions that contain free variables.
-For example,
+For example,}
+虽然内存分配相当便宜，但避免完全分配通常更快。有时可以避免分配的一个特殊位置是在闭包中，这是包含自由变量函数的运行时表示。例如,
 
 @racketblock[
 (let loop ([n 40000000] [prev-thunk (lambda () #f)])
@@ -499,11 +502,13 @@ For example,
             (lambda () n))))
 ]
 
-allocates a closure on every iteration, since @racket[(lambda () n)]
-effectively saves @racket[n].
+@;{allocates a closure on every iteration, since @racket[(lambda () n)]
+effectively saves @racket[n].}
+在每个迭代中分配一个闭包，因为@racket[(lambda () n)]有效地保存@racket[n]。
 
-The compiler can eliminate many closures automatically. For example,
-in
+@;{The compiler can eliminate many closures automatically. For example,
+in}
+编译器可以自动清除许多闭包。例如，在
 
 @racketblock[
 (let loop ([n 40000000] [prev-val #f])
@@ -513,8 +518,9 @@ in
         (loop (sub1 n) (prev-thunk)))))
 ]
 
-no closure is ever allocated for @racket[prev-thunk], because its only
-application is visible, and so it is inlined. Similarly, in 
+@;{no closure is ever allocated for @racket[prev-thunk], because its only
+application is visible, and so it is inlined. Similarly, in}
+中没有闭包被永远分配给@racket[prev-thunk]，因为只有应用程序是可见的，所以它是内联的。同样，在
 
 @racketblock[
 (let n-loop ([n 400000])
@@ -526,12 +532,15 @@ application is visible, and so it is inlined. Similarly, in
             (m-loop (sub1 m))))))
 ]
 
-then the expansion of the @racket[let] form to implement
+@;{then the expansion of the @racket[let] form to implement
 @racket[m-loop] involves a closure over @racket[n], but the compiler
 automatically converts the closure to pass itself @racket[n] as an
-argument instead.
+argument instead.}
+中，那么@racket[let]的扩展表实现@racket[m-loop]包含一个n上的闭包，但编译器自动将闭包转变以传递给自己的@racket[n]而不是作为一个参数。
 
-@section[#:tag "Reachability and Garbage Collection"]{Reachability and Garbage Collection}
+@;{@section[#:tag "Reachability and Garbage Collection"]{Reachability and Garbage Collection}}
+@section[#:tag "Reachability and Garbage Collection"]{可达性与垃圾收集}
+@;??????????????????????????????????????????????????????????????????
 
 In general, Racket re-uses the storage for a value when the
 garbage collector can prove that the object is unreachable from
