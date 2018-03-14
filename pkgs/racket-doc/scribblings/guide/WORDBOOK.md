@@ -39,6 +39,8 @@
 - shadow 覆盖
 - link 链接
 - bound 约束
+- Reachability 可执行性
+- reachable 可执行到的
 
 ## 内置数据名称
 - boolean 布尔值
@@ -103,3 +105,6 @@
 - Phase level 阶段等级
 - taint 污染
 - literals 字面量
+- generational garbage collector 分代垃圾收集器
+- minor collection 小收集
+- major collection 大收集

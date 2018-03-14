@@ -6,7 +6,7 @@
                      ffi/unsafe))
 
 @;{@title[#:tag "performance"]{Performance}}
-@title[#:tag "performance"]{性能（Performance）}
+@title[#:tag "performance"]{性能}
 
 @section-index["benchmarking"]
 @section-index["speed"]
@@ -539,10 +539,9 @@ argument instead.}
 中，那么@racket[let]的扩展表实现@racket[m-loop]包含一个n上的闭包，但编译器自动将闭包转变以传递给自己的@racket[n]而不是作为一个参数。
 
 @;{@section[#:tag "Reachability and Garbage Collection"]{Reachability and Garbage Collection}}
-@section[#:tag "Reachability and Garbage Collection"]{可达性与垃圾收集}
-@;??????????????????????????????????????????????????????????????????
+@section[#:tag "Reachability and Garbage Collection"]{可执行性与垃圾收集}
 
-In general, Racket re-uses the storage for a value when the
+@;{In general, Racket re-uses the storage for a value when the
 garbage collector can prove that the object is unreachable from
 any other (reachable) value. Reachability is a low-level, 
 abstraction breaking concept (and thus one must understand many
@@ -550,9 +549,10 @@ details of the runtime system's implementation to accurate predicate
 precisely when values are reachable from each other),
 but generally speaking one value is reachable from a second one when 
 there is some operation to recover the original value from the second
-one.
+one.}
+一般来说，当垃圾收集器可以证明对象与其它（可执行到的）值执行不到时，Racket重新使用存储值。可执行性（reachability）是一个低级别的抽象概念，打破概念抽象（因此，当值彼此是可执行到的时，必须准确理解运行时系统实现的许多细节，以便准确地判断。），但一般来说，当有一些操作从第二个恢复原始值时，可以从第二个值中获得一个值。 
 
-To help programmers understand when an object is no longer reachable and its
+@;{To help programmers understand when an object is no longer reachable and its
 storage can be reused,
 Racket provides @racket[make-weak-box] and @racket[weak-box-value],
 the creator and accessor for a one-record struct that the garbage
@@ -561,9 +561,12 @@ as reachable, and so @racket[weak-box-value] might return the object
 inside the box, but it might also return @racket[#f] to indicate
 that the object was otherwise unreachable and garbage collected.
 Note that unless a garbage collection actually occurs, the value will
-remain inside the weak box, even if it is unreachable.
+remain inside the weak box, even if it is unreachable.}
+为了帮助程序员了解什么时候一个对象不再是可执行到的以及什么时候它的存储可以重复使用，Racket提供@racket[make-weak-box]和@racket[weak-box-value]，创建者和访问者针对垃圾收集器专门处理的一个记录结构。在弱格子中的一个对象不算作可执行到的，所以@racket[weak-box-value]可能返回格子里的对象，但它也可以返回@racket[#f]标示对象不可执行到同时垃圾被收集。注意，除非实际发生垃圾收集，否则该值将保持在弱格子中，即使它是不可执行到的。
 
-For example, consider this program:
+@;{For example, consider this program:}
+例如，考虑这个程序：
+
 @racketmod[racket
            (struct fish (weight color) #:transparent)
            (define f (fish 7 'blue))
@@ -571,9 +574,12 @@ For example, consider this program:
            (printf "b has ~s\n" (weak-box-value b))
            (collect-garbage)
            (printf "b has ~s\n" (weak-box-value b))]
-It will print @litchar{b has #(struct:fish 7 blue)} twice because the
+
+@;{It will print @litchar{b has #(struct:fish 7 blue)} twice because the
 definition of @racket[f] still holds onto the fish. If the program
-were this, however:
+were this, however:}
+因为@racket[f]的定义仍然保存着fish，它将打印@litchar{b has #(struct:fish 7 blue)}两次。然而，如果程序是这样的话：
+
 @racketmod[racket
            (struct fish (weight color) #:transparent)
            (define f (fish 7 'blue))
@@ -582,19 +588,25 @@ were this, however:
            (set! f #f)
            (collect-garbage)
            (printf "b has ~s\n" (weak-box-value b))]
-the second printout will be @litchar{b has #f} because
-no reference to the fish exists (other than the one in the box).
 
-As a first approximation, all values in Racket must be allocated and will
-demonstrate behavior similar to the fish above. 
-There are a number of exceptions, however:
-@itemlist[@item{Small integers (recognizable with @racket[fixnum?]) are
+@;{the second printout will be @litchar{b has #f} because
+no reference to the fish exists (other than the one in the box).}
+第二个打印输出将是@litchar{b has #f}，因为没有对fish的引用存在（除了格子里的那个）。
+
+@;{As a first approximation, all values in Racket must be allocated and will
+demonstrate behavior similar to the fish above.
+There are a number of exceptions, however:}
+作为第一个近似值，Racket中的所有值都必须分配，并且会显示出与上面的fish相似的行为。然而，也有一些例外：
+
+@;{@itemlist[
+ @item{Small integers (recognizable with @racket[fixnum?]) are
                 always available without explicit
                 allocation. From the perspective of the garbage collector
                 and weak boxes, their storage is never reclaimed. (Due to
                 clever representation techniques, however, their storage
                 does not count towards the space that Racket uses.
                 That is, they are effectively free.)}
+    
          @item{Procedures where
                the compiler can see all of their call sites may never be
                allocated at all (as discussed above). 
@@ -605,35 +617,48 @@ There are a number of exceptions, however:
                because that table holds onto it.}
          @item{Reachability is only approximate with the @tech{CGC} collector (i.e.,
                a value may appear reachable to that collector when there is,
-               in fact, no way to reach it anymore.}]
+               in fact, no way to reach it anymore.}]}
+{@itemlist[
+@item{小整数（用@racket[fixnum?]识别）总是没有明确分配的情况下可用。从垃圾收集器和弱格子的角度来看，它们的存储永远不会被回收。（然而，由于巧妙的表现技巧，它们的存储并不等于Racket的使用空间。也就是说，它们实际上是免费的。）}
+@item{编译器可以看到所有调用站点的过程可能永远不会分配（如上所述）。类似的优化也可以消除对其他类型值的分配。}
+@item{拘禁符号仅分配一次（如上所述）。Racket内部的表格跟踪这个分配，所以一个符号不能变成垃圾，因为那张表格保存着它。}
+@item{可执行性是近似于@tech{CGC}收集器（即当有一个收集器的时候，一个值可以对那个收集器表现为可执行到的，事实上，再没有办法抓到它了。}]
 
-@section{Weak Boxes and Testing}
+@section{弱格子与测试}
 
-One important use of weak boxes is in testing that some abstraction properly 
+@;{One important use of weak boxes is in testing that some abstraction properly 
 releases storage for data it no longer needs, but there is a gotcha that 
-can easily cause such test cases to pass improperly. 
+can easily cause such test cases to pass improperly. }
+弱格子的一个重要用途是在测试一些抽象地释放不再需要的存储数据，但是有一个问题，它很容易造成这样的测试用例不当通过。
 
-Imagine you're designing a data structure that needs to
+@;{Imagine you're designing a data structure that needs to
 hold onto some value temporarily but then should clear a field or
 somehow break a link to avoid referencing that value so it can be
 collected. Weak boxes are a good way to test that your data structure
 properly clears the value. This is, you might write a test case
 that builds a value, extracts some other value from it
 (that you hope becomes unreachable), puts the extracted value into a weak-box,
-and then checks to see if the value disappears from the box.
+and then checks to see if the value disappears from the box.}
+假设您正在设计一个数据结构，它需要暂时保存某个值，但应清除一个字段或以某种方式中断一个链接以避免引用该值，以便收集该值。弱格子是测试数据结构正确清除值的好方法。也就是说，你可以编写一个构建一个值的测试用例，从中提取一些值（希望成为不可执行到的），将提取的值放入一个弱格子中，然后检查该值是否从该格子中消失。
 
-This code is one attempt to follow that pattern, but it has a subtle bug:
+@;{This code is one attempt to follow that pattern, but it has a subtle bug:}
+这段代码是一种对于遵循这种模式的尝试，但它有一个微妙的bug：
+
 @racketmod[racket
            (let* ([fishes (list (fish 8 'red)
                                 (fish 7 'blue))]
                   [wb (make-weak-box (list-ref fishes 0))])
              (collect-garbage)
              (printf "still there? ~s\n" (weak-box-value wb)))]
-Specifically, it will show that the weak box is empty, but not
-because @racket[_fishes] no longer holds onto the value, but
-because @racket[_fishes] itself is not reachable anymore!
 
-Change the program to this one:
+@;{Specifically, it will show that the weak box is empty, but not
+because @racket[_fishes] no longer holds onto the value, but
+because @racket[_fishes] itself is not reachable anymore!}
+具体来说，它会显示弱格子是空的，但不是因为@racket[_fishes]不再保存这个值，而是因为@racket[_fishes]本身不再是可执行到的！
+
+@;{Change the program to this one:}
+把程序改成这个：
+
 @racketmod[racket
            (let* ([fishes (list (fish 8 'red)
                                 (fish 7 'blue))]
@@ -641,20 +666,23 @@ Change the program to this one:
              (collect-garbage)
              (printf "still there? ~s\n" (weak-box-value wb))
              (printf "fishes is ~s\n" fishes))]
-and now we see the expected result. The difference is that last
+
+@;{and now we see the expected result. The difference is that last
 occurrence of the variable @racket[_fishes]. That constitutes
 a reference to the list, ensuring that the list is not itself
-garbage collected, and thus the red fish is not either.
+garbage collected, and thus the red fish is not either.}
+并且现在我们看到了预期的结果。不同的是，最后一次发生的变量的@racket[_fishes]。这就构成了一个对列表的引用，确保列表本身不是垃圾收集的，因此red的fish也不是。
 
+@;{@section{Reducing Garbage Collection Pauses}}
+@section{减少垃圾收集停顿}
 
-@section{Reducing Garbage Collection Pauses}
-
-By default, Racket's @tech{generational garbage collector} creates
+@;{By default, Racket's @tech{generational garbage collector} creates
 brief pauses for frequent @deftech{minor collections}, which inspect
 only the most recently allocated objects, and long pauses for infrequent
-@deftech{major collections}, which re-inspect all memory.
+@deftech{major collections}, which re-inspect all memory.}
+默认情况下，Racket的@tech{分代垃圾收集器（generational garbage collector）}因为频繁的@deftech{小收集（minor collections）}而产生短暂的停顿，这些小收集只检查最近分配的对象，并对稀少的@deftech{大收集（major collections）}进行长时间停顿，这些大收集重新检查所有内存。
 
-For some applications, such as animations and games,
+@;{For some applications, such as animations and games,
 long pauses due to a major collection can interfere
 unacceptably with a program's operation. To reduce major-collection
 pauses, the Racket garbage collector supports @deftech{incremental
@@ -665,17 +693,20 @@ major collection's work has been performed by minor collections the
 time that a major collection is needed, so the major collection's
 pause is as short as a minor collection's pause. Incremental mode
 tends to run more slowly overall, but it can
-provide much more consistent real-time behavior.
+provide much more consistent real-time behavior.}
+对于某些应用程序，如动画和游戏，由于大收集而产生的长时间停顿会用一个程序操作不可接受地干预。为了减少主要的收集停顿，Racket垃圾收集器支持@deftech{增量垃圾收集（incremental
+garbage-collection）}模式。在增量模式中，小收集通过对下一个大收集执行额外的工作来造成更长（但仍然相对较短）的停顿。如果一切顺利，大多数大收集的工作都是由一个大收集被需要的小收集时间完成的，所以大收集的停顿和小收集的停顿一样短暂。增量模式总体上运行速度较慢，但它可以提供更一致的实时行为。
 
-If the @envvar{PLT_INCREMENTAL_GC} environment variable is set
+@;{If the @envvar{PLT_INCREMENTAL_GC} environment variable is set
 to a value that starts with @litchar{1}, @litchar{y}, or @litchar{Y}
 when Racket starts, incremental mode is permanently enabled. Since
 incremental mode is only useful for certain parts of some programs,
 however, and since the need for incremental mode is a property of a
 program rather than its environment, the preferred way to enable
-incremental mode is with @racket[(collect-garbage 'incremental)].
+incremental mode is with @racket[(collect-garbage 'incremental)].}
+当Racket启动时，如果@envvar{PLT_INCREMENTAL_GC}环境变量被设置成一个值，它从@litchar{1}、@litchar{y}或@litchar{Y}开始，增量模式是永久启用。然而，由于增量模式只对某些程序的某些部分有用，并且由于增量模式的需要是程序的一个属性而不是其环境，所以启用增量模式的首选方式是@racket[(collect-garbage 'incremental)]。
 
-Calling @racket[(collect-garbage 'incremental)] does not perform an
+@;{Calling @racket[(collect-garbage 'incremental)] does not perform an
 immediate garbage collection, but instead requests that each minor
 collection perform incremental work up to the next major collection.
 The request expires with the next major collection. Make a call to
@@ -683,16 +714,19 @@ The request expires with the next major collection. Make a call to
 an application that needs to be responsive in real time. Force a
 full collection with @racket[(collect-garbage)] just before an initial
 @racket[(collect-garbage 'incremental)] to initiate incremental mode
-from an optimal state.
+from an optimal state.}
+调用@racket[(collect-garbage 'incremental)]不会执行一个立即垃圾收集，而是请求每个小收集执行增量工作到下一个大收集。请求失效于下一个大收集。在需要实时响应的一个应用程序里的任何重复任务中制造一个对@racket[(collect-garbage 'incremental)]的调用。在一个初始的@racket[(collect-garbage 'incremental)]之前强制一个用@racket[(collect-garbage)]的完全收集以从最佳状态启动增量模式。
 
-To check whether incremental mode is use and how it affects pause
+@;{To check whether incremental mode is use and how it affects pause
 times, enable @tt{debug}-level logging output for the
-@racketidfont{GC} topic. For example,
+@racketidfont{GC} topic. For example,}
+要检查增量模式是否使用以及它如何影响暂停时间，使@tt{debug}级日志能够为@racketidfont{GC}主题输出。例如,
 
 @commandline{racket -W "debuG@"@"GC error" main.rkt}
 
-runs @filepath{main.rkt} with garbage-collection logging to stderr
+@;{runs @filepath{main.rkt} with garbage-collection logging to stderr
 (while preserving @tt{error}-level logging for all topics). Minor
 collections are reported by @litchar{min} lines, increment-mode minor
 collection are reported with @litchar{mIn} lines, and major
-collections are reported with @litchar{MAJ} lines.
+collections are reported with @litchar{MAJ} lines.}
+用垃圾收集日志对标准错误（stderr）运行@filepath{main.rkt}（同时保持为所有主题的@tt{error}级记录）。小收集是由@litchar{min（分钟）}线报告，增量模式小收集用 @litchar{mIn}线报告，大收集用@litchar{MAJ（专业）}线报告。
