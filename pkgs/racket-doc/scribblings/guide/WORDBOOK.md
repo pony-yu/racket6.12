@@ -108,3 +108,7 @@
 - generational garbage collector 分代垃圾收集器
 - minor collection 小收集
 - major collection 大收集
+- parallelism 并行
+- futures 前景
+- places 现场
+- halt 中止

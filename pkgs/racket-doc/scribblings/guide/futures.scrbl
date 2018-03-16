@@ -7,24 +7,28 @@
                                                future-visualizer/private/visualizer-drawing 
                                                future-visualizer/trace))
 
-@title[#:tag "effective-futures"]{Parallelism with Futures}
+@;{@title[#:tag "effective-futures"]{Parallelism with Futures}}
+@title[#:tag "effective-futures"]{前景并行}
 
-The @racketmodname[racket/future] library provides support for
+@;{The @racketmodname[racket/future] library provides support for
 performance improvement through parallelism with @deftech{futures} and the @racket[future]
 and @racket[touch] functions. The level of parallelism available from
 those constructs, however, is limited by several factors, and the
 current implementation is best suited to numerical tasks. The caveats
 in @secref["DrRacket-perf"] also apply to futures; notably,
-the debugging instrumentation currently defeats futures.
+the debugging instrumentation currently defeats futures.}
+@racketmodname[racket/future]库通过与@deftech{前景（futures）}以及@racket[future]和@racket[touch]函数的并行，为性能改进提供支持。然而，这些结构的并行性受到几个因素的限制，当前的实现最适合于数值任务。在@secref["DrRacket-perf"]中的警告也适用于前景；值得注意的是，调试手段目前使前景失效了。
 
-@margin-note{Other functions, such as @racket[thread], support the
+@;{@margin-note{Other functions, such as @racket[thread], support the
 creation of reliably concurrent tasks. However, threads never run truly
 in parallel, even if the hardware and operating system support
-parallelism.}
+parallelism.}}
+@margin-note{其它函数，如@racket[thread]，支持创建可靠的并发任务。然而，即使硬件和操作系统支持并行性，线程也不会真正并行运行。}
 
-As a starting example, the @racket[any-double?] function below takes a
+@;{As a starting example, the @racket[any-double?] function below takes a
 list of numbers and determines whether any number in the list has a
-double that is also in the list:
+double that is also in the list:}
+作为一个开始的例子，@racket[any-double?]函数获取一个数字列表，并确定列表中的任何数字有一个也包含在列表中的double：
 
 @racketblock[
 (define (any-double? l)
@@ -33,9 +37,10 @@ double that is also in the list:
       (= i2 (* 2 i)))))
 ]
 
-This function runs in quadratic time, so it can take a long time (on
+@;{This function runs in quadratic time, so it can take a long time (on
 the order of a second) on large lists like @racket[l1] and
-@racket[l2]:
+@racket[l2]:}
+这个函数在二次时间中运行，所以像@racket[l1]和@racket[l2]这样的大列表可能需要很长时间（按秒顺序）：
 
 @racketblock[
 (define l1 (for/list ([i (in-range 5000)]) 
@@ -46,10 +51,11 @@ the order of a second) on large lists like @racket[l1] and
     (any-double? l2))
 ]
 
-The best way to speed up @racket[any-double?]  is to use a different
+@;{The best way to speed up @racket[any-double?]  is to use a different
 algorithm. However, on a machine that offers at least two processing
 units, the example above can run in about half the time using
-@racket[future] and @racket[touch]:
+@racket[future] and @racket[touch]:}
+加速@racket[any-double?]的最好的办法是使用不同的算法。然而，在提供至少两个处理单元的机器上，上述示例可以使用@racket[future]和@racket[touch]的大约一半时间运行：
 
 @racketblock[
 (let ([f (future (lambda () (any-double? l2)))])
@@ -57,20 +63,23 @@ units, the example above can run in about half the time using
       (touch f)))
 ]
 
-The future @racket[f] runs @racket[(any-double? l2)] in parallel to
+@;{The future @racket[f] runs @racket[(any-double? l2)] in parallel to
 @racket[(any-double? l1)], and the result for @racket[(any-double?
 l2)] becomes available about the same time that it is demanded by
-@racket[(touch f)].
+@racket[(touch f)].}
+前景@racket[f]在与@racket[(any-double? l1)]平行中运行@racket[(any-double? l2)]，同时对@racket[(any-double? l2)]的结果与@racket[(touch f)]所要求的时间相同。
 
-Futures run in parallel as long as they can do so safely, but the
+@;{Futures run in parallel as long as they can do so safely, but the
 notion of ``future safe'' is inherently tied to the
 implementation. The distinction between ``future safe'' and ``future unsafe''
 operations may be far from apparent at the level of a Racket program.
 The remainder of this section works through an example to illustrate
 this distinction and to show how to use the future visualizer
-can help shed light on it.
+can help shed light on it.}
+只要他们能安全地做到这一点，前景就可以并行运行，但“前景安全”的概念实际上与实施有关。“前景安全”和“前景不安全”操作之间的区别在Racket程序级别上可能还不太明显。本节剩余部分通过一个例子来说明这种区别，并显示如何使用前景的可视化工具有助于阐明这一点。
 
-Consider the following core of a Mandelbrot-set computation:
+@;{Consider the following core of a Mandelbrot-set computation:}
+考虑一下曼德尔布罗特集合计算的以下核心：
 
 @racketblock[
 (define (mandelbrot iterations x y n)
@@ -88,18 +97,20 @@ Consider the following core of a Mandelbrot-set computation:
                           (+ (* 2 zr zi) ci))]))))))
 ]
 
-The expressions @racket[(mandelbrot 10000000 62 500 1000)] and
+@;{The expressions @racket[(mandelbrot 10000000 62 500 1000)] and
 @racket[(mandelbrot 10000000 62 501 1000)] each take a while to
 produce an answer. Computing them both, of course, takes twice as
-long:
+long:}
+表达式@racket[(mandelbrot 10000000 62 500 1000)]和@racket[(mandelbrot 10000000 62 501 1000)]每次都要花一点时间产生一个答案。当然，计算两者都需要两倍的时间：
 
 @racketblock[
 (list (mandelbrot 10000000 62 500 1000)
       (mandelbrot 10000000 62 501 1000))
 ]
 
-Unfortunately, attempting to run the two computations in parallel with
-@racket[future] does not improve performance:
+@;{Unfortunately, attempting to run the two computations in parallel with
+@racket[future] does not improve performance:}
+不幸的是，试图用@racket[future]并行运行两个计算并不能提高性能：
 
 @racketblock[
  (let ([f (future (lambda () (mandelbrot 10000000 62 501 1000)))])
@@ -107,7 +118,8 @@ Unfortunately, attempting to run the two computations in parallel with
          (touch f)))
 ]
 
-To see why, use the @racketmodname[future-visualizer], like this:
+@;{To see why, use the @racketmodname[future-visualizer], like this:}
+要知道为什么，使用@racketmodname[future-visualizer]，像这样：
 
 @racketblock[ 
   (require future-visualizer) 
@@ -116,8 +128,9 @@ To see why, use the @racketmodname[future-visualizer], like this:
      (list (mandelbrot 10000000 62 500 1000)
            (touch f))))] 
  
-This opens a window showing a graphical view of a trace of the computation.
-The upper-left portion of the window contains an execution timeline:
+@;{This opens a window showing a graphical view of a trace of the computation.
+The upper-left portion of the window contains an execution timeline:}
+这将打开一个窗口，显示计算跟踪的图形视图。窗口的左上部分包含一个执行时间线：
 
 @(interaction-eval 
   #:eval future-eval 
@@ -233,33 +246,37 @@ The upper-left portion of the window contains an execution timeline:
                           #:height 300) 
 ]
 
-Each horizontal row represents an OS-level thread, and the colored 
+@;{Each horizontal row represents an OS-level thread, and the colored 
 dots represent important events in the execution of the program (they are 
 color-coded to distinguish one event type from another).  The upper-left blue 
 dot in the timeline represents the future's creation.  The future 
 executes for a brief period (represented by a green bar in the second line) on thread 
-1, and then pauses to allow the runtime thread to perform a future-unsafe operation.
+1, and then pauses to allow the runtime thread to perform a future-unsafe operation.}
+每个水平行代表一个操作系统级线程，着色点代表程序执行中的重要事件（它们被颜色编码以区分一个事件类型与另一个事件）。时间轴的上左位置蓝色圆点代表未来的创造。前景在线程1上执行一个短暂的时期（由第二行中的绿色条表示），然后暂停以允许运行时线程执行前景不安全操作。
 
-In the Racket implementation, future-unsafe operations fall into one of two categories. 
+@;{In the Racket implementation, future-unsafe operations fall into one of two categories. 
 A @deftech{blocking} operation halts the evaluation of the future, and will not allow 
 it to continue until it is touched.  After the operation completes within @racket[touch], 
 the remainder of the future's work will be evaluated sequentially by the runtime 
 thread.  A @deftech{synchronized} operation also halts the future, but the runtime thread 
 may perform the operation at any time and, once completed, the future may continue 
 running in parallel.  Memory allocation and JIT compilation are two common examples 
-of synchronized operations.
+of synchronized operations.}
+在Racket的实现中，前景不安全操作分为两类。一个@deftech{阻塞（blocking）}操作中止前景求值，同时不允许它继续下去，直到它被接触（touched）。在@racket[touch]中的操作完成之后，前景工作的剩余部分将由运行时线程依次进行求值。一个@deftech{同步（synchronized）}操作也中止前景，但运行时线程可以在任何时间执行操作，一旦完成，前景可能在并行中继续运行。内存分配和JIT编译是同步操作的两个常见示例。
 
-In the timeline, we see an orange dot just to the right of the green bar on thread 1 -- 
+@;{In the timeline, we see an orange dot just to the right of the green bar on thread 1 -- 
 this dot represents a synchronized operation (memory allocation).  The first orange 
 dot on thread 0 shows that the runtime thread performed the allocation shortly after 
 the future paused.  A short time later, the future halts on a blocking operation 
 (the first red dot) and must wait until the @racket[touch] for it to be evaluated 
-(slightly after the 1049ms mark).
+(slightly after the 1049ms mark).}
+在时间线中，我们在线程1的绿色条的右边看到一个橙色点——这个点代表一个同步操作（内存分配）。线程0上的第一个橙色圆点表示运行时线程在将来暂停后很快执行分配。不久之后，在一个阻塞操作前景中止（第一个红点），并且必须等到它被求值的@racket[touch]（略后1049ms标记）。
 
-When you move your mouse over an event, the visualizer shows you 
+@;{When you move your mouse over an event, the visualizer shows you 
 detailed information about the event and draws arrows
 connecting all of the events in the corresponding future.
-This image shows those connections for our future.
+This image shows those connections for our future.}
+当你把鼠标移动到一个事件，可视化工具显示你的有关事件和画箭头连接在相应的前景事件的详细信息。这张图片显示了对我们的未来的联系。
 
 @interaction-eval-show[
      #:eval future-eval 
@@ -271,17 +288,20 @@ This image shows those connections for our future.
                            #:selected-event-index 6)
 ]
 
-The dotted orange line connects the first event in the future to
+@;{The dotted orange line connects the first event in the future to
 the future that created it, and the purple lines connect adjacent
-events within the future. 
+events within the future. }
+虚线橙色线连接前景中的第一个事件到创造它的前景，同时紫色线连接前景里的邻近事件。
 
-The reason that we see no parallelism is that the @racket[<] and @racket[*] operations 
+@;{The reason that we see no parallelism is that the @racket[<] and @racket[*] operations 
 in the lower portion of the loop in @racket[mandelbrot] involve a mixture of 
 floating-point and fixed (integer) values.  Such mixtures typically trigger a slow 
-path in execution, and the general slow path will usually be blocking.
+path in execution, and the general slow path will usually be blocking.}
+我们没有看到并行性的原因是，@racket[mandelbrot]中的循环的下一部分中的@racket[<]和@racket[*]操作包括一个浮点值和固定（整数）值的混合。这种混合通常触发一个在执行过程中慢路径，并且这个普通的慢路径通常会阻塞。
 
-Changing constants to be floating-points numbers in @racket[mandelbrot] addresses that 
-first problem: 
+@;{Changing constants to be floating-points numbers in @racket[mandelbrot] addresses that 
+first problem: }
+将常数变为第一个问题的@racket[mandelbrot]地址中的浮点数：
 
 @racketblock[
 (define (mandelbrot iterations x y n)
@@ -299,9 +319,10 @@ first problem:
                           (+ (* 2.0 zr zi) ci))]))))))
 ]
 
-With that change, @racket[mandelbrot] computations can run in 
+@;{With that change, @racket[mandelbrot] computations can run in 
 parallel.  Nevertheless, we still see a special type of 
-slow-path operation limiting our parallelism (orange dots):
+slow-path operation limiting our parallelism (orange dots):}
+随着这种变化，@racket[mandelbrot]计算可以并行运行。然而，我们仍然看到一种特殊的慢路径操作限制了我们的并行性（橙色点）：
 
 @interaction-eval[
     #:eval future-eval            
@@ -418,15 +439,17 @@ slow-path operation limiting our parallelism (orange dots):
                           #:height 300)
 ]
 
-The problem is that most every arithmetic operation in this example 
+@;{The problem is that most every arithmetic operation in this example 
 produces an inexact number whose storage must be allocated.  While some allocation 
 can safely be performed exclusively without the aid of the runtime thread, especially 
 frequent allocation requires synchronized operations which defeat any performance 
-improvement.
+improvement.}
+问题是，这个例子中的大多数算术运算都会产生一个不精确的数字，它的存储必须被分配。虽然有些配置可以安全地只在没有运行时线程的情况下安全地执行，特别是频繁分配需要同步操作来克服任何性能改进。
 
-By using @tech{flonum}-specific operations (see
+@;{By using @tech{flonum}-specific operations (see
 @secref["fixnums+flonums"]), we can re-write @racket[mandelbrot] to use
-much less allocation:
+much less allocation:}
+利用@tech{flonum}具体操作（见@secref["fixnums+flonums"]），我们可以重写@racket[mandelbrot]以达到用更少的配置：
 
 @interaction-eval[
     #:eval future-eval 
@@ -454,10 +477,11 @@ much less allocation:
                           (fl+ (fl* 2.0 (fl* zr zi)) ci))]))))))
 ]
 
-This conversion can speed @racket[mandelbrot] by a factor of 8, even
+@;{This conversion can speed @racket[mandelbrot] by a factor of 8, even
 in sequential mode, but avoiding allocation also allows
 @racket[mandelbrot] to run usefully faster in parallel.
-Executing this program yields the following in the visualizer: 
+Executing this program yields the following in the visualizer: }
+即使是在连续模式下，这种转换可以将@racket[mandelbrot]速度提高8倍，但避免分配也允许@racket[mandelbrot]在并行中更快地运行。执行这个程序产生下面的可视化工具：
 
 @interaction-eval-show[
     #:eval future-eval 
@@ -468,17 +492,18 @@ Executing this program yields the following in the visualizer:
                           #:height 300)
 ]
 
-Notice that only one green bar is shown here because one of the 
+@;{Notice that only one green bar is shown here because one of the 
 mandelbrot computations is not being evaluated by a future (on 
-the runtime thread).
+the runtime thread).}
+注意，这里只显示一个绿色条，因为曼德尔布罗特计算中没有一个是由一个前景（运行时线程）求值的。
 
-As a general guideline, any operation that is inlined by the
+@;{As a general guideline, any operation that is inlined by the
 @tech{JIT} compiler runs safely in parallel, while other operations
 that are not inlined (including all operations if the JIT compiler is
 disabled) are considered unsafe. The @exec{raco decompile} tool
 annotates operations that can be inlined by the compiler (see
 @secref[#:doc '(lib "scribblings/raco/raco.scrbl") "decompile"]), so the
-decompiler can be used to help predict parallel performance.
-
+decompiler can be used to help predict parallel performance.}
+作为一个通用准则，在并行中通过@tech{JIT}编译器内联安全运行的任何操作，当没有内联（包括所有的操作如果JIT编译器是非激活的）的其它操作被认为是不安全的。@exec{raco反编译（raco decompile）}工具对操作可以被反编译器内联编译（见@secref[#:doc '(lib "scribblings/raco/raco.scrbl") "decompile"]），所以反编译器可以用来帮助预测并行性能。
 
 @close-eval[future-eval]
