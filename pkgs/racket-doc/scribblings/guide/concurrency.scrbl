@@ -24,7 +24,7 @@ the sense of using multiple hardware processors.  See
 在一个线程能够不需要协作地抢占另一个这个意义上讲线程同时运行，但是在使用多硬件处理器这个意义上讲线程不并行运行。参见@secref["parallelism"]以获取Racket的并行信息。
 
 @;{@section{Threads}}
-@section{线程（thread）}
+@section[#:tag "Threads"]{线程（thread）}
 
 @;{To execute a procedure concurrently, use @racket[thread].  The
 following example creates two new threads from the main thread:}
@@ -72,7 +72,7 @@ thread exits:}
 ]
 
 @;{@section{Thread Mailboxes}}
-@section{线程的邮箱}
+@section[#:tag "Thread_Mailboxes"]{线程的邮箱}
 
 @;{Each thread has a mailbox for receiving messages.  The @racket[thread-send] function
 asynchronously sends a message to another thread's mailbox, while
@@ -135,7 +135,7 @@ items then send the results to the main thread.}
 ]
 
 @;{@section{Semaphores}}
-@section{信号（Semaphores）}
+@section[#:tag "Semaphores"]{信号（Semaphores）}
 
 @;{Semaphores facilitate synchronized access to an arbitrary shared resource.
 Use semaphores when multiple threads must perform non-atomic operations on a
@@ -191,7 +191,7 @@ printing output.}
 信号是一个低级别的技术。通常，一个更好的解决方案是限制对一个单线程的资源访问。例如，通过为打印输出提供专用线程，可以更好地实现对标准输出的同步访问。
 
 @;{@section{Channels}}
-@section{通道（Channels）}
+@section[#:tag "Channels"]{通道（Channels）}
 
 @;{Channels synchronize two threads while a value is passed from one thread to the
 other.  Unlike a thread mailbox, multiple threads can get items from a single
@@ -237,7 +237,7 @@ the items and then pass their results to the result thread via the @racket[resul
 ]
 
 @;{@section{Buffered Asynchronous Channels}}
-@section{缓冲异步通道}
+@section[#:tag "Buffered_Asynchronous_Channels"]{缓冲异步通道}
 
 @;{Buffered asynchronous channels are similar to the channels described above, but
 the ``put'' operation of asynchronous channels does not block---unless the given
@@ -286,7 +286,7 @@ print thread will not print all items.}
 注意，上面的例子缺少任何同步来验证所有的条目都被处理了。如果主线程没有同步地退出，则工作线程可能无法完成某些条目的处理，否则打印线程将不会打印所有条目。
 
 @;{@section{Synchronizable Events and @racket[sync]}}
-@section{同步事件和@racket[sync]}
+@section[#:tag "Synchronizable_Events_and_sync"]{同步事件和@racket[sync]}
 
 @;{There are other ways to synchronize threads.  The @racket[sync] function allows
 threads to coordinate via @tech[#:doc reference-doc]{synchronizable events}.

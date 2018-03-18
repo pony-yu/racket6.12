@@ -2,7 +2,7 @@
 @(require scribble/manual "guide-utils.rkt")
 
 @;{@title{More Libraries}}
-@title{更多的库}
+@title[#:tag "More_Libraries"]{更多的库}
 
 @;{This guide covers only the Racket language and libraries that are
 documented in @|Racket|. The Racket distribution includes many
@@ -12,7 +12,7 @@ additional libraries.}
 @include-section["graphics.scrbl"]
 
 @;{@section{The Web Server}}
-@section{Web服务器}
+@section[#:tag "The_Web_Server"]{Web服务器}
 
 @;{@other-manual['(lib "web-server/scribblings/web-server.scrbl")]
 describes the Racket web server, which supports servlets implemented
@@ -20,7 +20,7 @@ in Racket.}
 @other-manual['(lib "web-server/scribblings/web-server.scrbl")]介绍了Racket的Web服务器，它支持Racket的servlet实现。
 
 @;{@section{Using Foreign Libraries}}
-@section{使用外部库}
+@section[#:tag "Using_Foreign_Libraries"]{使用外部库}
 
 @;{@other-manual['(lib "scribblings/foreign/foreign.scrbl")] describes
 tools for using Racket to access libraries that are normally used by C
@@ -28,7 +28,7 @@ programs.}
 @other-manual['(lib "scribblings/foreign/foreign.scrbl")]描述使用Racket访问C程序的工具。
 
 @;{@section{And More}}
-@section{其它更多的库}
+@section[#:tag "And_More"]{其它更多的库}
 
 @;{@link["../index.html"]{Racket Documentation} lists documentation for
 many other installed libraries. Run @exec{raco docs} to find

@@ -97,7 +97,7 @@ text area, still.}
 
 @; ----------------------------------------------------------------------
 @;{@section{Interacting with Racket}}
-@section{与Racket语言交互}
+@section[#:tag "Interacting_with_Racket"]{与Racket语言交互}
 
 @;{DrRacket's bottom text area and the @exec{racket} command-line program
 (when started with no options) both act as a kind of calculator. You
@@ -130,7 +130,7 @@ Racket使用圆括号包装较大的表达式——几乎任何一种表达式�
 
 @; ----------------------------------------------------------------------
 @;{@section{Definitions and Interactions}}
-@section{定义和交互}
+@section[#:tag "Definitions_and_Interactions"]{定义和交互}
 
 @;{You can define your own functions that work like @racket[substring] by
 using the @racket[define] form, like this:}
@@ -189,7 +189,7 @@ evaluation context to the inside of the module, just like DrRacket's
 
 @; ----------------------------------------------------------------------
 @;{@section{Creating Executables}}
-@section{创建可执行文件}
+@section[#:tag "Creating_Executables"]{创建可执行文件}
 
 @;{If your file (or @tech{definitions area} in DrRacket) contains}
 如果你的文件（或在DrRacket的@tech{定义区域}）包含：

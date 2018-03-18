@@ -67,7 +67,7 @@ a sequence as an element for repetition.}
 
 @;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 @;{@section{Definitions}}
-@section{定义}
+@section[#:tag "Definitions"]{定义}
 
 @;{A definition of the form}
 表的一个定义：
@@ -158,7 +158,6 @@ are written immediately after an open parenthesis with no extra space,
 and closing parentheses never go on their own line.}
 换行和缩进对于解析Racket程序来说并不重要，但大多数Racket程序员使用一套标准的约定来使代码更易读。例如，定义的主体通常在定义的第一行下缩进。标识符是在一个没有额外空格的括号内立即写出来的，而闭括号则从不自己独立一行。
 
-
 @;{DrRacket automatically indents according to the standard style when
 you type Enter in a program or @tech{REPL} expression. For example, if you
 hit Enter after typing @litchar{(define (greet name)}, then DrRacket
@@ -190,7 +189,7 @@ source's indentation to suggest where a parenthesis might be missing.}
 
 @;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 @;{@section{Identifiers}}
-@section{标识符}
+@section[#:tag "Identifiers"]{标识符}
 
 @;{Racket's syntax for identifiers is especially liberal. Excluding the
 special characters}
@@ -225,8 +224,7 @@ more examples:}
 
 @;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 @;{@section{Function Calls@aux-elem{ (Procedure Applications)}}}
-@section{函数调用@aux-elem{(过程应用程序)}}
-@;??????????????????????????????????????????????????????????????
+@section[#:tag "Function_Calls"]{函数调用@aux-elem{(过程应用程序)}}
 
 @;{We have already seen many function calls, which are called
 @defterm{procedure applications} in more traditional
@@ -275,7 +273,7 @@ Racket代码例子贯穿整个文档，预定义的名称的使用链接到参�
 
 @;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 @;{@section{Conditionals with @racket[if], @racket[and], @racket[or], and @racket[cond]}}
-@section{条件表达式@racket[if]、@racket[and]、@racket[or]和@racket[cond]}
+@section[#:tag "Conditionals_with_if_and_or_cond"]{条件表达式@racket[if]、@racket[and]、@racket[or]和@racket[cond]}
 
 @;{The next simplest kind of expression is an @racket[if] conditional:}
 以下是一个最简单的表达式是@racket[if]条件：
@@ -428,7 +426,7 @@ few key places makes Racket code even more readable.}
 
 @;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 @;{@section{Function Calls, Again}}
-@section{函数重复调用}
+@section[#:tag "Function_Calls_Again"]{函数重复调用}
 
 @;{In our earlier grammar of function calls, we oversimplified.  The
 actual syntax of a function call allows an arbitrary
@@ -469,7 +467,7 @@ a procedure'' error like this one.}
 
 @;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 @;{@section{Anonymous Functions with @racket[lambda]}}
-@section{匿名函数与@racket[lambda]}
+@section[#:tag "Anonymous_Functions_with_lambda"]{匿名函数与@racket[lambda]}
 
 @;{Programming in Racket would be tedious if you had to name all of your
 numbers. Instead of writing @racket[(+ 1 2)], you'd have to write}

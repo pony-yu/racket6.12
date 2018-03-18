@@ -92,7 +92,7 @@ space.}
 @; ----------------------------------------------------------------------
 
 @;{@section{Source Locations}}
-@section{源位置}
+@section[#:tag "Source_Locations"]{源位置}
 
 @;{The difference between @racketidfont{read} and
 @racketidfont{read-syntax} is that @racketidfont{read} is meant to be

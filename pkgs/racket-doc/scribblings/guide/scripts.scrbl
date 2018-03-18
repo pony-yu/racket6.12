@@ -10,7 +10,7 @@ same kind of scripts, or scripts can be implemented as batch files.}
 在UNIX和Mac OS上，Racket文件可以转换成可执行脚本。在Windows中，一个兼容层如Cygwin支持相同的脚本，或者脚本可以作为批处理文件执行。
 
 @;{@section{Unix Scripts}}
-@section{Unix脚本}
+@section[#:tag "Unix_Scripts"]{Unix脚本}
 
 @;{In a Unix environment (including Linux and Mac OS), a Racket file can
 be turned into an executable script using the shell's @as-index{@tt{#!}}
@@ -135,7 +135,7 @@ the script file turns out to be valid input to both @exec{/bin/sh} and
 racket}中止这个shell脚本以启动@exec{racket}。这样，脚本文件证明有效输入到了@exec{/bin/sh}和@exec{racket}。
 
 @;{@section{Windows Batch Files}}
-@section{Windows批处理文件}
+@section[#:tag "Windows_Batch_Files"]{Windows批处理文件}
 
 @;{A similar trick can be used to write Racket code in Windows
 @as-index{@tt{.bat}} batch files:}

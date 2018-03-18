@@ -213,7 +213,7 @@ information about inlined arithmetic operations.}
 @; ----------------------------------------------------------------------
 
 @;{@section{Mutation and Performance}}
-@section{突变和性能}
+@section[#:tag "Mutation_and_Performance"]{突变和性能}
 
 @;{Using @racket[set!] to mutate a variable can lead to bad
 performance. For example, the microbenchmark}
@@ -624,7 +624,8 @@ There are a number of exceptions, however:}
 @item{拘禁符号仅分配一次（如上所述）。Racket内部的表格跟踪这个分配，所以一个符号不能变成垃圾，因为那张表格保存着它。}
 @item{可执行性是近似于@tech{CGC}收集器（即当有一个收集器的时候，一个值可以对那个收集器表现为可执行到的，事实上，再没有办法抓到它了。}]
 
-@section{弱格子与测试}
+@;{@section{Weak Boxes and Testing}}
+@section[#:tag "Weak_Boxes_and_Testing"]{弱格子与测试}
 
 @;{One important use of weak boxes is in testing that some abstraction properly 
 releases storage for data it no longer needs, but there is a gotcha that 
@@ -674,7 +675,7 @@ garbage collected, and thus the red fish is not either.}
 并且现在我们看到了预期的结果。不同的是，最后一次发生的变量的@racket[_fishes]。这就构成了一个对列表的引用，确保列表本身不是垃圾收集的，因此red的fish也不是。
 
 @;{@section{Reducing Garbage Collection Pauses}}
-@section{减少垃圾收集停顿}
+@section[#:tag "Reducing_Garbage_Collection_Pauses"]{减少垃圾收集停顿}
 
 @;{By default, Racket's @tech{generational garbage collector} creates
 brief pauses for frequent @deftech{minor collections}, which inspect
