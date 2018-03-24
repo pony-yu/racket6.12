@@ -7,7 +7,7 @@
 @;{A @deftech{keyword} value is similar to a symbol (see
 @secref["symbols"]), but its printed form is prefixed with
 @litchar{#:}.}
-一个@deftech{关键字（keyword）}值类似于一个符号（见《符号（Symbols）》（@secref["symbols"]）），但它的打印形式是用前缀@litchar{#:}。
+一个@deftech{关键字（keyword）}值类似于一个符号（见@secref["symbols"]），但它的打印形式是用前缀@litchar{#:}。
 
 @;{@refdetails/gory["parse-keyword"]{the syntax of keywords}}
 @refdetails/gory["parse-keyword"]{关键字语法}

@@ -17,7 +17,7 @@ especially quick introduction to Racket, start with @|Quick|.}
 Racket. From @seclink["datatypes"]{Chapter 3} on, this guide dives
 into details---covering much of the Racket toolbox, but leaving
 precise details to @|Racket| and other reference manuals.}
-@seclink["to-scheme"]{第2章}简要介绍Racket语言。从@seclink["datatypes"]{第3章}开始，本指南深入讨论了大部分的Racket语言工具箱，但把更清晰的细节内容留给@|Racket|语言参考手册和其他参考手册介绍。
+@seclink["to-scheme"]{第2章}简要介绍Racket语言。从@seclink["datatypes"]{第3章}开始，本指南深入讨论了大部分的Racket语言工具箱，但把更清晰的细节内容留给@|Racket|语言参考手册和其它参考手册介绍。
 
 @;{@margin-note{The source of this manual is available on
 @hyperlink["https://github.com/racket/racket/tree/master/pkgs/racket-doc/scribblings/guide"]{GitHub}.}}
