@@ -1,12 +1,14 @@
 #lang scribble/doc
 @(require scribble/manual scribble/eval "guide-utils.rkt")
 
-@title[#:tag "contracts" #:style 'toc]{Contracts}
+@;{@title[#:tag "contracts" #:style 'toc]{Contracts}}
+@title[#:tag "contracts" #:style 'toc]{合约}
 
-This chapter provides a gentle introduction to Racket's
-contract system.
+@;{This chapter provides a gentle introduction to Racket's
+contract system.}
+本章对Racket的合约系统作了介绍。
 
-@refdetails["contracts"]{contracts}
+@refdetails["contracts"]{合约}
 
 @local-table-of-contents[]
 
