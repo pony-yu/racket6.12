@@ -30,28 +30,34 @@ to switch to the usual langle/rangle that is used in syntax definitions.
 ;}
 
 @;------------------------------------------------------------------------
-@title[#:tag "eval-model"]{Evaluation Model}
+@;{@title[#:tag "eval-model"]{Evaluation Model}}
+@title[#:tag "eval-model"]{求值模型}
 
-Racket evaluation can be viewed as the simplification of expressions
+@;{Racket evaluation can be viewed as the simplification of expressions
 to obtain values. For example, just as an elementary-school student
-simplifies
+simplifies}
+Racket求值可以看作是表达式的简化以获得值。例如，就像一个小学学生简化
 
 @verbatim{  1 + 1 = 2}
 
-Racket evaluation simplifies
+@;{Racket evaluation simplifies}
+Racket求值简化
 
 @racketblock[
 (+ 1 1) @#,reduces 2
 ]
 
-The arrow @reduces above replaces the more traditional @tt{=} to
+@;{The arrow @reduces above replaces the more traditional @tt{=} to
 emphasize that evaluation proceeds in a particular direction towards
 simpler expressions. In particular, a @deftech{value} is an
 expression that evaluation simplifies no further, such as the number
-@racket[2].
+@racket[2].}
+上面的箭头 @reduces 取代更传统的@tt{=}以强调求值进行在一个特定朝着更简单的表达方式的方向。特别是，一个@deftech{值（value）}是一个表达式，求值不再进一步简化，如数字@racket[2]。
 
 @;------------------------------------------------------------------------
-@section[#:tag "cont-model"]{Sub-expression Evaluation and Continuations}
+@;{@section[#:tag "cont-model"]{Sub-expression Evaluation and Continuations}}
+@section[#:tag "cont-model"]{子表达式求值和延续}
+@;??????????????????????????????????????????????????????????????
 
 Some simplifications require more than one step. For example:
 

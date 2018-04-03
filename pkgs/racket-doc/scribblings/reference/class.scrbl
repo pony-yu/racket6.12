@@ -8,15 +8,19 @@
 (define-syntax sees
   (syntax-rules ()
     [(_) ""]
-    [(_ s) (elem " and " (secref s))]
-    [(_ s ... s0) (elem (elem ", " (secref s)) ... ", and " (secref s0))]))
+    [(_ s) (elem @;{" and "}"》和《" (secref s))]
+    [(_ s ... s0) (elem (elem @;{", "}"，《" (secref s)) ... @;{", and "}"》和《" (secref s0) "》")]))
 
 (define-syntax (defclassforms stx)
   (syntax-case stx (*)
     [(_ [* (form ...) (also ...) more ...])
-     #'(defform* (form  ...)
+     @;{#'(defform* (form  ...)
          "See " @racket[class*] (sees also ...) "; use"
          " outside the body of a " @racket[class*] " form is a syntax error."
+         more ...)}
+     #'(defform* (form  ...)
+         "参见《" @racket[class*] (sees also ...) "》；使用"
+         "一个"@racket[class*]"表的外部主体是一个语法错误。"
          more ...)]
     [(_ [form (also ...) more ...])
      #'(defclassforms [* (form) (also ...) more ...])]
@@ -39,7 +43,7 @@
                                           s))])
        #'(...
           (defform tmpl
-            "Shorthand for " (racket (begin (#,(racket name) id) ... (define id _expr) ...)) ".")))]
+            @;{"Shorthand for "}"简写，原型为" (racket (begin (#,(racket name) id) ... (define id _expr) ...)) ".")))]
      [(_ form ...)
       #'(begin (defstarshorthands form) ...)]))
 
@@ -59,9 +63,9 @@
                                              s))])
          #'(...
             (defform* [tmpl1 (#,(racket name) (id . formals) body ...+)]
-              "Shorthand for "
+              @;{"Shorthand for "}"简写，原型为"
               (racket (begin (#,(racket form) id) (define id expr)))
-              " or "
+              @;{" or "}"或"
               (racket (begin (#,(racket form) id) (define (id . formals) body ...+)))))))]
      [(_ form ...)
       #'(begin (defdefshorthands form) ...)]))
@@ -76,124 +80,161 @@
 @examples[#:hidden #:eval class-ctc-eval
           (require racket/class racket/contract)]
 
-@title[#:tag "mzlib:class" #:style 'toc]{Classes and Objects}
+@;{@title[#:tag "mzlib:class" #:style 'toc]{Classes and Objects}}
+@title[#:tag "mzlib:class" #:style 'toc]{类和对象}
 
-@guideintro["classes"]{classes and objects}
+@;{@guideintro["classes"]{classes and objects}}
+@guideintro["classes"]{类和对象}
 
 @note-lib[racket/class #:use-sources (racket/private/class-internal)]
 
-A @deftech{class} specifies
+@;{A @deftech{class} specifies}
+一个类指定
 
 @itemize[
  
- @item{a collection of fields;}
+ @item{@;{a collection of fields;}
+  一个字段集合；}
 
- @item{a collection of methods;}
+ @item{@;{a collection of methods;}
+  一个方法集合；}
 
- @item{initial value expressions for the fields;  and}
+ @item{@;{initial value expressions for the fields;  and}
+ 字段的初始值表达式；}
 
- @item{initialization variables that are bound to initialization
+ @item{@;{initialization variables that are bound to initialization
  arguments.}
+ 绑定到初始化参数的初始化变量。}
 
 ]
 
-In the context of the class system, an @defterm{object} is a
+@;{In the context of the class system, an @defterm{object} is a
 collection of bindings for fields that are instantiated according to a
-class description.
+class description.}
+在类系统的上下文中，一个@defterm{对象（object）}是对一个类描述实例化的字段绑定的一个集合。
 
-The class system allows a program to define a new class (a
+@;{The class system allows a program to define a new class (a
 @deftech{derived class}) in terms of an existing class (the
-@deftech{superclass}) using inheritance, overriding, and augmenting:
+@deftech{superclass}) using inheritance, overriding, and augmenting:}
+这类系统允许一个程序定义一个新类（一个@deftech{派生类（derived class）}）在一个现有的类（@deftech{基类（superclass）}）使用继承、重写和增强：
 
 @itemize[
 
- @item{@deftech{inheritance}: An object of a derived class supports
+ @item{
+  @;{@deftech{inheritance}: An object of a derived class supports
  methods and instantiates fields declared by the derived class's
  superclass, as well as methods and fields declared in the derived
  class expression.}
+@deftech{继承（inheritance）}：一个派生类对象支持的方法和实例字段由派生类的基类声明，以及方法和字段在派生类的表达式中声明。
+    }
 
- @item{@deftech{overriding}: Some methods declared in a superclass can
+ @item{
+  @;{@deftech{overriding}: Some methods declared in a superclass can
  be replaced in the derived class. References to the overridden method
  in the superclass use the implementation in the derived class.}
+@deftech{重写（overriding）}：一些在基类中的方法中声明可以被派生类取代。对基类中的重写方法的引用使用在派生类中的实现。
+ }
 
- @item{@deftech{augmenting}: Some methods declared in a superclass can
+ @item{
+  @;{@deftech{augmenting}: Some methods declared in a superclass can
  be merely extended in the derived class. The superclass method
  specifically delegates to the augmenting method in the derived class.}
+@deftech{增强（augmenting）}：在基类中的一些方法申明可以在派生类中仅仅被扩展。基类方法具体代表派生类中的增强方法。
+ }
 
 ]
 
-An @deftech{interface} is a collection of method names to be
+@;{An @deftech{interface} is a collection of method names to be
 implemented by a class, combined with a derivation requirement. A
-class @deftech{implements} an interface when it
+class @deftech{implements} an interface when it}
+一个@deftech{接口（interface）}是一个对一个类实现的方法名称的集合，并与派生需求相结合。一个类@deftech{实现（implements）}一个接口，在它的以下情况
 
 @itemize[
 
- @item{declares (or inherits) a public method for each variable in the
+ @item{
+  @;{declares (or inherits) a public method for each variable in the
  interface;}
+    声明（或继承）接口中每个变量的一个公共方法；
+    }
 
- @item{is derived from the class required by the interface, if any; and}
+ @item{
+  @;{is derived from the class required by the interface, if any; and}
+    被继承自接口所需的类，如果有的话；
+    }
 
- @item{specifically declares its intention to implement the interface.}
+ @item{
+  @;{specifically declares its intention to implement the interface.}
+    特别声明了它实现接口的目的。
+    }
 
 ]
 
-A class can implement any number of interfaces. A derived class
+@;{A class can implement any number of interfaces. A derived class
 automatically implements any interface that its superclass
 implements. Each class also implements an implicitly-defined interface
 that is associated with the class. The implicitly-defined interface
 contains all of the class's public method names, and it requires that
-all other implementations of the interface are derived from the class.
+all other implementations of the interface are derived from the class.}
+一个类可以实现任意数量的接口。一个派生类自动实现它的基类实现的任何接口。每个类还实现与类关联的一个隐式定义接口。该隐式定义接口包含所有类的公共方法名，并且它要求所有其它接口的实现都是从类派生的。
 
-A new interface can @deftech{extend} one or more interfaces with
+@;{A new interface can @deftech{extend} one or more interfaces with
 additional method names; each class that implements the extended
 interface also implements the original interfaces. The derivation
 requirements of the original interface must be consistent, and the
 extended interface inherits the most specific derivation requirement
-from the original interfaces.
+from the original interfaces.}
+一个新的接口可以用附加的方法名@deftech{扩展（extend）}一个或多个接口；实现扩展接口的每个类也实现原始接口。原始接口的派生要求必须是一致的，并且扩展接口继承了来自原始接口的最具体的派生需求。
 
-Classes, objects, and interfaces are all values. However, a class or
+@;{Classes, objects, and interfaces are all values. However, a class or
 interface is not an object (i.e., there are no ``meta-classes'' or
-``meta-interfaces'').
+``meta-interfaces'').}
+类、对象和接口都是值。但是，一个类或接口不是一个对象（也就是说，没有“元类”或“元接口”）。
 
 @local-table-of-contents[]
 
 @; ------------------------------------------------------------------------
 
-@section[#:tag "createinterface"]{Creating Interfaces}
+@;{@section[#:tag "createinterface"]{Creating Interfaces}}
+@section[#:tag "createinterface"]{创建接口}
 
-@guideintro["classes"]{classes, objects, and interfaces}
+@;{@guideintro["classes"]{classes, objects, and interfaces}}
+@guideintro["classes"]{类、对象和接口}
 
 @defform/subs[(interface (super-interface-expr ...) name-clause ...)
               ([name-clause
                 id
                 (id contract-expr)])]{
 
-Produces an interface. The @racket[id]s must be mutually distinct.
+@;{Produces an interface. The @racket[id]s must be mutually distinct.}
+生成一个接口。@racket[id]必须是互不相同的。 
 
-Each @racket[super-interface-expr] is evaluated (in order) when the
+@;{Each @racket[super-interface-expr] is evaluated (in order) when the
 @racket[interface] expression is evaluated. The result of each
 @racket[super-interface-expr] must be an interface value, otherwise
 the @exnraise[exn:fail:object].  The interfaces returned by the
 @racket[super-interface-expr]s are the new interface's
 superinterfaces, which are all extended by the new interface. Any
 class that implements the new interface also implements all of the
-superinterfaces.
+superinterfaces.}
+在@racket[interface]表达式被求值时，每个@racket[super-interface-expr]被求值（按顺序）。每个@racket[super-interface-expr]的结果必须是一个接口值，否则@exnraise[exn:fail:object]。通过@racket[super-interface-expr]返回的接口是新接口的超级接口，它被新接口进行所有扩展。任何类实现新接口，也实现所有的超接口。
 
-The result of an @racket[interface] expression is an interface that
+@;{The result of an @racket[interface] expression is an interface that
 includes all of the specified @racket[id]s, plus all identifiers from
 the superinterfaces. Duplicate identifier names among the
 superinterfaces are ignored, but if a superinterface contains one of
 the @racket[id]s in the @racket[interface] expression, the
 @exnraise[exn:fail:object]. A given @racket[id] may be paired with
-a corresponding @racket[contract-expr].
+a corresponding @racket[contract-expr].}
+一个@racket[interface]表达式的结果是一个接口，它包括所有指定的@racket[id]，加上来自于超级接口的标识符。在超接口之间的重复标识符名字被忽略，但如果一个超级接口包含@racket[interface]表达式中的@racket[id]之一，@exnraise[exn:fail:object]。一个给定的@racket[id]可以搭配一个相应的@racket[contract-expr]。
 
-If no @racket[super-interface-expr]s are provided, then the derivation
+@;{If no @racket[super-interface-expr]s are provided, then the derivation
 requirement of the resulting interface is trivial: any class that
 implements the interface must be derived from @racket[object%].
 Otherwise, the implementation requirement of the resulting interface
 is the most specific requirement from its superinterfaces. If the
 superinterfaces specify inconsistent derivation requirements, the
-@exnraise[exn:fail:object].
+@exnraise[exn:fail:object].}
+如果没有提供@racket[super-interface-expr]，那么结果作为结果的派生需求是微不足道的：任何实现该接口的类必须从@racket[object%]派生。否则，结果接口的实现需求是来自于它的超级接口的最具体的需求。如果超级接口不一致地指定派生需求，@exnraise[exn:fail:object]。
 
 @examples[
 #:eval class-ctc-eval
@@ -213,18 +254,20 @@ superinterfaces specify inconsistent derivation requirements, the
                 id
                 (id contract-expr)])]{
 
-Like @racket[interface], but also associates to the interface the
+@;{Like @racket[interface], but also associates to the interface the
 structure-type properties produced by the @racket[property-expr]s with
-the corresponding @racket[val-expr]s.
+the corresponding @racket[val-expr]s.}
+就像@racket[interface]，但是也对接口联想到通过@racket[property-expr]用相应的@racket[val-expr]生成的结构类型属性。
 
-Whenever the resulting interface (or a sub-interface derived from it)
+@;{Whenever the resulting interface (or a sub-interface derived from it)
 is explicitly implemented by a class through the @racket[class*] form,
 each property is attached with its value to a structure type that
 instantiated by instances of the class. Specifically, the property is
 attached to a structure type with zero immediate fields, which is
 extended to produce the internal structure type for instances of the
 class (so that no information about fields is accessible to the
-structure type property's guard, if any).
+structure type property's guard, if any).}
+每当作为结果的接口（或一个从它派生的子接口）通过@racket[class*]表被一个类单显式地实现时，每个属性都将其值附加到一个由类实例实例化的结构类型。具体来说，属性被附加到具有零立即字段的结构类型中，该字段被扩展为类的实例生成内部结构类型（因此，如果结构类型属性的守护者没有任何字段的信息，则可以访问）。
 
 @examples[
 #:eval class-eval
@@ -236,17 +279,20 @@ structure type property's guard, if any).
 
 @; ------------------------------------------------------------------------
 
-@section[#:tag "createclass"]{Creating Classes}
+@;{@section[#:tag "createclass"]{Creating Classes}}
+@section[#:tag "createclass"]{创建类}
 
-@guideintro["classes"]{classes and objects}
+@;{@guideintro["classes"]{classes and objects}}
+@guideintro["classes"]{类和对象}
 
 @defthing[object% class?]{
 
-A built-in class that has no methods fields, implements only its own
+@;{A built-in class that has no methods fields, implements only its own
 interface @racket[(class->interface object%)], and is transparent
 (i.e,. its inspector is @racket[#f], so all immediate instances are
 @racket[equal?]). All other classes are derived from @racket[object%].}
-
+一个内置类，没有方法字段，只实现自己的接口@racket[(class->interface object%)]，并且是透明的（即，其检查器是@racket[#f]，所以直接实例是@racket[equal?]）。所有其它类都是从@racket[object%]派生的。
+}
 
 @defform/subs[
 #:literals (inspect init init-field field inherit-field init-rest init-rest
@@ -319,15 +365,17 @@ interface @racket[(class->interface object%)], and is transparent
   (chaperone-procedure method-procedure wrapper-proc
                        other-arg-expr ...)])]{
 
-Produces a class value.
+@;{Produces a class value.}
+生成一个类值。
 
-The @racket[superclass-expr] expression is evaluated when the
+@;{The @racket[superclass-expr] expression is evaluated when the
 @racket[class*] expression is evaluated. The result must be a class
 value (possibly @racket[object%]), otherwise the
 @exnraise[exn:fail:object].  The result of the
-@racket[superclass-expr] expression is the new class's superclass.
+@racket[superclass-expr] expression is the new class's superclass.}
+当@racket[class*]表达式被求值时@racket[superclass-expr]表达式被求值。结果必须是类值（可能是@racket[object%]），否则@exnraise[exn:fail:object]。@racket[superclass-expr]表达式的结果是新的类的基类。
 
-The @racket[interface-expr] expressions are also evaluated when the
+@;{The @racket[interface-expr] expressions are also evaluated when the
 @racket[class*] expression is evaluated, after
 @racket[superclass-expr] is evaluated. The result of each
 @racket[interface-expr] must be an interface value, otherwise the
@@ -337,9 +385,10 @@ identifier in each interface, the class (or one of its ancestors) must
 declare a public method with the same name, otherwise the
 @exnraise[exn:fail:object]. The class's superclass must satisfy the
 implementation requirement of each interface, otherwise the
-@exnraise[exn:fail:object].
+@exnraise[exn:fail:object].}
+@racket[superclass-expr]表达式被求值后，当@racket[class*]表达式被求值时@racket[interface-expr]表达式也被求值。每个@racket[interface-expr]的结果必须是一个接口的值，否则@exnraise[exn:fail:object]。通过@racket[interface-expr]返回的接口都是由类实现。对每个接口的每个标识符，类（或其原型之一）必须用相同的名称声明一个公共方法，否则@exnraise[exn:fail:object]。类的基类必须满足每一个接口的实现需求，否则@exnraise[exn:fail:object]。
 
-An @racket[inspect] @racket[class-clause] selects an inspector (see
+@;{An @racket[inspect] @racket[class-clause] selects an inspector (see
 @secref["inspectors"]) for the class extension. The
 @racket[inspector-expr] must evaluate to an inspector or @racket[#f]
 when the @racket[class*] form is evaluated. Just as for structure
@@ -348,9 +397,10 @@ private fields, and also affects comparisons using @racket[equal?]. If
 no @racket[inspect] clause is provided, access to the class is
 controlled by the parent of the current inspector (see
 @secref["inspectors"]). A syntax error is reported if more than one
-@racket[inspect] clause is specified.
+@racket[inspect] clause is specified.}
+一个@racket[inspect] @racket[class-clause]为类表达式选择一个检查器（见@secref["inspectors"]）。@racket[inspector-expr]必须对一个检查器求值或或当@racket[class*]表被求值时为@racket[#f]。正如结构类型，检查器控制对类字段，包括私有字段的访问，同时也影响使用@racket[equal?]的比较。如果没有提供@racket[inspect]子句，则由当前检查器（请参阅@secref["inspectors"]）的父级控制对类的访问。如果指定了多个@racket[inspect]子句，则报告一个语法错误。
 
-The other @racket[class-clause]s define initialization arguments,
+@;{The other @racket[class-clause]s define initialization arguments,
 public and private fields, and public and private methods. For each
 @racket[id] or @racket[maybe-renamed] in a @racket[public],
 @racket[override], @racket[augment], @racket[pubment],
@@ -359,21 +409,24 @@ public and private fields, and public and private methods. For each
 clause, there must be one @racket[method-definition]. All other
 definition @racket[class-clause]s create private fields. All remaining
 @racket[expr]s are initialization expressions to be evaluated when the
-class is instantiated (see @secref["objcreation"]).
+class is instantiated (see @secref["objcreation"]).}
+其它@racket[class-clause]定义初始化参数、公共字段和私有字段，以及公共和私有方法。对在@racket[public]、@racket[override]、@racket[augment]、@racket[pubment]、@racket[overment]、@racket[augride]、@racket[public-final]、@racket[override-final]、@racket[augment-final]或者@racket[private]子句里的每个@racket[id]或@racket[maybe-renamed]，必须有一个@racket[method-definition]。所有其它定义@racket[class-clause]都创建私有字段。当类被实例化时（请参见@secref["objcreation"]），所有剩余的@racket[expr]是用于求值的初始化表达式。
 
-The result of a @racket[class*] expression is a new class, derived
+@;{The result of a @racket[class*] expression is a new class, derived
 from the specified superclass and implementing the specified
 interfaces. Instances of the class are created with the
 @racket[instantiate] form or @racket[make-object] procedure, as
-described in @secref["objcreation"].
+described in @secref["objcreation"].}
+一个@racket[class*]表达式的结果是一个新的类，从指定的基类派生并实现指定的接口。类的实例是用@racket[instantiate]表或@racket[make-object]过程创建的，如@secref["objcreation"]中所描述的那样。
 
-Each @racket[class-clause] is (partially) macro-expanded to reveal its
+@;{Each @racket[class-clause] is (partially) macro-expanded to reveal its
 shapes. If a @racket[class-clause] is a @racket[begin] expression, its
 sub-expressions are lifted out of the @racket[begin] and treated as
 @racket[class-clause]s, in the same way that @racket[begin] is
-flattened for top-level and embedded definitions.
+flattened for top-level and embedded definitions.}
+每个@racket[class-clause]是（部分地）宏展开以显示其形状。如果一个@racket[class-clause]是一个@racket[begin]表达式，它的子表达式将从@racket[begin]就被取消，并被当作@racket[class-clause]处理，同样地，对于顶级和嵌入的定义来说，@racket[begin]是扁平的。
 
-Within a @racket[class*] form for instances of the new class,
+@;{Within a @racket[class*] form for instances of the new class,
 @racket[this] is bound to the object itself;
 @racket[this%] is bound to the class of the object;
 @racket[super-instantiate], @racket[super-make-object], and
@@ -383,10 +436,13 @@ available for calling superclass methods (see
 @secref["clmethoddefs"]); and @racket[inner] is available for
 calling subclass augmentations of methods (see
 @secref["clmethoddefs"]).}
+在一个@racket[class*]表用于新类的实例中，@racket[this]被绑定到对象本身；@racket[this%]被绑定到对象的类；@racket[super-instantiate]、@racket[super-make-object]和@racket[super-new]被绑定到基类（参见@secref["objcreation"]）中的初始化字段的表；@racket[super]可用于调用基类方法（见@secref["clmethoddefs"]）；@racket[inner]可供调用方法（见@secref["clmethoddefs"]）的子类增强。
+}
 
 @defform[(class superclass-expr class-clause ...)]{
 
-Like @racket[class*], but omits the @racket[_interface-expr]s, for the case that none are needed.
+@;{Like @racket[class*], but omits the @racket[_interface-expr]s, for the case that none are needed.}
+类似于@racket[class*]，但忽略@racket[_interface-expr]，因为不需要。
 
 @examples[
 #:eval class-eval
@@ -401,10 +457,11 @@ Like @racket[class*], but omits the @racket[_interface-expr]s, for the case that
 
 @defidform[this]{
 
-@index['("self")]{Within} a @racket[class*] form, @racket[this] refers
+@;{@index['("self")]{Within} a @racket[class*] form, @racket[this] refers
 to the current object (i.e., the object being initialized or whose
 method was called). Use outside the body of a @racket[class*] form is
-a syntax error.
+a syntax error.}
+@index['("self")]{在}一个@racket[class*]表中，@racket[this]指当前对象（即，正在初始化的对象或其方法被调用）。在外面使用一个@racket[class*]表的主体是一个语法错误。
 
 @examples[
 #:eval class-eval
@@ -421,10 +478,11 @@ a syntax error.
 
 @defidform[this%]{
                   
-Within a @racket[class*] form, @racket[this%] refers to the class
+@;{Within a @racket[class*] form, @racket[this%] refers to the class
 of the current object (i.e., the object being initialized or whose
 method was called).  Use outside the body of a @racket[class*] form is
-a syntax error.
+a syntax error.}
+在@racket[class*]表中，@racket[this%]指当前对象（即，正在初始化的对象或其方法被调用）的类。在外面使用一个@racket[class*]表的主体是一个语法错误。
 
 @examples[
 #:eval class-eval
@@ -697,34 +755,41 @@ a syntax error.
   ...)
 ]{
 
-Like @racket[class*], but includes a sub-expression to be used as the
+@;{Like @racket[class*], but includes a sub-expression to be used as the
 source for all syntax errors within the class definition. For example,
 @racket[define-serializable-class] expands to @racket[class/derived]
 so that errors in the body of the class are reported in terms of
-@racket[define-serializable-class] instead of @racket[class].
+@racket[define-serializable-class] instead of @racket[class].}
+类似于@racket[class*]，但包含一个子表达式，以用作类定义中所有语法错误的源。例如，@racket[define-serializable-class]扩展到@racket[class/derived]以便该类主体中的错误在@racket[define-serializable-class]术语中报告，而不是在@racket[class]中报告。
 
-The @racket[original-datum] is the original expression to use for
-reporting errors.
+@;{The @racket[original-datum] is the original expression to use for
+reporting errors.}
+@racket[original-datum]是用于报告错误的原始表达式。
 
-The @racket[name-id] is used to name the resulting class; if it
-is @racket[#f], the class name is inferred.
+@;{The @racket[name-id] is used to name the resulting class; if it
+is @racket[#f], the class name is inferred.}
+@racket[name-id]是用于命名结果类；如果是@racket[#f]，类名被推断。
 
-The @racket[super-expr], @racket[interface-expr]s, and
-@racket[class-clause]s are as for @racket[class*].
+@;{The @racket[super-expr], @racket[interface-expr]s, and
+@racket[class-clause]s are as for @racket[class*].}
+@racket[super-expr]、@racket[interface-expr]和@racket[class-clause]是作为@racket[class*]。
 
-If the @racket[deserialize-id-expr] is not literally @racket[#f], then
+@;{If the @racket[deserialize-id-expr] is not literally @racket[#f], then
 a serializable class is generated, and the result is two values
 instead of one: the class and a deserialize-info structure produced by
 @racket[make-deserialize-info]. The @racket[deserialize-id-expr]
 should produce a value suitable as the second argument to
 @racket[make-serialize-info], and it should refer to an export whose
-value is the deserialize-info structure.
+value is the deserialize-info structure.}
+如果@racket[deserialize-id-expr]不是字面上的@racket[#f]，那么生成一个可序列化的类，并且结果是两个值而不是一个：类和通过@racket[make-deserialize-info]生成的反序列化信息结构。@racket[deserialize-id-expr]应该产生一个合适的值作为给@racket[make-serialize-info]的第二个参数，并且它应该指向一个导出，其值是反序列化信息结构。
 
-Future optional forms may be added to the sequence that currently ends
+@;{Future optional forms may be added to the sequence that currently ends
 with @racket[deserialize-id-expr].}
+未来可选的表可能会用@racket[deserialize-id-expr]添加到目前最后部分的序列中。
+}
 
 @; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-
+@;??????????????????????????????????????????????????????????
 @subsection[#:tag "clinitvars"]{Initialization Variables}
 
 A class's initialization variables, declared with @racket[init],

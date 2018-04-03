@@ -1,12 +1,15 @@
 #lang scribble/doc
 @(require "mz.rkt")
 
-@title[#:style 'toc #:tag "data"]{Datatypes}
+@;{@title[#:style 'toc #:tag "data"]{Datatypes}}
+@title[#:style 'toc #:tag "data"]{数据类型}
 
-@guideintro["datatypes"]{Datatypes}
+@;{@guideintro["datatypes"]{Datatypes}}
+@guideintro["datatypes"]{数据类型}
 
-Each pre-defined datatype comes with a set of procedures for
-manipulating instances of the datatype.
+@;{Each pre-defined datatype comes with a set of procedures for
+manipulating instances of the datatype.}
+每个预定义的数据类型配备一组操纵数据类型实例的程序。
 
 @local-table-of-contents[#:style 'immediate-only]
 

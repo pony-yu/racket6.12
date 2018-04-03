@@ -12,9 +12,11 @@
 @(define math-eval (make-base-eval))
 @examples[#:hidden #:eval math-eval (require racket/math)]
 
-@title[#:tag "numbers" #:style '(toc)]{Numbers}
+@;{@title[#:tag "numbers" #:style '(toc)]{Numbers}}
+@title[#:tag "numbers" #:style '(toc)]{数字}
 
-@guideintro["numbers"]{numbers}
+@;{@guideintro["numbers"]{numbers}}
+@guideintro["numbers"]{数字}
 
 All @deftech{numbers} are @deftech{complex numbers}. Some of them are
 @deftech{real numbers}, and all of the real numbers that can be
@@ -846,9 +848,13 @@ both in binary and as integers.
 @mz-examples[(integer-length 8) (integer-length -8)]}
 
 @; ------------------------------------------------------------------------
-@subsection{Random Numbers}
+@;{@subsection{Random Numbers}}
+@subsection[#:tag "Random-Numbers"]{随机数}
 
-@margin-note{When security is a concern, use @racket[crypto-random-bytes] instead of @racket[random].}
+@margin-note{
+ @;{When security is a concern, use @racket[crypto-random-bytes] instead of @racket[random].}
+当安全性受到关注时，使用@racket[crypto-random-bytes]代替@racket[random]。
+}
 
 @defproc*[([(random [k (integer-in 1 4294967087)]
                     [rand-gen pseudo-random-generator?
@@ -863,25 +869,31 @@ both in binary and as integers.
                               (current-pseudo-random-generator)]) 
             (and/c real? inexact? (>/c 0) (</c 1))])]{  
 
-When called with an integer argument @racket[k], returns a random
-exact integer in the range @racket[0] to @math{@racket[k]-1}.
+@;{When called with an integer argument @racket[k], returns a random
+exact integer in the range @racket[0] to @math{@racket[k]-1}.}
+当使用一个整型参数@racket[k]调用，返回在范围@racket[0]到@math{@racket[k]}-1里的一个随机精确整数。
 
-When called with two integer arguments @racket[min] and @racket[max], returns a
-random exact integer in the range @racket[min] to @math{@racket[max]-1}.
+@;{When called with two integer arguments @racket[min] and @racket[max], returns a
+random exact integer in the range @racket[min] to @math{@racket[max]-1}.}
+当使用两个整数参数的@racket[min]和@racket[max]调用，返回在范围@racket[min]到@math{@racket[max]}-1里的一个随机精确整数。
 
-When called with zero arguments, returns a random inexact number between
-@racket[0] and @racket[1], exclusive.
+@;{When called with zero arguments, returns a random inexact number between
+@racket[0] and @racket[1], exclusive.}
+当用零参数调用时，返回一个@racket[0]到@racket[1]之间的随机不精确数字。
 
-In each case, the number is provided by the given pseudo-random number
+@;{In each case, the number is provided by the given pseudo-random number
 generator (which defaults to the current one, as produced by
 @racket[current-pseudo-random-generator]). The generator maintains an
 internal state for generating numbers. The random number generator
 uses a 54-bit version of L'Ecuyer's MRG32k3a algorithm
-@cite["L'Ecuyer02"].
+@cite["L'Ecuyer02"].}
+在每种情况下，该数字由给定的伪随机数生成器（默认为当前的由@racket[current-pseudo-random-generator]生成）提供。生成器维护生成数字的一个内部状态。随机数发生器采用L'Ecuyer的MRG32k3a算法@cite["L'Ecuyer02"]的一个54位版本。
 
-@history[#:changed "6.4"]{Added support for ranges.}}
+@;{@history[#:changed "6.4"]{Added support for ranges.}}
+@history[#:changed "6.4"]{增加了对范围的支持。}
+}
 
-
+@;????????????????????????????????????????????????????????????????
 @defproc[(random-seed [k (integer-in 0 (sub1 (expt 2 31)))])
           void?]{
 

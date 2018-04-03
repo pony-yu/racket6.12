@@ -4,6 +4,7 @@
 @(define fl-eval (make-base-eval))
 @examples[#:hidden #:eval fl-eval (require racket/flonum)]
 
+@;{@title[#:tag "flonums"]{Flonums}}
 @title[#:tag "flonums"]{Flonums}
 
 @defmodule[racket/flonum]
@@ -13,6 +14,7 @@ The @racketmodname[racket/flonum] library provides operations like
 @tech{flonums}. Flonum-specific operations can provide better
 performance when used consistently, and they are as safe as generic
 operations like @racket[+].
+
 
 @guidealso["fixnums+flonums"]
 
