@@ -380,11 +380,11 @@ V 1 Language Model
 
       5.7 Structure Type Transformer Binding
 
-    6 Classes and Objects
+V    6 Classes and Objects
 
-      6.1 Creating Interfaces
+V      6.1 Creating Interfaces
 
-      6.2 Creating Classes
+V      6.2 Creating Classes
 
         6.2.1 Initialization Variables
 
@@ -574,7 +574,7 @@ V 1 Language Model
 
       11.6 Engines
 
-    12 Macros
+V    12 Macros
 
       12.1 Pattern-Based Syntax Matching
 
@@ -604,7 +604,7 @@ V 1 Language Model
 
         12.9.1 Information on Expanded Modules
 
-      12.10 File Inclusion
+V      12.10 File Inclusion
 
       12.11 Syntax Utilities
 

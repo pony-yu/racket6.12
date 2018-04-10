@@ -789,33 +789,38 @@ with @racket[deserialize-id-expr].}
 }
 
 @; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-@;??????????????????????????????????????????????????????????
-@subsection[#:tag "clinitvars"]{Initialization Variables}
 
-A class's initialization variables, declared with @racket[init],
+@;@subsection[#:tag "clinitvars"]{Initialization Variables}
+@subsection[#:tag "clinitvars"]{初始化变量}
+
+@;{A class's initialization variables, declared with @racket[init],
 @racket[init-field], and @racket[init-rest], are instantiated
 for each object of a class. Initialization variables can be used in
 the initial value expressions of fields, default value expressions
 for initialization arguments, and in initialization expressions.  Only
 initialization variables declared with @racket[init-field] can be
 accessed from methods; accessing any other initialization variable
-from a method is a syntax error.
+from a method is a syntax error.}
+用@racket[init]、@racket[init-field]和@racket[init-rest]声明的一个类的初始化变量，被声明给一个类的每个对象。初始化变量可用于字段的初始值表达式、初始化参数的默认值表达式以及初始化表达式中。只有用@racket[init-field]声明的初始化变量可以从方法访问；从方法访问任何其它初始化变量都是一个语法错误。
 
-The values bound to initialization variables are
+@;{The values bound to initialization variables are}
+绑定到初始化变量的值是
 
 @itemize[
 
- @item{the arguments provided with @racket[instantiate] or passed to
+ @item{@;{the arguments provided with @racket[instantiate] or passed to
  @racket[make-object], if the object is created as a direct instance
  of the class; or,}
+  如果对象是作为类的一个直接实例创建，参数用@racket[instantiate]提供或传递给@racket[make-object]；或，}
 
- @item{the arguments passed to the superclass initialization form or
+ @item{@;{the arguments passed to the superclass initialization form or
  procedure, if the object is created as an instance of a derived
  class.}
+ 如果对象被创建为一个派生类的一个实例，参数传递给基类的初始化表或程序。}
 
 ]
 
-If an initialization argument is not provided for an initialization
+@;{If an initialization argument is not provided for an initialization
 variable that has an associated @racket[_default-value-expr], then the
 @racket[_default-value-expr] expression is evaluated to obtain a value
 for the variable. A @racket[_default-value-expr] is only evaluated when
@@ -824,8 +829,10 @@ an argument is not provided for its variable. The environment of
 variables, all of the fields, and all of the methods of the class. If
 multiple @racket[_default-value-expr]s are evaluated, they are
 evaluated from left to right. Object creation and field initialization
-are described in detail in @secref["objcreation"].
+are described in detail in @secref["objcreation"].}
+如果一个初始化参数不提供一个初始化的变量，它有一个关联的@racket[_default-value-expr]，那么@racket[_default-value-expr]表达式被求值以获得一个给变量的值，一个@racket[_default-value-expr]仅在一个参数不提供给它的变量时被求值。@racket[_default-value-expr]的环境包括所有的初始化变量、所有的字段、所有的类方法。如果多个@racket[_default-value-expr]被求值，它们被从左到右。对象创建和字段初始化在@secref["objcreation"]中进行了详细描述。
 
+@;???????????????????????????????????????????????????????????????????????
 If an initialization variable has no @racket[_default-value-expr], then
 the object creation or superclass initialization call must supply an
 argument for the variable, otherwise the @exnraise[exn:fail:object].
