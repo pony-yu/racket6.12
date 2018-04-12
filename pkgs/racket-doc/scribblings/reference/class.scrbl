@@ -832,31 +832,34 @@ evaluated from left to right. Object creation and field initialization
 are described in detail in @secref["objcreation"].}
 如果一个初始化参数不提供一个初始化的变量，它有一个关联的@racket[_default-value-expr]，那么@racket[_default-value-expr]表达式被求值以获得一个给变量的值，一个@racket[_default-value-expr]仅在一个参数不提供给它的变量时被求值。@racket[_default-value-expr]的环境包括所有的初始化变量、所有的字段、所有的类方法。如果多个@racket[_default-value-expr]被求值，它们被从左到右。对象创建和字段初始化在@secref["objcreation"]中进行了详细描述。
 
-@;???????????????????????????????????????????????????????????????????????
-If an initialization variable has no @racket[_default-value-expr], then
+@;{If an initialization variable has no @racket[_default-value-expr], then
 the object creation or superclass initialization call must supply an
-argument for the variable, otherwise the @exnraise[exn:fail:object].
+argument for the variable, otherwise the @exnraise[exn:fail:object].}
+如果一个初始化的变量没有@racket[_default-value-expr]，那么创建对象或基类的初始化调用必须给这个变量提供一个可变参数，否则@exnraise[exn:fail:object]。
 
-Initialization arguments can be provided by name or by position.  The
+@;{Initialization arguments can be provided by name or by position.  The
 external name of an initialization variable can be used with
 @racket[instantiate] or with the superclass initialization form. Those
 forms also accept by-position arguments. The @racket[make-object]
 procedure and the superclass initialization procedure accept only
-by-position arguments.
+by-position arguments.}
+初始化参数可以通过名称或位置提供。一个初始化变量的外部名称可用于@racket[instantiate]或基类的初始化表。这些表也接受通过位置提供的参数。@racket[make-object]程序和基类的初始化程序只接受通过位置提供的参数。
 
-Arguments provided by position are converted into by-name arguments
+@;{Arguments provided by position are converted into by-name arguments
 using the order of @racket[init] and @racket[init-field] clauses and
 the order of variables within each clause. When an @racket[instantiate]
 form provides both by-position and by-name arguments, the converted
 arguments are placed before by-name arguments. (The order can be
-significant; see also @secref["objcreation"].)
+significant; see also @secref["objcreation"].)}
+通过位置提供的参数用@racket[init]和@racket[init-field]子句的顺序和每个子句中的变量顺序转换成通过名字提供的参数。当一个@racket[instantiate]表既提供按位置的参数也提供按名称的参数时，转换的参数将被放置在按名称的参数之前（顺序可能很重要，请参见@secref["objcreation"]。）
 
-Unless a class contains an @racket[init-rest] clause, when the number
+@;{Unless a class contains an @racket[init-rest] clause, when the number
 of by-position arguments exceeds the number of declared initialization
 variables, the order of variables in the superclass (and so on, up the
-superclass chain) determines the by-name conversion.
+superclass chain) determines the by-name conversion.}
+除非一个类包含一个@racket[init-rest]子句，当由位置提供的参数数量超过声明初始化变量的个数，基类中的变量顺序（等等，在基类上连续）确定通过名称的转换。
 
-If a class expression contains an @racket[init-rest] clause, there
+@;{If a class expression contains an @racket[init-rest] clause, there
 must be only one, and it must be last. If it declares a variable, then
 the variable receives extra by-position initialization arguments as a
 list (similar to a dotted ``rest argument'' in a procedure).  An
@@ -864,28 +867,34 @@ list (similar to a dotted ``rest argument'' in a procedure).  An
 arguments that are left over from a by-name conversion for a derived
 class. When a derived class's superclass initialization provides even
 more by-position arguments, they are prefixed onto the by-position
-arguments accumulated so far.
+arguments accumulated so far.}
+如果一个类表达式包含一个@racket[init-rest]子句，那么必须只有一个，并且它必须是最后一个。如果它声明了一个变量，那么这个变量会接受额外的位置初始化参数作为一个列表（类似于一个过程中的一个带“rest argument”点缀的参数）。一个@racket[init-rest]变量可以接受位置初始化参数，它从一个名称参数转化给一个派生类。当一个派生类的基类初始化提供更多位置参数，它们被前缀上积累更多的位置参数。
 
-If too few or too many by-position initialization arguments are
+@;{If too few or too many by-position initialization arguments are
 provided to an object creation or superclass initialization, then the
 @exnraise[exn:fail:object]. Similarly, if extra by-position arguments
 are provided to a class with an @racket[init-rest] clause, the
-@exnraise[exn:fail:object].
+@exnraise[exn:fail:object].}
+如果太少或者太多的位置初始化参数被提供给一个对象创建或基类初始化，那么@exnraise[exn:fail:object]。同样，如果额外的位置参数提供给了一个带@racket[init-rest]子句的类，那么@exnraise[exn:fail:object]。
 
-Unused (by-name) arguments are to be propagated to the superclass, as
+@;{Unused (by-name) arguments are to be propagated to the superclass, as
 described in @secref["objcreation"].  Multiple initialization
 arguments can use the same name if the class derivation contains
 multiple declarations (in different classes) of initialization
 variables with the name. See @secref["objcreation"] for further
-details.
+details.}
+未使用的（名字）参数是被传播给基类，作为描述参见@secref["objcreation"]。如果类派生包含多个带有名称的初始化变量的声明（在不同的类中），则多个初始化参数可以使用相同的名称。有关更详细的信息，请参见@secref["objcreation"]。
 
-See also @secref["extnames"] for information about internal and
-external names.
+@;{See also @secref["extnames"] for information about internal and
+external names.}
+有关内部和外部名称的信息，也可以参阅@secref["extnames"]。
 
 @; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-@subsection[#:tag "clfields"]{Fields}
+@;{@subsection[#:tag "clfields"]{Fields}}
+@subsection[#:tag "clfields"]{字段}
 
+@;??????????????????????????????????????????????????????????????
 Each @racket[field], @racket[init-field], and non-method
 @racket[define-values] clause in a class declares one or more new
 fields for the class. Fields declared with @racket[field] or
