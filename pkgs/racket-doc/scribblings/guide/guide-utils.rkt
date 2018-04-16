@@ -21,7 +21,8 @@
          r5rs r6rs)
 
 (define Quick
-  (other-manual '(lib "scribblings/quick/quick.scrbl")))
+  ;(other-manual '(lib "scribblings/quick/quick.scrbl"))
+  (link "https://docs.racket-lang.org/quick/index.html" "Quick: An Introduction to Racket with Pictures"))
 
 (define HtDP
   (italic (link "http://www.htdp.org" "How to Design Programs")))
@@ -64,7 +65,9 @@
 (define (ext-refsecref s)
   (make-element #f (list (refsecref s) " in " Racket)))
 
-(define Racket (other-manual '(lib "scribblings/reference/reference.scrbl")))
+(define Racket
+  @;{(other-manual '(lib "scribblings/reference/reference.scrbl"))}
+  (link "https://docs.racket-lang.org/reference/index.html" "The Racket Reference"))
 
 (define r6rs @elem{R@superscript{6}RS})
 (define r5rs @elem{R@superscript{5}RS})

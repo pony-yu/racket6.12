@@ -6,73 +6,69 @@
 @(define piece-eval (make-base-eval))
 
 @;{@title[#:tag "intro"]{Welcome to Racket}}
-@title[#:tag "intro"]{Racket语言欢迎你!}
+@title[#:tag "intro"]{欢迎来到Racket!}
 
 @;{Depending on how you look at it, @bold{Racket} is}
 取决于你如何看待它，Racket语言是：
 
-@;{@itemize[
-
- @item{a @defterm{programming language}---a dialect of Lisp and a
-       descendant of Scheme;
-
-       @margin-note{See @secref["dialects"] for more information on
-       other dialects of Lisp and how they relate to Racket.}}
-
- @item{a @defterm{family} of programming languages---variants of
-       Racket, and more; or}
-
- @item{a set of @defterm{tools}---for using a family of programming languages.}
-]}
 @itemize[
-         
- @item{@defterm{一种@defterm{编程语言（programming language）}}——一种Lisp语言的方言，继承于Scheme；
- @margin-note{参见@secref["dialects"]以获取更多关于Lisp其它方言的信息，以及它们与Racket的关系。}}
-  
- @item{@defterm{一@defterm{系列（family）}编程语言}——如Racket或者其它等等；}
- 
- @item{@defterm{一系列@defterm{工具（tools）}}——用于一系列编程语言的。}
- 
- ]
+
+ @item{@;{a @defterm{programming language}---a dialect of Lisp and a
+       descendant of Scheme;}
+@defterm{一种@defterm{编程语言（programming language）}}——Lisp语言的一种方言和Scheme的一种派生语言；
+
+       @;{@margin-note{See @secref["dialects"] for more information on
+       other dialects of Lisp and how they relate to Racket.}}
+@margin-note{参见《@secref["dialects"]》以获取更多关于Lisp其它方言的信息以及它们与Racket的关系。}
+  }
+
+ @item{@;{a @defterm{family} of programming languages---variants of
+       Racket, and more; or}
+@defterm{编程语言的一个@defterm{家族（family）}}——Racket的变体，以及更多的；
+  }
+
+ @item{@;{a set of @defterm{tools}---for using a family of programming languages.}
+@defterm{一系列@defterm{工具（tools）}}——用于编程语言的一个家族。
+  }
+   
+]
+
 
 @;{Where there is no room for confusion, we use simply @defterm{Racket}.}
-当不会出现混乱的地方，我们就用简单的@defterm{Racket}。
+在不会有混乱的情况下，我们简单地使用@defterm{Racket}。
 
 @;{Racket's main tools are}
-Racket的主要工具是包括：
+Racket的主要工具是：
 
-@;{@itemize[
-
- @tool[@exec{racket}]{the core compiler, interpreter, and run-time system;}
-
- @tool["DrRacket"]{the programming environment; and}
-
- @tool[@exec{raco}]{a command-line tool for executing @bold{Ra}cket
- @bold{co}mmands that install packages, build libraries, and more.}
-
-]}
 @itemize[
-         
- @tool[@exec{racket}]{核心编译器、解释器和运行时系统；}
-  
- @tool["DrRacket"]{编程环境；}
- 
- @tool[@exec{raco}]{一个用于执行@bold{Ra}cket的@bold{co}mmand（命令）以安装软件包、建立库等等的命令行工具。}
 
- ]
+ @tool[@exec{racket}]{
+   @;{the core compiler, interpreter, and run-time system;}
+  核心编译器、解释器和运行时系统；}
+
+ @tool["DrRacket"]{
+   @;{the programming environment; and}
+  编程环境；}
+
+ @tool[@exec{raco}]{
+   @;{a command-line tool for executing @bold{Ra}cket
+ @bold{co}mmands that install packages, build libraries, and more.}
+用于执行为安装软件包、建立库等等的@bold{Ra}cket@bold{命令}的一个命令行（command-line）工具。}
+
+]
 
 @;{Most likely, you'll want to explore the Racket language using
 DrRacket, especially at the beginning. If you prefer, you can also
 work with the command-line @exec{racket} interpreter and your favorite
 text editor; see also @secref["other-editors"]. The rest of this guide
 presents the language mostly independent of your choice of editor.}
-最有可能的是，你想使用DrRacket探索Racket语言，尤其是在开始阶段。如果您愿意，您还可以使用命令行@exec{racket}解释器和您喜欢的文本编辑器,也可以参见@secref["other-editors"]部分内容。本指南的其余部分介绍了与语言无关的编辑器的选择。
+最有可能的是，你想使用DrRacket探索Racket语言，尤其是在开始阶段。如果你要更进一步，你还可以使用命令行@exec{racket}解释器和你喜欢的文本编辑器；也可以参见《@secref["other-editors"]》。本指南的其余部分介绍这个语言大多都无关于你的编辑器选择。
 
 @;{If you're using DrRacket, you'll need to choose the proper language,
 because DrRacket accommodates many different variants of Racket, as
 well as other languages. Assuming that you've never used DrRacket
 before, start it up, type the line}
-如果你使用DrRacket，就需要选择适当的语言，因为DrRacket可以容纳许多不同的变种如Racket，以及其他语言。如果你以前从未使用DrRacket，启动它，在DrRacket顶上的文本区域输入这一行：
+如果你正在使用DrRacket，就将需要选择适当的语言，因为DrRacket可以容纳许多不同Racket变体，以及其它语言。如果你以前从未使用DrRacket，启动它，在DrRacket顶上的文本区域键入这一行：
 
 @racketmod[racket]
 
@@ -80,10 +76,12 @@ before, start it up, type the line}
 that's above the text area. DrRacket then understands that you mean to
 work in the normal variant of Racket (as opposed to the smaller
 @racketmodname[racket/base] or many other possibilities).}
-然后单击@onscreen{运行（Run）}按钮的上方的文本区。DrRacket就明白你的意思在Racket执行正常变体的工作（相对于较小的@racketmodname[racket/base]或许多其他的可能性）。
+然后点击文本区域上方的@onscreen{Run}（运行）按钮。DrRacket接着就明白你的意思是在Racket的正常变体下工作（相对于较小的@racketmodname[racket/base]或许多其它的可能性来讲）。
 
-@margin-note{@secref["more-hash-lang"] describes some of the other
+@margin-note{@;{@secref["more-hash-lang"] describes some of the other
              possibilities.}
+《@secref["more-hash-lang"]》描述一些其它的可能性。
+}
 
 @;{If you've used DrRacket before with something other than a program
 that starts @hash-lang[], DrRacket will remember the last language
@@ -93,18 +91,18 @@ menu item.  In the dialog that appears, select the first item, which
 tells DrRacket to use the language that is declared in a source
 program via @hash-lang[]. Put the @hash-lang[] line above in the top
 text area, still.}
-如果你使用DrRacket之前已经使用了其它以@hash-lang[]开始，那么DrRacket会记得你上次使用的语言，而不是从@hash-lang[]推断的语言。在这种情况下，使用@menuitem["Language" "Choose Language..."]（语言|选择语言……）菜单项去改变。在出现的对话框中，选择第一项，它告诉DrRacket使用通过@hash-lang[]申明在源程序中的语言。仍然要把把@hash-lang[]放在文本区域的顶部的。
+如果你之前用除了以@hash-lang[]开始的一个程序之外程序使用过DrRacket，那么DrRacket会记住你使用的这个最后的语言，而不是从@hash-lang[]推断这个语言。在这种情况下，使用@menuitem["Language" "Choose Language..."]（语言|选择语言……）菜单项。在出现的对话框中，选择第一项，它告诉DrRacket使用通过@hash-lang[]在源程序中申明的这个语言。仍然要把@hash-lang[]行放在文本区域的顶部上面。
 
 @; ----------------------------------------------------------------------
 @;{@section{Interacting with Racket}}
-@section[#:tag "Interacting_with_Racket"]{与Racket语言交互}
+@section[#:tag "Interacting_with_Racket"]{用Racket进行交互}
 
 @;{DrRacket's bottom text area and the @exec{racket} command-line program
 (when started with no options) both act as a kind of calculator. You
 type a Racket expression, hit the Return key, and the answer is
 printed. In the terminology of Racket, this kind of calculator is
 called a @idefterm{read-eval-print loop} or @deftech{REPL}.}
-DrRacket底部的文本区和@exec{racket}的命令行程序（启动时没有选择）作为一种计算器。你打出一个racket的表达式，按下回车键，答案就打印出来了。在Racket的术语里，这种计算器叫做@idefterm{读取求值打印（read-eval-print）}循环或@deftech{REPL}。
+DrRacket的底部文本区和@exec{racket}的命令行程序（当不带选项启动时）都可以扮作一种计算器。你打出一个racket的表达式，按下回车键，答案就打印出来了。在Racket的术语里，这种计算器叫做一个@idefterm{读取求值打印循环}（read-eval-print loop）或@deftech{REPL}。
 
 @;{A number by itself is an expression, and the answer is just the
 number:}
@@ -114,7 +112,7 @@ number:}
 
 @;{A string is also an expression that evaluates to itself. A string is
 written with double quotes at the start and end of the string:}
-字符串也是一个求值的表达式。字符串在字符串的开始和结尾使用双引号：
+一个字符串也是一个求值为自身的表达式。一个字符串在字符串的开始和结尾使用双引号来书写：
 
 @interaction["Hello, world!"]
 
@@ -124,7 +122,7 @@ call is written: open parenthesis, function name, argument
 expression, and closing parenthesis. The following expression calls
 the built-in function @racket[substring] with the arguments
 @racket["the boy out of the country"], @racket[4], and @racket[7]:}
-Racket使用圆括号包装较大的表达式——几乎任何一种表达式，而不是简单的常数。例如，函数调用被写入：大括号，函数名，参数表达式，闭括号。下面的表达式用参数调用@racket["the boy out of the country"]、@racket[4]和@racket[7]调用内置函数@racket[substring]：
+Racket使用圆括号包裹较大的表达式——几乎任何一种表达式，而不是简单的常数。例如，一个函数调用被写为：开括号，函数名，参数表达式和闭括号。下面的表达式用参数@racket["the boy out of the country"]、@racket[4]和@racket[7]调用内置函数@racket[substring]：
 
 @interaction[(substring "the boy out of the country" 4 7)]
 
@@ -134,7 +132,7 @@ Racket使用圆括号包装较大的表达式——几乎任何一种表达式�
 
 @;{You can define your own functions that work like @racket[substring] by
 using the @racket[define] form, like this:}
-你可以通过使用@racket[define]表像@racket[substring]那样定义自己的函数，像这样：
+你能够通过使用@racket[define]表定义像@racket[substring]那样工作的你自己的函数，像这样：
 
 @def+int[
 #:eval piece-eval
@@ -149,7 +147,7 @@ definitions are normally a part of a program that you want to keep and
 use later. So, in DrRacket, you'd normally put the definition in the
 top text area---called the @deftech{definitions area}---along with the
 @hash-lang[] prefix:}
-虽然你可以在@tech{REPL}求值这个@racket[define]表，但定义通常是你要保持并今后使用一个程序的一部分。所以，在DrRacket中，你通常会把定义放在顶部的文本区——被称作@deftech{定义区域（definitions area）}——随着@hash-lang[]前缀一起：
+虽然你可以在@tech{REPL}中求值@racket[define]表，但定义通常是你想去保持并今后使用的一个程序的一部分。所以，在DrRacket中，你通常会把定义放在顶部文本区——被称作@deftech{定义区域（definitions area）}——随着@hash-lang[]前缀一起：
 
 @racketmod[
 racket
@@ -158,6 +156,7 @@ code:blank
   (substring str 4 7))
 ]
 
+@;????????????????????????????????????????????????????????????????????????
 @;{If calling @racket[(extract "the boy")] is part of the main action of
 your program, that would go in the @tech{definitions area}, too. But
 if it was just an example expression that you were using to explore
