@@ -7,7 +7,7 @@
 @;{This chapter provides a quick introduction to Racket as background for
 the rest of the guide. Readers with some Racket experience can safely
 skip to @secref["datatypes"].}
-本章提供了一个快速入门的以Racket语言骨架作为背景的指南。有Racket经验的读者可以直接跳到《内置数据类型》（@secref["datatypes"]）部分。
+本章提供了一个对Racket的快速入门作为给这个指南余下部分的背景。有一些Racket经验的读者可以直接跳到《@secref["datatypes"]》部分。
 
 @local-table-of-contents[]
 
