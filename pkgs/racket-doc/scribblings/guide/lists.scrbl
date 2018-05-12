@@ -14,11 +14,11 @@
 @;{Racket is a dialect of the language Lisp, whose name originally stood
 for ``LISt Processor.'' The built-in list datatype remains a prominent
 feature of the language.}
-Racket语言是Lisp的一种方言，名字来自于“LISt Processor”。内置的列表数据类型保持了这种语言的一个显著特征。
+Racket语言是Lisp语言的一种方言，名字来自于“LISt Processor”。内置的列表数据类型保留了这种语言的一个显著特征。
 
 @;{The @racket[list] function takes any number of values and returns
 a list containing the values:}
-@racket[list]函数接受任意数量的值并返回包含值的列表：
+@racket[list]函数接受任意数量的值并返回一个包含这些值的列表：
 
 @interaction[(list "red" "green" "blue")
              (list 1 2 3 4 5)]
@@ -26,7 +26,7 @@ a list containing the values:}
 @;{@margin-note{A list usually prints with @litchar{'}, but the printed
              form of a list depends on its content. See
              @secref["pairs"] for more information.}}
-@margin-note{一个列表通常用@litchar{'}打印，但是一个列表的打印形式取决于它的内容。更多信息请看@secref["pairs"]。}
+@margin-note{一个列表通常用@litchar{'}打印，但是一个列表的打印形式取决于它的内容。更多信息请看《@secref["pairs"]》。}
 
 @;{As you can see, a list result prints in the @tech{REPL} as a quote
 @litchar{'} and then a pair of parentheses wrapped around the printed
@@ -36,10 +36,10 @@ because parentheses are used for both expressions, such as
 @racketresult['("red" "green" "blue")]. In addition to the quote,
 parentheses for results are printed in blue in the documentation and
 in DrRacket, whereas parentheses for expressions are brown.}
-你可以看到，一个列表的结果是作为引用（@litchar{'}）打印在@tech{REPL}中，并且采用一对圆括号包围的列表元素的打印表。这里有一个容易混淆的地方，因为两个表达式都使用圆括号，比如@racket[(list "red" "green" "blue")]，那么打印结果为@racketresult['("red" "green" "blue")]。除了引用，括号中的结果在文档中和DrRacket中打印为蓝色的，而表达式的括号是棕色的。
+就如你能够看到的那样，一个列表结果在@tech{REPL}中打印为一个引用@litchar{'}，并且采用一对圆括号包围这个列表元素的打印表。这里有一个容易混淆的地方，因为两个表达式都使用圆括号，比如@racket[(list "red" "green" "blue")]，那么打印结果为@racketresult['("red" "green" "blue")]。除了引用，结果的圆括号在文档中和在DrRacket中打印为蓝色，而表达式的圆括号是棕色的。
 
 @;{Many predefined functions operate on lists. Here are a few examples:}
-在列表方面有许多预定义的函数操作。下面是几个例子：
+在列表方面有许多预定义的函数操作。下面是少许例子：
 
 @interaction[
 (code:line (length (list "hop" "skip" "jump"))        (code:comment @#,t{count the elements}))
@@ -60,12 +60,12 @@ functions play a role similar to @racket[for] in Java, Racket, and other
 languages. The body of a Racket iteration is packaged into a function
 to be applied to each element, so the @racket[lambda] form becomes
 particularly handy in combination with iteration functions.}
-除了像@racket[append]这样的简单的操作，Racket还包括遍历列表元素的函数。这些迭代函数作用类似于java、Racket及其它语言里的@racket[for]。Racket迭代的主体被打包成一个应用于每个元素的函数，所以@racket[lambda]表在与迭代函数的组合中变得特别方便。
+除了像@racket[append]这样的简单操作，Racket还包括遍历列表元素的函数。这些迭代函数扮演类似于java、Racket及其它语言里的@racket[for]一个角色。一个Racket迭代的主体被打包成一个应用于每个元素的函数，所以@racket[lambda]表在与迭代函数的组合中变得特别方便。
 
 @;{Different list-iteration functions combine iteration results in
 different ways. The @racket[map] function uses the per-element
 results to create a new list:}
-不同的列表迭代函数以不同的方式组合迭代结果。@racket[map]函数使用每个元素结果创建一个新的列表：
+不同的列表迭代函数在不同的方式中组合迭代结果。@racket[map]函数使用每个元素结果创建一个新列表：
 
 @interaction[
 (map sqrt (list 1 4 9 16))
@@ -76,7 +76,7 @@ results to create a new list:}
 
 @;{The @racket[andmap] and @racket[ormap] functions combine the results
 by @racket[and]ing or @racket[or]ing:}
-@racket[andmap]和@racket[ormap]函数相结合，结果通过@racket[and]或@racket[or]决定：
+@racket[andmap]和@racket[ormap]函数通过@racket[and]或@racket[or]结合结果：
 
 @interaction[
 (andmap string? (list "a" "b" "c"))
@@ -88,7 +88,7 @@ by @racket[and]ing or @racket[or]ing:}
 functions can all handle multiple lists, instead of just a single
 list. The lists must all have the same length, and the given function
 must accept one argument for each list:}
-@racket[map]、@racket[andmap]和@racket[ormap]函数都可以处理多个列表，而不只是一个单一的列表。列表必须具有相同的长度，并且给定的函数必须接受每个列表元素作为参数：
+@racket[map]、@racket[andmap]和@racket[ormap]函数都可以处理多个列表，而不只是一个单一的列表。这些列表都必须具有相同的长度，并且给定的函数必须对每个列表接受一个参数：
 
 @interaction[
 (map (lambda (s n) (substring s 0 n))
@@ -98,7 +98,7 @@ must accept one argument for each list:}
 
 @;{The @racket[filter] function keeps elements for which the body result
 is true, and discards elements for which it is @racket[#f]:}
-@racket[filter]函数保持函数体结果是真的元素，并忽略是@racket[#f]的元素：
+@racket[filter]函数保持其主体结果是真的元素，并忽略其主体结果是@racket[#f]的元素：
 
 @interaction[
 (filter string? (list "a" "b" 6))
@@ -123,13 +123,13 @@ provided before the lists:}
 functions. One reason is that @racket[map], @racket[ormap],
 @racket[andmap], and @racket[filter] cover the most common kinds of
 list loops.}
-尽管有其共性， @racket[foldl]不是像其它函数一样受欢迎。一个原因是@racket[map]、 @racket[ormap]、@racket[andmap]和@racket[filter]覆盖最常见的列表迭代。
+尽管有其共性，@racket[foldl]不是像其它函数一样受欢迎。一个原因是@racket[map]、 @racket[ormap]、@racket[andmap]和@racket[filter]覆盖了最常见的列表迭代。
 
 @;{Racket provides a general @defterm{list comprehension} form
 @racket[for/list], which builds a list by iterating through
 @defterm{sequences}. List comprehensions and related iteration forms
 are described in @secref["for"].}
-Racket为列表提供了一个通用的@defterm{列表解析（list comprehension）}表@racket[for/list]，它通过迭代@defterm{序列（sequences）}建立一个列表。列表解析和相关迭代表将在@secref["for"]部分解释。
+Racket提供了一个通用的@defterm{列表理解}表@racket[for/list]，它用迭代通过@defterm{序列（sequences）}来建立一个列表。列表理解表和相关迭代表将在《@secref["for"]》部分描述。
 
 @;------------------------------------------------------------------------
 @;{@section{List Iteration from Scratch}}
@@ -138,17 +138,17 @@ Racket为列表提供了一个通用的@defterm{列表解析（list comprehensio
 @;{Although @racket[map] and other iteration functions are predefined, they
 are not primitive in any interesting sense. You can write equivalent
 iterations using a handful of list primitives.}
-尽管@racket[map]和其他迭代函数是预定义的，但它们在任何有趣的意义上都不是原始的。使用少量列表原语即能编写等效迭代。
+尽管@racket[map]和其它迭代函数是预定义的，但它们在任何令人感兴趣的意义上都不是原始的。使用少量列表原语即能编写等效迭代。
 
 @;{Since a Racket list is a linked list, the two core operations on a
 non-empty list are}
-由于Racket列表是一个链表，在非空列表中的两个核心操作是:
+由于一个Racket列表是一个链表，对非空列表的两个核心操作是:
 
 @itemize[
 
  @item{
   @;{@racket[first]: get the first thing in the list; and}
-    @racket[first]：取得列表上的第一件事物；
+    @racket[first]：取得列表上的第一个元素；
  }
 
  @item{
@@ -168,7 +168,7 @@ non-empty list are}
 of the list---use the @racket[cons] function, which is short for
 ``construct.'' To get an empty list to start with, use the
 @racket[empty] constant:}
-为链表添加一个新的节点——确切地说，添加到列表的前面——使用@racket[cons]函数，那是“construct”（构造）的缩写。要得到一个空列表用于开始，用@racket[empty]来构造：
+为一个链表添加一个新的节点——确切地说，添加到这个列表的前面——使用@racket[cons]函数，它是“construct”（构造）的缩写。要得到一个空列表用于开始，用@racket[empty]来构造：
 
 @interaction[
 #:eval list-eval
@@ -181,7 +181,7 @@ empty
 non-empty lists, because @racket[first] and @racket[rest] work only on
 non-empty lists. The @racket[empty?] function detects empty lists,
 and @racket[cons?] detects non-empty lists:}
-要处理列表，你需要能够区分空列表和非空列表，因为@racket[first]和@racket[rest]只在非空列表上工作。@racket[empty?]函数检测空列表，@racket[cons?]检测非空列表：
+要处理一个列表，你需要能够区分空列表和非空列表，因为@racket[first]和@racket[rest]只在非空列表上工作。@racket[empty?]函数检测空列表，@racket[cons?]检测非空列表：
 
 @interaction[
 #:eval list-eval
@@ -193,7 +193,7 @@ and @racket[cons?] detects non-empty lists:}
 
 @;{With these pieces, you can write your own versions of the
 @racket[length] function, @racket[map] function, and more.}
-通过这些片段，您可以编写自己的@racket[length]函数、@racket[map]函数以及更多的函数的版本。
+通过这些片段，你能够编写你自己的@racket[length]函数、@racket[map]函数以及更多的函数的版本。
 
 @defexamples[
 #:eval list-eval
@@ -217,7 +217,7 @@ and @racket[cons?] detects non-empty lists:}
 @;{If the derivation of the above definitions is mysterious to you,
 consider reading @|HtDP|. If you are merely suspicious of the use
 of recursive calls instead of a looping construct, then read on.}
-如果上述定义的派生对你来说难以理解，建议去读《如何设计程序》（ @|HtDP|）。如果您只对使用递归调用而不是循环结构表示疑惑，那就继续往后读。
+如果上述定义的派生对你来说难以理解，建议去读《@|HtDP|（如何设计程序）》。如果你只对使用递归调用表示不信任，而不是循环结构，那就继续往后读。
 
 @;------------------------------------------------------------------------
 @;{@section[#:tag "tail-recursion"]{Tail Recursion}}
@@ -226,7 +226,7 @@ of recursive calls instead of a looping construct, then read on.}
 @;{Both the @racket[my-length] and @racket[my-map] functions run in
 @math{O(n)} space for a list of length @math{n}. This is easy to see by
 imagining how @racket[(my-length (list "a" "b" "c"))] must evaluate:}
-前面@racket[my-length]和@racket[my-map]自定义函数都在@math{O(n)}的时间内运行一个 @math{n}长度的列表。很显然能够想象@racket[(my-length (list "a" "b" "c"))]必须如下求值：
+@racket[my-length]函数和@racket[my-map]函数都为一个 @math{n}长度的列表在@math{O(n)}空间内运行。通过想象就很容易明白必须怎样@racket[(my-length (list "a" "b" "c"))]求值：
 
 @racketblock[
 #||# (my-length (list "a" "b" "c"))
@@ -242,23 +242,23 @@ imagining how @racket[(my-length (list "a" "b" "c"))] must evaluate:}
 @;{For a list with @math{n} elements, evaluation will stack up @math{n}
 @racket[(+ 1 ...)] additions, and then finally add them up when the
 list is exhausted.}
-对于带有@math{n}个元素的列表，求值将叠加@math{n}@racket[(+ 1 ...)]，并且直到列表用完时最后才添加它们。
+对于一个带有@math{n}个元素的列表，求值将堆栈叠加@math{n}@racket[(+ 1 ...)]，并且直到列表用完时最后才把它们加起来。
 
 @;{You can avoid piling up additions by adding along the way. To
 accumulate a length this way, we need a function that takes both a
 list and the length of the list seen so far; the code below uses a
 local function @racket[iter] that accumulates the length in an
 argument @racket[len]:}
-你可以通过一路求和避免堆积添加。要以这种方式累积长度，我们需要一个函数，它既可以操作列表，也可以操作当前列表的长度；下面的代码使用一个局部函数@racket[iter]，在一个参数@racket[len]中累积长度：
+你可以通过一路求和避免堆积添加。要以这种方式累积一个长度，我们需要一个既可以操作列表也可以操作当前列表长度的函数；下面的代码使用一个局部函数@racket[iter]，它在一个参数@racket[len]中累积长度：
 
 @racketblock[
 (define (my-length lst)
-  (code:comment @#,t{local function @racket[iter]:})
+  (code:comment @#,t{@;{local function @racket[iter]:}局部函数@racket[iter]:})
   (define (iter lst len)
     (cond
      [(empty? lst) len]
      [else (iter (rest lst) (+ len 1))]))
-  (code:comment @#,t{body of @racket[my-length] calls @racket[iter]:})
+  (code:comment @#,t{@;{body of @racket[my-length] calls @racket[iter]:}@racket[my-length]的主体调用@racket[iter]:})
   (iter lst 0))
 ]
 
@@ -280,7 +280,7 @@ function call, like @racket[(iter (list "b" "c") 1)], is exactly the
 result of some other function call, like @racket[(iter (list "c")
 2)], then the first one doesn't have to wait around for the second
 one, because that takes up space for no good reason.}
-修正后的@racket[my-length]函数在恒定的空间中运行，正如上面的求值步骤所表明的那样。也就是说，当函数调用的结果，比如@racket[(iter (list "b" "c") 1)]，确切地说是其他函数调用的结果，例如@racket[(iter (list "c"))]，那么第一个函数不需要等待第二个函数回绕，因为那样会为了不恰当的原因占用空间。
+修正后的@racket[my-length]在恒定的空间中运行，正如上面所建议的求值步骤那样。也就是说，当一个函数调用的结果，像@racket[(iter (list "b" "c") 1)]，恰恰是其它函数调用的结果，像@racket[(iter (list "c"))]，那么第一个函数不需要等待第二个函数回绕，因为那样会为了不恰当的原因占用空间。
 
 @;{This evaluation behavior is sometimes called @idefterm{tail-call
 optimization}, but it's not merely an ``optimization'' in Racket; it's
@@ -289,14 +289,14 @@ expression in @deftech{tail position} with respect to another
 expression does not take extra computation space over the other
 expression.}
 这种求值行为有时称为@idefterm{”尾部调用优化(tail-call
-optimization)“}，但它在Racket里不仅仅是一种“优化”，它是代码运行方式的保证。更确切地说，相对于另一表达式的@deftech{尾部(tail position)}位置表达式在另一表达式上不占用额外的计算空间。
+optimization)“}，但它在Racket里不仅仅是一种“优化”，它是一种代码将要运行的方式的保证。更确切地说，相对于另一表达式的一个@deftech{尾部(tail position)}位置的表达式在另一表达式上不占用额外的计算空间。
 
 @;{In the case of @racket[my-map], @math{O(n)} space complexity is
 reasonable, since it has to generate a result of size
 @math{O(n)}. Nevertheless, you can reduce the constant factor by
 accumulating the result list. The only catch is that the accumulated
 list will be backwards, so you'll have to reverse it at the very end:}
-在 @racket[my-map]例子中，@math{O(n)}空间复杂度是合理的，因为它必须生成@math{O(n)}的结果。不过，您可以通过累积结果列表来减少常数因子。唯一的问题是累积的列表将是向后的，所以你必须在结尾处反转它：
+在@racket[my-map]例子中，@math{O(n)}空间复杂度是合理的，因为它必须生成一个@math{O(n)}大小的结果。不过，你可以通过累积结果列表来减少常量因子。唯一的问题是累积的列表将是向后的，所以你将不得不在每个结尾处反转它：
 
 @;{@margin-note{Attempting to reduce a constant factor like this is
 usually not worthwhile, as discussed below.}}
@@ -325,7 +325,7 @@ usually not worthwhile, as discussed below.}}
 @;{then the @racket[for/list] form in the function is expanded to
 essentially the same code as the @racket[iter] local definition and
 use. The difference is merely syntactic convenience.}
-然后函数中的@racket[for/list]表扩展到和@racket[iter]函数局部定义和使用在本质上相同的代码。区别仅仅是句法上的便利。
+那么函数中的@racket[for/list]表扩展到和@racket[iter]函数局部定义和使用在本质上相同的代码。区别仅仅是句法上的便利。
 
 @;------------------------------------------------------------------------
 @;{@section{Recursion versus Iteration}}
@@ -339,7 +339,7 @@ large inputs can lead to stack overflow.  Similarly, in Racket, it is
 sometimes important to make sure that tail recursion is used to avoid
 @math{O(n)} space consumption when the computation is easily performed
 in constant space.}
-@racket[my-length]和@racket[my-map]示例表明迭代只是递归的一个特例。在许多语言中，尽可能地将尽可能多的计算合并成迭代形式是很重要的。否则，性能会变差，适度大的输入都会导致堆栈溢出。同样地，在Racket中，有时很重要的一点是要确保在易于计算的常数空间中使用尾递归避免@math{O(n)}空间消耗。
+@racket[my-length]和@racket[my-map]示例表明迭代只是递归的一个特例。在许多语言中，尽可能地将尽可能多的计算合并成迭代形式是很重要的。否则，性能会变差，不太大的输入都会导致堆栈溢出。类似地，在Racket中，有时很重要的一点是要确保在易于计算的常数空间中使用尾递归避免@math{O(n)}空间消耗。
 
 @;{At the same time, recursion does not lead to particularly bad
 performance in Racket, and there is no such thing as stack overflow;
@@ -349,13 +349,13 @@ recursion than would trigger a stack overflow in other
 languages. These considerations, combined with the fact that
 tail-recursive programs automatically run the same as a loop, lead
 Racket programmers to embrace recursive forms rather than avoid them.}
-同时，在Racket里递归不会导致特别差的性能，而且没有堆栈溢出那样的事情；如果计算涉及到太多的上下文，你可能耗尽内存，但耗尽内存通常需要比可能触发其他语言中的堆栈溢出更多数量级以上的更深层次的递归。基于这些考虑因素，加上尾递归程序自动与循环运行的事实相结合，导致Racket程序员接受递归形式而不是避免它们。
+然而，在Racket里递归不会导致特别差的性能，而且没有堆栈溢出那样的事情；如果一个计算涉及到太多的上下文，你可能耗尽内存，但耗尽内存通常需要比可能触发其它语言中的堆栈溢出更多数量级以上的更深层次的递归。基于这些考虑因素，加上尾递归程序会自动和一个循环一样运行的事实相结合，引导Racket程序员接受递归形式而不是避免它们。
 
 @;{Suppose, for example, that you want to remove consecutive duplicates
 from a list. While such a function can be written as a loop that
 remembers the previous element for each iteration, a Racket programmer
 would more likely just write the following:}
-例如，假设您希望从列表中删除连续的重复项。虽然这样的函数可以写成一个循环，每次迭代都记得以前的元素，但Racket程序员更可能只写以下内容：
+例如，假设你想从一个列表中去除连续的重复项。虽然这样的一个函数可以写成一个循环，为每次迭代记住前面的元素，但一个Racket程序员更可能只写以下内容：
 
 @def+int[
 #:eval list-eval
@@ -379,7 +379,7 @@ duplicates, then the resulting list can be much smaller than
 @math{O(n)} space! The reason is that when the function discards
 duplicates, it returns the result of a @racket[remove-dups] call
 directly, so the tail-call ``optimization'' kicks in:}
-一般来说，这个函数为长度@math{n}的输入列表消耗@math{O(n)}空间，但这很好，因为它产生一个@math{O(n)}结果。如果输入列表恰巧是连续重复的，然后得到的列表可以比@math{O(n)}小得多——而且@racket[remove-dups]也将使用比@math{O(n)}更少的空间！原因是当函数放弃重复，它返回一个@racket[remove-dups]的直接调用结果，所以尾部调用“优化”加入：
+一般来说，这个函数为一个长度为@math{n}的输入列表消耗@math{O(n)}的空间，但这很好，因为它产生一个@math{O(n)}结果。如果输入列表恰巧是连续重复的，那么得到的列表可以比@math{O(n)}小得多——而且@racket[remove-dups]也将使用比@math{O(n)}更少的空间！原因是当函数放弃重复，它返回一个@racket[remove-dups]的直接调用结果，所以尾部调用“优化”加入：
 
 @racketblock[
 #||# (remove-dups (list "a" "b" "b" "b" "b" "b"))
