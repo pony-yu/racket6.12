@@ -8,7 +8,7 @@
 Racket's built-in datatypes: numbers, booleans, strings, lists, and
 procedures. This section provides a more complete coverage of the
 built-in datatypes for simple forms of data.}
-@seclink["to-scheme"]{上一章}介绍了Racket的内置数据类型：数字、布尔值、字符串、列表、和程序。本节提供了简单的数据表的内置数据表更完整的覆盖。
+@seclink["to-scheme"]{上一章}介绍了一些Racket的内建数据类型：数字、布尔值、字符串、列表、和程序。本节为数据的简单表提供一个内建数据类型的更完整的覆盖。
 
 @local-table-of-contents[]
 
