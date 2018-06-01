@@ -147,7 +147,7 @@ class description.}
 @;{An @deftech{interface} is a collection of method names to be
 implemented by a class, combined with a derivation requirement. A
 class @deftech{implements} an interface when it}
-一个@deftech{接口（interface）}是一个对一个类实现的方法名称的集合，并与派生需求相结合。一个类@deftech{实现（implements）}一个接口，在它的以下情况
+一个@deftech{接口（interface）}是一个对一个类实现的方法名称的集合，并与派生需求相结合。在以下情况,一个类@deftech{实现（implements）}一个接口：
 
 @itemize[
 
@@ -159,7 +159,7 @@ class @deftech{implements} an interface when it}
 
  @item{
   @;{is derived from the class required by the interface, if any; and}
-    被继承自接口所需的类，如果有的话；
+    如果有的话，继承自接口所需的类；
     }
 
  @item{
