@@ -1,6 +1,10 @@
 Racket 6.12 中文翻译版本。
 由于是翻译版，不必向上游提交。
 
+@罗马不是一天建成的。@
+
+欢迎愿意参与的朋友一起来完成这个项目，给想学习Racket的朋友提供一个学习工具。
+
 [![Linux/Mac Build
 Status](https://travis-ci.org/racket/racket.svg?branch=master)](https://travis-ci.org/racket/racket)
 [![Windows build status](https://ci.appveyor.com/api/projects/status/hqir4eib0okk6xar?svg=true)](https://ci.appveyor.com/project/plt/racket)
