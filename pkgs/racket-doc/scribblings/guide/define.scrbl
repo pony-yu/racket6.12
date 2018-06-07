@@ -77,7 +77,7 @@ arguments in a list):}
 
 @;------------------------------------------------------------------------
 @;{@section{Curried Function Shorthand}}
-@section[#:tag "Curried-Function-Shorthand"]{咖喱函数简写}
+@section[#:tag "Curried-Function-Shorthand"]{柯里函数简写}
 
 @;{Consider the following @racket[make-add-suffix] function that takes a
 string and returns another function that takes a string:}
@@ -103,7 +103,7 @@ called directly, like this:}
 arguments, but it takes them one at a time. A function that takes some
 of its arguments and returns a function to consume more is sometimes
 called a @defterm{curried function}.}
-从某种意义上说，@racket[make-add-suffix]是一个函数，需要两个参数，但每次只需要一个参数。一个函数带有一些参数并返回一个函数会提供更多，有时被称为一个@defterm{咖喱函数（curried function）}。
+从某种意义上说，@racket[make-add-suffix]是一个函数，需要两个参数，但每次只需要一个参数。一个函数带有一些参数并返回一个函数会提供更多，有时被称为一个@defterm{柯里函数（curried function）}。
 
 @;{Using the function-shorthand form of @racket[define],
 @racket[make-add-suffix] can be written equivalently as}
@@ -118,7 +118,7 @@ called a @defterm{curried function}.}
 @racket[(make-add-suffix "!")]. The @racket[define] form further
 supports a shorthand for defining curried functions that reflects
 nested function calls:}
-这个简写反映了@racket[(make-add-suffix "!")]函数调用的形态。@racket[define]表更进一步支持定义反映嵌套函数调用的咖喱函数简写：
+这个简写反映了@racket[(make-add-suffix "!")]函数调用的形态。@racket[define]表更进一步支持定义反映嵌套函数调用的柯里函数数简写：
 
 @def+int[
 #:eval def-eval

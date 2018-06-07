@@ -8,12 +8,12 @@
 procedure constructs pairs, and the @racket[car] and @racket[cdr]
 procedures extract the first and second elements of the pair,
 respectively. The @racket[pair?] predicate recognizes pairs.}
-一个@deftech{配对（pair）}把两个任意值结合。@racket[cons]过程构建配对，@racket[car]和@racket[cdr]过程分别提取配对的第一和第二个成员。@racket[pair?]判断确认配对。
+一个@deftech{配对（pair）}把两个任意值结合。@racket[cons]过程构建配对，@racket[car]和@racket[cdr]过程分别提取配对的第一和第二个配对元素。@racket[pair?]判断识别配对。
 
 @;{Some pairs print by wrapping parentheses around the printed forms of
 the two pair elements, putting a @litchar{'} at the beginning and a
 @litchar{.} between the elements.}
-一些配对通过圆括号包围两个配对元素的打印表来打印，在开始位置放置@litchar{'}，在元素之间放置@litchar{.}。
+一些配对通过圆括号包围两个配对元素的打印形式来打印，在开始位置放置一个@litchar{'}，并在元素之间放置一个@litchar{.}。
 
 @examples[
 (cons 1 2)
@@ -28,11 +28,10 @@ list. More precisely, a list is either the empty list @racket[null],
 or it is a pair whose first element is a list element and whose second
 element is a list. The @racket[list?] predicate recognizes lists. The
 @racket[null?]  predicate recognizes the empty list.}
-一个@deftech{列表（list）}是创建链表的配对的组合。更确切地说，一个列表要么是空列表@racket[null]，要么是个配对（其第一个元素是列表元素，第二个元素是一个列表）。@racket[list?]判断识别列表。@racket[null?]判断识别空列表。
+一个@deftech{列表（list）}是一个配对的组合，它创建一个链表。更确切地说，一个列表要么是空列表@racket[null]，要么是个配对，其第一个元素是一个列表元素，第二个元素是一个列表。@racket[list?]判断识别列表。@racket[null?]判断识别空列表。
 
-@;{A list normally prints as a @litchar{'} followed by a pair of parentheses
-wrapped around the list elements.}
-一个列表通常打印为一个@litchar{'}后跟一对括号括在列表元素周围。
+@;{A list normally prints as a @litchar{'} followed by a pair of parentheses wrapped around the list elements.}
+一个列表通常打印为一个@litchar{'}后跟一对括号包裹列表元素。
 
 @examples[
 null
@@ -46,7 +45,7 @@ null
 when one of its elements cannot be written as a @racket[quote]d
 value. For example, a value constructed with @racket[srcloc] cannot be
 written using @racket[quote], and it prints using @racketresult[srcloc]:}
-当一个列表或配对的一个元素不能写成一个@racket[quote]（引用）值时，使用@racketresult[list]或@racketresult[cons]打印。例如，一个用@racket[srcloc]构建的值不能使用@racket[quote]来写，应该使用@racketresult[srcloc]来写：
+当一个列表或配对的其中一个元素不能写成一个@racket[quote]（引用）值时，使用@racketresult[list]或@racketresult[cons]打印。例如，一个用@racket[srcloc]构建的值不能使用@racket[quote]来编写，应该使用@racketresult[srcloc]来编写：
 
 @interaction[
 (srcloc "file.rkt" 1 0 1 (+ 4 4))
@@ -56,19 +55,19 @@ written using @racket[quote], and it prints using @racketresult[srcloc]:}
 ]
 
 @;{@margin-note{See also @racket[list*].}}
-@margin-note{也参见@racket[list*].}
+@margin-note{也参见@racket[list*]。}
 
 @;{As shown in the last example, @racketresult[list*] is used to
 abbreviate a series of @racketresult[cons]es that cannot be
 abbreviated using @racketresult[list].}
-如最后一个例子所示，@racketresult[list*]是用来缩略一系列的不能使用@racketresult[list]缩略的@racketresult[cons]。
+如最后一个例子所示，@racketresult[list*]是用来缩略一系列不能使用@racketresult[list]缩写的@racketresult[cons]。
 
 The @racket[write] and @racket[display] functions print a pair or list
 without a leading @litchar{'}, @racketresult[cons],
 @racketresult[list], or @racketresult[list*]. There is no difference
 between @racket[write] and @racket[display] for a pair or list, except
 as they apply to elements of the list:
-@racket[write]和@racket[display]函数不带前导@litchar{'}、@racketresult[cons]、@racketresult[list]或@racketresult[list*]打印一个配对或一个列表。一个配对或列表的@racket[write]和@racket[display]没有区别，除非它们运用于列表元素：
+@racket[write]和@racket[display]函数不带一个前导@litchar{'}、@racketresult[cons]、@racketresult[list]或@racketresult[list*]打印一个配对或一个列表。对于一个配对或列表来说@racket[write]和@racket[display]没有区别，除非它们运用于列表的元素：
 
 @examples[
 (write (cons 1 2))
@@ -81,7 +80,7 @@ as they apply to elements of the list:
 
 @;{Among the most important predefined procedures on lists are those that
 iterate through the list's elements:}
-列表中最重要的预定义程序是遍历列表元素的那些程序：
+对于列表来说最重要的预定义过程是遍历列表元素的那些过程：
 
 @interaction[
 (map (lambda (i) (/ 1 i))
@@ -104,7 +103,7 @@ iterate through the list's elements:}
 ]
 
 @;{@refdetails["pairs"]{pairs and lists}}
-@refdetails["pairs"]{配对和列表}
+@margin-note{在《Racket参考》中的“配对和列表（Pairs and Lists）”提供更多有关配对和列表的信息。}
 
 @;{Pairs are immutable (contrary to Lisp tradition), and @racket[pair?]
 and @racket[list?] recognize immutable pairs and lists, only. The
@@ -113,7 +112,7 @@ with @racket[set-mcar!] and @racket[set-mcdr!], as well as
 @racket[mcar] and @racket[mcdr]. A mutable pair prints using
 @racketresult[mcons], while @racket[write] and @racket[display] print
 mutable pairs with @litchar["{"] and @litchar["}"]:}
-配对是不可变的（与Lisp传统相反），@racket[pair?]、@racket[list?]仅识别不可变的配对和列表。@racket[mcons]过程创建一个可变的配对，用@racket[set-mcar!]和@racket[set-mcdr!]，及@racket[mcar]和@racket[mcdr]进行操作。一个可变的配对用@racketresult[mcons]打印，而@racket[write]和@racket[display]使用@litchar["{"]和@litchar["}"]打印可变配对：
+配对是不可变的（与Lisp传统相反），并且@racket[pair?]和@racket[list?]仅识别不可变的配对和列表。@racket[mcons]过程创建一个@deftech{可变配对（mutable pair）}，它配合@racket[set-mcar!]和@racket[set-mcdr!]，及@racket[mcar]和@racket[mcdr]进行操作。一个可变配对用@racketresult[mcons]打印，而@racket[write]和@racket[display]使用@litchar["{"]和@litchar["}"]打印：
 
 @examples[
 (define p (mcons 1 2))
@@ -126,4 +125,4 @@ p
 ]
 
 @;{@refdetails["mpairs"]{mutable pairs}}
-@refdetails["mpairs"]{可变配对（mutable pairs）}
+@margin-note{在《Racket参考》中的“可变配对和列表（Mutable Pairs and Lists）”中提供关于可变配对的更多信息。}

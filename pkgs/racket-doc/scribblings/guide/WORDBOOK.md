@@ -2,9 +2,9 @@
 
 为统一翻译名称，建议采用以下词汇进行翻译（如有异议，可讨论）：
 ## 常用词
-- Examples: 例如：（感觉这样翻译比“例子：”、“举例：”更贴近口语）
+- Examples: 例子：（感觉这样翻译比“例如：”、“举例：”更贴近）
 - sequence 序列
-- Shorthand 速记
+- Shorthand 缩写
 - evaluate 求值
 - load 加载
 - import 导入
@@ -50,23 +50,23 @@
 - byte 字节
 - symbol 符号
 - keyword 关键字
-- pair 配对
+- pair 配对（原文解释是：把两个任意值结合。说明不存在顺序，而且也没有pair-ref这种按顺序存取的函数，因此不考虑翻译为“序对”。）
 - list 列表
 - vector 向量
 - hash Table 哈希表
 - box 格子（不翻译为“盒子”是因为我认为数据是平面、线性的，用“格子”更贴切）
-- void 空值
+- void 无效值
 - undefined 未定义值
 
 ## 扩展数据类型
 - struct 结构
 
 ## 程序术语
-- curried function 咖喱函数（带有临时使用性质的函数，就像当佐料的咖喱一样，这里直接命名为咖喱函数）
+- curried function 柯里函数（类似于柯里化的函数，实际上Racket天生就有这个能力，只是Racket表达方式的一种，而且不常见。翻译为柯里函数，既指明类似于柯里化函数，同时也不拗口。）
 - module 模块
 - function 函数
 - method 方法
-- procedure 程序
+- procedure 过程
 - required argument 必需参数
 - optional argument 可选参数
 - rest argument 剩余参数
@@ -82,6 +82,7 @@
 - clause 从句
 - indy dependent contract 印依赖合约
 - element 元素
+- form 表（在不是表示术语的时候，有时根据上下文翻译为形式）
 - predicate 判定（不翻译为断言，是因为断言不直白，判定更简单易懂）
 - field 字段
 - wrapper function 包装函数

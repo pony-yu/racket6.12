@@ -16,7 +16,7 @@ shown with @litchar{\u} when the string is printed.}
 一个@deftech{字符串（string）}是一个固定长度的@seclink["characters"]{字符（characters）}数组。它使用双引号打印，在字符串中的双引号和反斜杠字符是用反斜杠转义。其它普通的字符串转义被支持，包括@litchar{\n}用于一个换行，@litchar{\r}用于一个回车，使用@litchar{\}后边跟着多达三个八进制数字实现八进制转义，以及用@litchar{\u}（多达四位数）实现十六进制转义。在打印字符串时通常用@litchar{\u}显示一个字符串中的不可打印字符。
 
 @;{@refdetails/gory["parse-string"]{the syntax of strings}}
-@margin-note{在《Racket参考》中的解析字符串文档有关于字符串语法的更好的知识点。}
+@margin-note{在《Racket参考》中的“读取字符串（Reading Strings）”文档有关于字符串语法的更好的知识点。}
 
 @;{The @racket[display] procedure directly writes the characters of a
 string to the current output port (see @secref["i/o"]), in contrast

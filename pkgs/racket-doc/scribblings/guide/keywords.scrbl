@@ -7,10 +7,10 @@
 @;{A @deftech{keyword} value is similar to a symbol (see
 @secref["symbols"]), but its printed form is prefixed with
 @litchar{#:}.}
-一个@deftech{关键字（keyword）}值类似于一个符号（见@secref["symbols"]），但它的打印形式是用前缀@litchar{#:}。
+一个@deftech{关键字（keyword）}值类似于一个符号（详见《@secref["symbols"]》），但它的打印形式是用@litchar{#:}进行前缀。
 
 @;{@refdetails/gory["parse-keyword"]{the syntax of keywords}}
-@refdetails/gory["parse-keyword"]{关键字语法}
+@margin-note{在《Racket参考》里的“读取关键字”（Reading Keywords）文档有关于关键字的语法更好的知识点。}
 
 @examples[
 (string->keyword "apple")
@@ -25,7 +25,7 @@ both cases, but we sometimes use @defterm{keyword value} to refer more
 specifically to the result of a quote-keyword expression or of
 @racket[string->keyword]. An unquoted keyword is not an expression,
 just as an unquoted identifier does not produce a symbol:}
-更确切地说，关键字类似于标识符；以同样的方式，可以引用标识符来生成符号，可以引用关键字来生成值。在这两种情况下都使用同一术语“关键字”，但有时我们使用@defterm{关键字值（keyword value）}更具体地引用引号关键字表达式或使用@racket[string->keyword]过程的结果。一个不带引号的关键字不是表达式，只是作为一个不带引号的标识符不产生符号：
+更确切地说，一个关键字类似于一个标识符；以同样的方式，一个标识符可以被引用以生成一个符号，一个关键字可以被引用以生成一个值。在这两种情况下都使用同一术语“关键字”，但有时我们使用@defterm{关键字值（keyword value）}去更具体地针对一个引用关键字表达式的结果或使用@racket[string->keyword]的结果。一个非引用关键字不是一个表达式，只是作为一个非引用标识符，不产生一个符号：
 
 @examples[
 not-a-symbol-expression
