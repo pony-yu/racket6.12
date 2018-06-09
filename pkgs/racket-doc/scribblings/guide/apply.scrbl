@@ -5,7 +5,7 @@
 @title[#:tag "application"]{函数调用@aux-elem{（过程程序）}}
 
 @;{An expression of the form}
-一个表表达式：
+表的一个表达式：
 
 @specsubform[
 (proc-expr arg-expr ...)
