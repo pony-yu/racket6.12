@@ -28,7 +28,7 @@
 - reference 引用　
 - source 源码
 - projection 推断
-- primitives 基本类型
+- primitives 基本类型（网上OlingCat提到英翻译为“原语或原语类型”，暂留作参考，也许应该按这个翻译。）
 - build 构建
 - exercise 运用
 - escape 转义
