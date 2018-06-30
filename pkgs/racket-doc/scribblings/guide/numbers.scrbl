@@ -89,7 +89,7 @@ that branch on the comparison of inexact numbers can nevertheless
 produce exact results. The procedures @racket[exact->inexact] and
 @racket[inexact->exact] convert between the two
 types of numbers.}
-包含一个精确数值的计算产生不精确的结果，以致不精确充当了一种数值方面的污染。注意，然而，Racket没有提供"不精确的布尔值"，所以对不精确的数字的比较分支计算却仍然能产生精确的结果。程序@racket[exact->inexact]和@racket[inexact->exact]在两种数值类型之间转换。
+包含一个精确数值的计算产生不精确的结果，以致不精确充当了一种数值方面的污染。注意，然而，Racket没有提供"不精确的布尔值"，所以对不精确的数字的比较分支计算却仍然能产生精确的结果。过程@racket[exact->inexact]和@racket[inexact->exact]在两种数值类型之间转换。
 
 @examples[
 (/ 1 2)
@@ -102,7 +102,7 @@ types of numbers.}
 @racket[log], and @racket[sin] when an exact result would require
 representing real numbers that are not rational. Racket can represent
 only rational numbers and complex numbers with rational parts.}
-当精确的结果需要作为非有理数实数时，不精确的结果也由像@racket[sqrt]、@racket[log]和@racket[sin]这样的程序产生。Racket仅能表示有理数和带有理数部分的复数。
+当精确的结果需要作为非有理数实数时，不精确的结果也由像@racket[sqrt]、@racket[log]和@racket[sin]这样的过程产生。Racket仅能表示有理数和带有理数部分的复数。
 
 @examples[
 (code:line (sin 0)   (code:comment @#,t{@;{rational...}有理数...}))
@@ -134,7 +134,7 @@ the usual way, and are recognized by the procedures @racket[integer?],
 to the generic @racket[number?]. A few mathematical procedures accept
 only real numbers, but most implement standard extensions to complex
 numbers.}
-数值类别@deftech{整数（integer）}、@deftech{有理数（rational）}、@deftech{实数（real）}（总是有理数）以及@deftech{复数（complex）}用通常的方法定义，并被程序@racket[integer?]、@racket[rational?]、@racket[real?]以及@racket[complex?]所验证。一些数学程序只接受实数，但大多数实现了对复数的标准扩展。
+数值类别@deftech{整数（integer）}、@deftech{有理数（rational）}、@deftech{实数（real）}（总是有理数）以及@deftech{复数（complex）}用通常的方法定义，并被过程@racket[integer?]、@racket[rational?]、@racket[real?]以及@racket[complex?]所验证。一些数学过程只接受实数，但大多数实现了对复数的标准扩展。
 
 @examples[
 (integer? 5)
@@ -153,7 +153,7 @@ it is given both inexact and exact numbers to compare, it essentially
 converts the inexact numbers to exact before comparing. The
 @racket[eqv?] (and therefore @racket[equal?]) procedure, in contrast,
 compares numbers considering both exactness and numerical equality.}
-@racket[=]程序为了数值相等而比较数值。如果给定不精确数和精确数去作比较，它在比较之前从本质上将不精确数转换为精确数。相反，@racket[eqv?]（乃至 @racket[equal?]）程序比较数值既考虑精确性又考虑数值的相等。
+@racket[=]过程为了数值相等而比较数值。如果给定不精确数和精确数去作比较，它在比较之前从本质上将不精确数转换为精确数。相反，@racket[eqv?]（乃至 @racket[equal?]）过程比较数值既考虑精确性又考虑数值的相等。
 
 @examples[
 (= 1 1.0)
@@ -174,4 +174,4 @@ can only approximate @racket[1/10]:}
 ]
 
 @;{@refdetails["numbers"]{numbers and number procedures}}
-@margin-note{《The Racket Reference（Racket参考）》文档（4.2 Numbers（数值））有关于数值和数值程序的更多内容。}
+@margin-note{《The Racket Reference（Racket参考）》文档（4.2 Numbers（数值））有关于数值和数值过程的更多内容。}

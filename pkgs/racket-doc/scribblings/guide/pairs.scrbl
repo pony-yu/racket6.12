@@ -62,11 +62,11 @@ abbreviate a series of @racketresult[cons]es that cannot be
 abbreviated using @racketresult[list].}
 如最后一个例子所示，@racketresult[list*]是用来缩略一系列不能使用@racketresult[list]缩写的@racketresult[cons]。
 
-The @racket[write] and @racket[display] functions print a pair or list
+@;{The @racket[write] and @racket[display] functions print a pair or list
 without a leading @litchar{'}, @racketresult[cons],
 @racketresult[list], or @racketresult[list*]. There is no difference
 between @racket[write] and @racket[display] for a pair or list, except
-as they apply to elements of the list:
+as they apply to elements of the list:}
 @racket[write]和@racket[display]函数不带一个前导@litchar{'}、@racketresult[cons]、@racketresult[list]或@racketresult[list*]打印一个点对或一个列表。对于一个点对或列表来说@racket[write]和@racket[display]没有区别，除非它们运用于列表的元素：
 
 @examples[

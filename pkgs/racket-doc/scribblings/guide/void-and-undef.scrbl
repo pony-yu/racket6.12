@@ -18,7 +18,7 @@ print anything.}
 @|void-const|. (That is, the identifier @racketidfont{void} is bound
 to a procedure that returns @|void-const|, instead of being bound
 directly to @|void-const|.)}
-@racket[void]程序接受任意数量的参数并返回@|void-const|。（即，@racketidfont{void}标识符绑定到一个返回@|void-const|的过程，而不是直接绑定到@|void-const|。）
+@racket[void]过程接受任意数量的参数并返回@|void-const|。（即，@racketidfont{void}标识符绑定到一个返回@|void-const|的过程，而不是直接绑定到@|void-const|。）
 
 @examples[
 (void)

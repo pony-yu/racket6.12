@@ -4,7 +4,7 @@
 ## 常用词
 - Examples: 例子：（感觉这样翻译比“例如：”、“举例：”更贴近）
 - sequence 序列
-- shorthand 速记（不翻译为缩写）
+- shorthand 简写（不翻译为缩写或速记）
 - shorthand form 速记形式
 - evaluate 求值
 - load 加载
@@ -42,6 +42,7 @@
 - bound 约束
 - Reachability 可执行性
 - reachable 可执行到的
+- constructor guard 构造器看守
 
 ## 内置数据名称
 - boolean 布尔值

@@ -4,7 +4,7 @@
 @(define greet-eval (make-base-eval))
 
 @;{@title[#:tag "lambda"]{Functions@aux-elem{ (Procedures)}: @racket[lambda]}}
-@title[#:tag "lambda"]{lambda函数（程序）}
+@title[#:tag "lambda"]{lambda函数（过程）}
 
 @;{A @racket[lambda] expression creates a function. In the simplest
 case, a @racket[lambda] expression has the form}
