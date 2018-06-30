@@ -1,6 +1,6 @@
 #lang scribble/doc
 @(require scribble/manual
-          scribble/eval 
+          scribble/eval
           "guide-utils.rkt"
           (for-label racket))
 
@@ -15,13 +15,15 @@
 @deftech{threads}, and it provides a general @racket[sync] function
 that can be used to synchronize both threads and other implicit forms of
 concurrency, such as @tech{ports}.}
-Racket以@deftech{线程（threads）}的形式提供@deftech{并发性（concurrency）}，它提供了一个通用的@racket[sync]（同步）函数，可用于同步线程和其它隐式并发形式，如@tech{端口（ports）}。
+Racket以@deftech{线程（threads）}的形式提供@deftech{并发性（concurrency）}，
+它提供了一个通用的@racket[sync]（同步）函数，可用于同步线程和其它隐式并发，如@tech{端口（ports）}。
 
 @;{Threads run concurrently in the sense that one thread can preempt
 another without its cooperation, but threads do not run in parallel in
 the sense of using multiple hardware processors.  See
 @secref["parallelism"] for information on parallelism in Racket.}
-在一个线程能够不需要协作地抢占另一个这个意义上讲线程同时运行，但是在使用多硬件处理器这个意义上讲线程不并行运行。参见@secref["parallelism"]以获取Racket的并行信息。
+在一个线程能够不需要协作地抢占另一个这个意义上讲线程同时运行，但是在使用多硬件处理器这个意义上讲线程不并行运行。
+参见@secref["parallelism"]以获取Racket的并行信息。
 
 @;{@section{Threads}}
 @section[#:tag "Threads"]{线程（thread）}
@@ -39,7 +41,7 @@ following example creates two new threads from the main thread:}
 @;{The next example creates a new thread that would otherwise loop forever, but
 the main thread uses @racket[sleep] to pause itself for 2.5 seconds, then
 uses @racket[kill-thread] to terminate the worker thread:}
-下一个示例创建一个新线程，否则线程将永远循环，但主线程使用@racket[sleep]暂停2.5秒，然后使用@racket[kill-thread]终止工作线程：
+下一个示例创建了一个本来会无限循环的新线程，但主线程使用@racket[sleep]使自身暂停2.5秒，然后使用@racket[kill-thread]终止工作线程：
 
 @racketblock[
 (define worker (thread (lambda ()
@@ -53,14 +55,15 @@ uses @racket[kill-thread] to terminate the worker thread:}
 
 @;{@margin-note{In DrRacket, the main thread keeps going until the Stop button is
 clicked, so in DrRacket the @racket[thread-wait] is not necessary.}}
-@margin-note{在DrRacket里，主线程一直到Stop（停止）按钮被点击，所以在DrRacket里的@racket[thread-wait]（线程等待）是没有必要的。}
+@margin-note{在DrRacket里，主线程一直运行直到按下Stop（停止）按钮，所以在DrRacket里@racket[thread-wait]（线程等待）是没有必要的。}
 
 @;{If the main thread finishes or is killed, the application exits, even if
 other threads are still running.  A thread can use @racket[thread-wait] to
 wait for another thread to finish.  Here, the main thread uses
 @racket[thread-wait] to make sure the worker thread finishes before the main
 thread exits:}
-如果主线程完成或被杀死，应用程序将退出，即使其它线程仍在运行。一个线程可以使用@racket[thread-wait]（线程等待）来等待另一个线程完成。在这里，主线程使用@racket[thread-wait]（线程等待）以确保工作线程在主线程退出之前完成：
+一旦主线程结束或被杀死，应用程序将退出，即使其它线程仍在运行。一个线程可以使用@racket[thread-wait]（线程等待）来等待另一个线程完成。
+在这里，主线程使用@racket[thread-wait]（线程等待）以确保工作线程在主线程退出之前结束：
 
 @racketblock[
 (define worker (thread
@@ -72,7 +75,7 @@ thread exits:}
 ]
 
 @;{@section{Thread Mailboxes}}
-@section[#:tag "Thread_Mailboxes"]{线程的邮箱}
+@section[#:tag "Thread_Mailboxes"]{线程邮箱}
 
 @;{Each thread has a mailbox for receiving messages.  The @racket[thread-send] function
 asynchronously sends a message to another thread's mailbox, while
@@ -81,7 +84,9 @@ thread's mailbox, blocking to wait for a message if necessary.  In the
 following example, the main thread sends data to the worker thread to be
 processed, then sends a @racket['done] message when there is no more data and
 waits for the worker thread to finish.}
-每个线程都有一个邮箱来接收消息。@racket[thread-send]函数异步发送一个消息到另一个线程的邮箱，而@racket[thread-receive]返回当前线程邮箱中最以前的消息，如果需要的话阻塞以等待一个消息。在下面的示例中，主线程将数据发送到工作线程以被处理，然后在没有更多数据并等待工作线程完成时发送一个发送一个@racket['done]消息。
+每个线程都有一个用于接收消息的邮箱。@racket[thread-send]函数异步发送一个消息到另一个线程的邮箱，
+而@racket[thread-receive]返回当前线程邮箱中最早的消息，如果需要的话则阻塞以等待新的消息。
+在下面的示例中，主线程将数据发送到工作线程以被处理，然后在没有更多数据并等待工作线程完成时发送一个发送一个@racket['done]消息。
 
 @racketblock[
 (define worker-thread (thread
@@ -140,7 +145,7 @@ items then send the results to the main thread.}
 @;{Semaphores facilitate synchronized access to an arbitrary shared resource.
 Use semaphores when multiple threads must perform non-atomic operations on a
 single resource.}
-信号进行同步访问任意共享资源。使用信号时，多个线程必须在一个单一的资源执行非原子操作。
+信号可用于帮助对任意共享资源的同步访问。当多个线程必须对单个资源执行非原子操作时，应该使用信号。
 
 @;{In the following example, multiple threads print to standard output
 concurrently.  Without synchronization, a line printed by one thread might
@@ -149,7 +154,9 @@ initialized with a count of @racket[1], only one thread will print at a time.
 The @racket[semaphore-wait] function blocks until the semaphore's internal counter is
 non-zero, then decrements the counter and returns. The @racket[semaphore-post] function
 increments the counter so that another thread can unblock and then print.}
-在下面的示例中，多个线程同时打印到标准输出。如果没有同步，一个线程打印的行可能出现在另一个线程打印的行的中间。通过使用计数为@racket[1]初始化的信号量，每次只能打印一个线程。@racket[semaphore-wait]函数块，直到信号的内部计数器不为零，然后递减计数器并返回。@racket[semaphore-post]函数递增计数器以便另一个线程可以解锁然后打印增量。
+在下面的示例中，多个线程同时打印到标准输出。如果没有同步，一个线程打印的行可能出现在另一个线程打印的行的中间。
+通过使用计数为@racket[1]初始化的信号，每次只有一个线程能打印。@racket[semaphore-wait]函数将阻塞线程直到信号的内部计数器不为零，
+然后递减计数器并返回。@racket[semaphore-post]函数递增计数器以便另一个线程可以解锁然后打印。
 
 @racketblock[
 (define output-semaphore (make-semaphore 1))
@@ -168,7 +175,7 @@ increments the counter so that another thread can unblock and then print.}
 semaphore can also be expressed using
 @racket[call-with-semaphore],which has the advantage of posting to the
 semaphore if control escapes (e.g., due to an exception):}
-等待信号、工作和张贴到信号的模式也可以用@racket[call-with-semaphore]来表示，如果控制中断（例如由于异常），它具有张贴到信号的优势：
+等待信号、工作和张贴到信号的模式也可以用@racket[call-with-semaphore]来表示，它的优势是能够张贴到信号即使控制中断（例如由于异常）：
 
 @racketblock[
 (define output-semaphore (make-semaphore 1))
@@ -188,7 +195,8 @@ semaphore if control escapes (e.g., due to an exception):}
 resource access to a single thread.  For example, synchronizing access to
 standard output might be better accomplished by having a dedicated thread for
 printing output.}
-信号是一个低级别的技术。通常，一个更好的解决方案是限制对一个单线程的资源访问。例如，通过为打印输出提供专用线程，可以更好地实现对标准输出的同步访问。
+信号是一个底层技术。通常，一个更好的解决方案是限制对资源的访问，使其只能被单个线程访问。
+例如，通过为打印输出提供专用线程，可以更好地实现对标准输出的同步访问。
 
 @;{@section{Channels}}
 @section[#:tag "Channels"]{通道（Channels）}
@@ -245,7 +253,9 @@ channel was created with a buffer limit and the limit has been reached.  The
 asynchronous-put operation is therefore somewhat similar to
 @racket[thread-send], but unlike thread mailboxes, asynchronous channels allow
 multiple threads to consume items from a single channel.}
-缓冲的异步通道类似于上面描述的通道，但是异步通道的“放置（put）”操作不会阻塞——除非给定的通道是用缓冲区限制创建的，并且达到了极限。因此，异步放置（asynchronous-put）操作类似于@racket[thread-send]，但与线程邮箱不同，异步通道允许多个线程从单个通道中接受条目。
+缓冲异步通道类似于上面描述的通道，但是异步通道的“放置（put）”操作不会阻塞除非给定的通道创建时有缓冲区大小限制，
+并且达到了极限。因此，异步放置（asynchronous-put）操作类似于@racket[thread-send]，
+但与线程邮箱不同，异步通道允许多个线程从单个通道中接受条目。
 
 @;{In the following
 example, the main thread adds items to the work channel, which holds a maximum
@@ -293,13 +303,15 @@ threads to coordinate via @tech[#:doc reference-doc]{synchronizable events}.
 Many values double as events, allowing a uniform way to synchronize threads
 using different types.  Examples of events include channels, ports, threads,
 and alarms.}
-还有其他方法来同步线程。@racket[sync]函数允许线程通过@tech[#:doc reference-doc]{同步事件（synchronizable events）}的协调。许多值作为事件的两倍，允许统一的方式使用不同类型同步线程。事件的例子包括通道、端口、线程和警报。
+还有其他方法来同步线程。@racket[sync]函数允许线程通过同步事件@tech[#:doc reference-doc]{同步事件（synchronizable events）}进行协调。
+许多值随事件翻倍，线程得以以一种不同类型的通用方式同步。事件的例子包括通道、端口、线程和警报。
 
 @;{In the next example, a channel and an alarm are used as synchronizable events.
 The workers @racket[sync] on both so that they can process channel items until the
 alarm is activated.  The channel items are processed, and then results are sent back
 to the main thread.}
-在下面的例子中，一个通道和一个报警作为同步事件。工作@racket[sync]在在两个同步上，以便它们能够处理通道条目，直到警报被激活。对通道条目进行处理，然后将结果发送回主线程。
+在下面的例子中，一个通道和一个警报被作为同步事件使用。工作线程@racket[sync]在通道和警报两者上，
+以便它们能处理通道条目直到警报被激活.通道条目被处理后，结果将发送回主线程。
 
 @racketblock[
 (define main-thread (current-thread))
@@ -339,7 +351,11 @@ specifies the maximum number of seconds it should wait on the given events. The
 available in the given input port.  The result of @racket[thread-receive-evt] is ready when
 @racket[thread-receive] would not block.  In a real application, the messages
 received in the thread mailbox could be used for control messages, etc.}
-下一个示例显示了在简单的TCP回声服务器中使用的函数。该函数使用@racket[sync/timeout]对给定端口的输入或线程邮箱中的消息进行同步。@racket[sync/timeout]的第一个参数指定在给定事件中应该等待的最大秒数。@racket[read-line-evt]函数返回一个事件，当在给定的输入端口里一行输入可获得时它被准备。当@racket[thread-receive]不会阻止@racket[thread-receive-evt]的结果被准备。在实际应用程序中，线程邮箱中接收到的消息可用于控制消息等。
+下一个示例展示了在简单的TCP回声服务器中使用的函数。该函数使用@racket[sync/timeout]对给定端口的输入或线程邮箱中的消息进行同步。
+@racket[sync/timeout]的第一个参数指定在给定事件中应该等待的最大秒数。
+@racket[read-line-evt]函数会返回一个事件。当指定输入端口里的一行输入可获得时，这个事件会被准备好。
+当调用@racket[thread-receive]不会阻塞时，@racket[thread-receive-evt]的结果会被准备好。
+在实际应用中，线程邮箱中接收到的消息可用于控制消息，等等。
 
 @racketblock[
 (define (serve in-port out-port)
@@ -370,7 +386,10 @@ two seconds, closing the ports, which allows @racket[copy-port] to finish and th
 client to exit.  The main thread uses @racket[thread-wait] to wait for the
 client thread to exit (since, without @racket[thread-wait], the main thread might
 exit before the other threads are finished).}
-下面的例子中使用了@racket[serve]函数，它启动一个服务器线程和一个通过TCP通信的客户机线程。客户机向服务器输出三行，然后将它们返回。客户机的@racket[copy-port]调用阻塞直到接收到EOF为止。服务器在两秒钟后超时，关闭端口，允许@racket[copy-port]完成，客户机退出。主线程使用@racket[thread-wait]来等待客户机线程退出（因为没有@racket[thread-wait]，主线程可能在其它线程完成之前退出）。
+下面的例子中使用了@racket[serve]函数，它启动一个服务端线程和一个通过 TCP 通信的客户端线程。
+客户端向服务端输出三行消息，服务端会将它们直接返回。客户端的@racket[copy-port]调用阻塞直到接收到EOF为止。
+服务端在两秒钟后超时，关闭端口，使@racket[copy-port]完成，然后客户端退出。
+主线程使用@racket[thread-wait]来等待客户端线程退出（主线程因为没有@racket[thread-wait]，它可能在其它线程完成之前退出）。
 
 @racketblock[
 (define port-num 4321)
@@ -440,7 +459,7 @@ dispatch on the return value of @racket[sync].}
 @;{The result of @racket[handle-evt] invokes its callback in tail position
 with respect to @racket[sync], so it is safe to
 use recursion as in the following example.}
-@racket[handle-evt]的结果调用回调相对于@racket[sync]尾的位置，所以它是安全的使用递归如下。
+@racket[handle-evt]的结果在相对于@racket[sync]的尾部调用其回调，所以如下例所示，使用递归是安全的。
 
 @racketblock[
 (define control-channel (make-channel))
@@ -474,4 +493,5 @@ use recursion as in the following example.}
 that its handler is not called in tail position with respect to
 @racket[sync]. At the same time, @racket[wrap-evt] disables break
 exceptions during its handler's invocation.}
-@racket[wrap-evt]函数类似于@racket[handle-evt]，除了它的处理器不调用相对于@racket[sync]的尾位置。同时， @racket[wrap-evt]在处理程序调用期间禁用异常。
+@racket[wrap-evt]函数类似于@racket[handle-evt]，除了它的处理器不在相对于@racket[sync]的尾部被调用。
+同时，@racket[wrap-evt]在处理程序调用期间禁用中断异常。
