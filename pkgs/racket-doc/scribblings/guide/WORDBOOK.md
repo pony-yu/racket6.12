@@ -4,7 +4,8 @@
 ## 常用词
 - Examples: 例子：（感觉这样翻译比“例如：”、“举例：”更贴近）
 - sequence 序列
-- Shorthand 缩写
+- shorthand 速记（不翻译为缩写）
+- shorthand form 速记形式
 - evaluate 求值
 - load 加载
 - import 导入
@@ -50,7 +51,7 @@
 - byte 字节
 - symbol 符号
 - keyword 关键字
-- pair 配对（原文解释是：把两个任意值结合。说明不存在顺序，而且也没有pair-ref这种按顺序存取的函数，因此不考虑翻译为“序对”。）
+- pair 点对（原文解释是：把两个任意值结合。说明不存在顺序，而且也没有pair-ref这种按顺序存取的函数，因此不考虑翻译为“序对”。采用《算 法 语 言 Scheme 修 订 5 报 告》翻译。）
 - list 列表
 - vector 向量
 - hash Table 哈希表

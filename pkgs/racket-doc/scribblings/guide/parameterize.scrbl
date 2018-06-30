@@ -6,12 +6,13 @@
 @;{@title[#:tag "parameterize"]{Dynamic Binding: @racket[parameterize]}}
 @title[#:tag "parameterize"]{动态绑定：@racket[parameterize]}
 
-@refalso["parameters"]{@racket[parameterize]}
+@;{@refalso["parameters"]{@racket[parameterize]}}
+@margin-note{在《Racket参考》中的“（parameterize）”部分也有关于@racket[parameterize]的文档。}
 
 @;{The @racket[parameterize] form associates a new value with a
 @deftech{parameter} during the evaluation of @racket[_body]
 expressions:}
-@racket[parameterize]表把一个新值和@racket[_body]表达式求值过程中的一个参数@deftech{parameter}相结合：
+@racket[parameterize]表把一个新值和@racket[_body]表达式的求值过程中的一个参数@deftech{parameter}相结合：
 
 @specform[(parameterize ([parameter-expr value-expr] ...)
             body ...+)]

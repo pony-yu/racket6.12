@@ -24,14 +24,14 @@ whitespace) in between:}
 general, the result of @racket[cons] is a @defterm{pair}. The more
 traditional name for the @racket[cons?] function is @racket[pair?],
 and we'll use the traditional name from now on.}
-因此，由@racket[cons]产生的一个值并不总是一个列表。一般来说，@racket[cons]的结果是一个 @defterm{配对（pair）}。更符合惯例的@racket[cons?]函数名字是@racket[pair?]，那我们从现在开始使用这个符合惯例的名字。
+因此，由@racket[cons]产生的一个值并不总是一个列表。一般来说，@racket[cons]的结果是一个 @defterm{点对（pair）}。更符合惯例的@racket[cons?]函数名字是@racket[pair?]，那我们从现在开始使用这个符合惯例的名字。
 
 @;{The name @racket[rest] also makes less sense for non-list pairs; the
 more traditional names for @racket[first] and @racket[rest] are
 @racket[car] and @racket[cdr], respectively. (Granted, the traditional
 names are also nonsense. Just remember that ``a'' comes before ``d,''
 and @racket[cdr] is pronounced ``could-er.'')}
-名字@racket[rest]对非列表配对也意义不大；对@racket[first]和@racket[rest]更符合惯例的名字分别是@racket[car]和@racket[cdr]。（当然，符合惯例的名字也是没有意义的。请记住，“a”出现在“d”之前，并且@racket[cdr]被声明为“could-er（可以）”。
+名字@racket[rest]对非列表点对也意义不大；对@racket[first]和@racket[rest]更符合惯例的名字分别是@racket[car]和@racket[cdr]。（当然，符合惯例的名字也是没有意义的。请记住，“a”出现在“d”之前，并且@racket[cdr]被声明为“could-er（可以）”。
 
 @examples[
 #:eval list-eval
@@ -49,12 +49,12 @@ historical curiosity, along with the dot notation for printing and the
 funny names @racket[car] and @racket[cdr]. Pairs are deeply wired into
 to the culture, specification, and implementation of Racket, however,
 so they survive in the language.}
-Racket的配对数据类型和它对表的关系，连同打印的点符号和滑稽的名字@racket[car]及@racket[cdr]本质上是一个历史上的奇特事物。然而，配对深深地被连接进了Racket的文化、详述和实现上，因此它们在语言中得以存在下来。
+Racket的点对数据类型和它对表的关系，连同打印的点符号和滑稽的名字@racket[car]及@racket[cdr]本质上是一个历史上的奇特事物。然而，点对深深地被连接进了Racket的文化、详述和实现上，因此它们在语言中得以存在下来。
 
 @;{You are perhaps most likely to encounter a non-list pair when making a
 mistake, such as accidentally reversing the arguments to
 @racket[cons]:}
-在你犯一个错误时，你很可能会遇到一个非列表配对，比如不小心给cons把参数颠倒过来：
+在你犯一个错误时，你很可能会遇到一个非列表点对，比如不小心给cons把参数颠倒过来：
 
 @interaction[(cons (list 2 3) 1) (cons 1 (list 2 3))]
 
@@ -62,12 +62,12 @@ mistake, such as accidentally reversing the arguments to
 @racket[make-hash] function takes a list of pairs, where the
 @racket[car] of each pair is a key and the @racket[cdr] is an
 arbitrary value.}
-非列表配对有时被有意使用。例如，@racket[make-hash]函数取得了一个配对的列表，其中每个配对的@racket[car]是一个键同时@racket[cdr]是一个任意值。
+非列表点对有时被有意使用。例如，@racket[make-hash]函数取得了一个点对的列表，其中每个点对的@racket[car]是一个键同时@racket[cdr]是一个任意值。
 
 @;{The only thing more confusing to new Racketeers than non-list pairs is
 the printing convention for pairs where the second element @italic{is}
 a pair, but  a list:}
-对新的Racket程序员唯一更困惑的情况莫过于非列表配对是对配对的打印习惯，其第二个元素@italic{是}一个配对而@italic{不是}一个列表：
+对新的Racket程序员唯一更困惑的情况莫过于非列表点对是对点对的打印习惯，其第二个元素@italic{是}一个点对而@italic{不是}一个列表：
 
 @interaction[(cons 0 (cons 1 2))]
 
@@ -77,7 +77,7 @@ parenthesis. In that case, remove the dot, the open parenthesis, and the
 matching close parenthesis. Thus, @racketresultfont[#:decode? #f]{'(0 . (1 . 2))}
 becomes @racketresult['(0 1 . 2)], and
 @racketresultfont[#:decode? #f]{'(1 . (2 . (3 . ())))} becomes @racketresult['(1 2 3)].}
-一般来说，打印一个配对的规则如下：除非该点紧接着是一个开括号，否则使用点表示法。在这种情况下，去掉点、开括号和匹配的闭括号。由此，@racketresultfont[#:decode? #f]{'(0 . (1 . 2))}变成@racketresult['(0 1 . 2)]，@racketresultfont[#:decode? #f]{'(1 . (2 . (3 . ())))}变成@racketresult['(1 2 3)]。
+一般来说，打印一个点对的规则如下：除非该点紧接着是一个开括号，否则使用点表示法。在这种情况下，去掉点、开括号和匹配的闭括号。由此，@racketresultfont[#:decode? #f]{'(0 . (1 . 2))}变成@racketresult['(0 1 . 2)]，@racketresultfont[#:decode? #f]{'(1 . (2 . (3 . ())))}变成@racketresult['(1 2 3)]。
 
 @;------------------------------------------------------------------------
 @;{@section[#:tag "quoting-lists"]{Quoting Pairs and Symbols with @racket[quote]}}
@@ -242,7 +242,7 @@ case it uses @racketidfont{'} to print the output:}
 @;{Now that you know the truth about pairs and lists, and now that you've
 seen @racket[quote], you're ready to understand the main way in which
 we have been simplifying Racket's true syntax.}
-现在你已经知道了关于配对和列表的真相，而且现在你已经明白了@racket[quote]，你已经准备好理解我们一直在简化Racket真实语法的主要方法。
+现在你已经知道了关于点对和列表的真相，而且现在你已经明白了@racket[quote]，你已经准备好理解我们一直在简化Racket真实语法的主要方法。
 
 @;{The syntax of Racket is not defined directly in terms of character
 streams. Instead, the syntax is determined by two layers:}
@@ -269,7 +269,7 @@ printed with parentheses, and reading a pair of parentheses produces a
 list. Similarly, a non-list pair is printed with the dot notation, and
 a dot on input effectively runs the dot-notation rules in reverse to
 obtain a pair.}
-打印和读取的规则是互相协调的。例如，一个列表用圆括号打印，读取一对圆括号生成一个列表。类似地，一个非列表配对用点表示法打印，同时在输入上的一个点有效地运行点标记规则从反向得到一个配对。
+打印和读取的规则是互相协调的。例如，一个列表用圆括号打印，读取一对圆括号生成一个列表。类似地，一个非列表点对用点表示法打印，同时在输入上的一个点有效地运行点标记规则从反向得到一个点对。
 
 @;{One consequence of the read layer for expressions is that you can use
 the dot notation in expressions that are not quoted forms:}
@@ -292,7 +292,7 @@ single element in a parenthesized sequence, as long as the element is
 not first or last. Such a pair triggers a reader conversion that moves
 the element between @litchar{.}s to the front of the list. The
 conversion enables a kind of general infix notation:}
-通常，@litchar{.}被仅只带一个括号序列的读取器允许，并且只有在序列的最后一个元素之前。然而，一对@litchar{.}也可以出现在一个括号序列的一个单个元素周围，只要这个元素不是第一个或最后一个。这样的一个配对触发一个阅读器转换，它将@litchar{.}之间的元素移动到列表的前面。这个转换使一种通用的中缀表示法成为可能：
+通常，@litchar{.}被仅只带一个括号序列的读取器允许，并且只有在序列的最后一个元素之前。然而，一对@litchar{.}也可以出现在一个括号序列的一个单个元素周围，只要这个元素不是第一个或最后一个。这样的一个点对触发一个阅读器转换，它将@litchar{.}之间的元素移动到列表的前面。这个转换使一种通用的中缀表示法成为可能：
 
 @interaction[
 (1 . < . 2)
@@ -303,4 +303,4 @@ conversion enables a kind of general infix notation:}
 nothing to do with the dot notation for non-list pairs. Racket
 programmers use the infix convention sparingly---mostly for asymmetric
 binary operators such as @racket[<] and @racket[is-a?].}
-这两个点转换是非传统的，并且它与非列表配对的点记法基本上没有关系。Racket程序员保守地使用中缀标记——大多用于非对称二元操作符，如@racket[<]和@racket[is-a?]。
+这两个点转换是非传统的，并且它与非列表点对的点记法基本上没有关系。Racket程序员保守地使用中缀标记——大多用于非对称二元操作符，如@racket[<]和@racket[is-a?]。

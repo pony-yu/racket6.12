@@ -7,7 +7,7 @@
 
 @;{The @racket[case] form dispatches to a clause by matching the result
 of an expression to the values for the clause:}
-通过将表达式的结果与子句的值相匹配，@racket[case]表分派一个子句：
+通过将一个表达式的结果与子句的值相匹配，@racket[case]表分派到一个从句：
 
 @specform[(case expr
             [(datum ...+) body ...+]
@@ -36,7 +36,7 @@ corresponding @racket[_body]s are evaluated if any of the
 
 @;{The last clause of a @racket[case] form can use @racket[else], just
 like @racket[cond]:}
-一个@racket[case]表最后一个从句可以使用@racket[else]，就像@racket[cond]那样：
+一个@racket[case]表的最后从句可以使用@racket[else]，就像@racket[cond]那样：
 
 @examples[
 (case (random 6)
@@ -49,4 +49,4 @@ like @racket[cond]:}
 @;{For more general pattern matching (but without the dispatch-time
 guarantee), use @racket[match], which is introduced in
 @secref["match"].}
-对于更一般的模式匹配（但没有分派时间保证），使用@racket[match]，这个会在《模式匹配》（@secref["match"]）中介绍。
+对于更一般的模式匹配（但没有分派时间保证），使用@racket[match]，这个会在《@secref["match"]》中介绍。
