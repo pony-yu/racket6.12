@@ -532,7 +532,6 @@ at the structure-type level and at the level of individual fields:}
 @;-- FIXME:
 @;-- Explain when to use guards instead of contracts, and vice versa
 
-@;???????????????????????????????????????????????????????????
  @specspecsubform[(code:line #:guard guard-expr)]{
  @;{Specifies a
   @deftech{constructor guard} procedure to be called whenever an
@@ -544,7 +543,7 @@ at the structure-type level and at the level of individual fields:}
   as given, minus the name argument. The guard can raise an exception
   if one of the given arguments is unacceptable, or it can convert an
   argument.}
-指定在创建结构类型的实例时调用的构造@deftech{函数保护过程（constructor guard）}。在结构类型中，这个看护获取与非自动字段相同的参数，再加上一个实例化类型的名称（如果子类型被实例化，在这种情况下最好使用子类型的名称报告错误）。保护过程应该返回与给定值相同的值，减去名称参数。如果某个参数不可接受，或者可以转换一个参数，则保护过程可以引发异常。
+每当一个结构类型的实例被创建，都指定一个@deftech{构造器看守（constructor guard）}过程以供调用。在结构类型中这个看守获取与结构类型中的非自动字段相同数量的参数，再加上一个实例化类型的名称（如果一个子类型被实例化，在这种情况下最好使用子类型的名称报告一个错误）。看守应该返回与给定值相同数量的值，减去名称参数。如果某个参数不可接受，或者它可以转换一个参数，则这个看守可以引发一个异常。
 
  @defexamples[
    #:eval posn-eval
@@ -566,7 +565,7 @@ at the structure-type level and at the level of individual fields:}
   case, only the fields accepted by the constructor are provided to
   the guard (but the subtype's guard gets both the original fields and
   fields added by the subtype).}
-即使创建子类型实例，也会调用保护过程。在这种情况下，只有构造函数接受的字段被提供给保护过程（但是子类型的保护过程同时获得子类型添加的原始字段和现有字段）。
+即使子类型实例被创建，这个看守也会被调用。在这种情况下，只有被构造器接受的字段被提供给看守（但是子类型的看守同时获得子类型添加的原始字段和现有字段）。
 
  @defexamples[
   #:eval posn-eval
@@ -587,7 +586,7 @@ at the structure-type level and at the level of individual fields:}
   type to be used as dictionaries. Implementing
   the methods for @racket[gen:custom-write] allows the customization
   of how an instance of a structure type is @racket[display]ed.}
-关联与@defterm{通用接口（generic interface）}对应的结构类型的方法定义。例如，执行@racket[gen:dict]方法允许一个结构类型实例用作字典。执行@racket[gen:custom-write]方法允许定制如何@racket[显示（display）]结构类型的实例。
+使方法定义与关联到一个@defterm{通用接口（generic interface）}的结构类型关联。例如，执行@racket[gen:dict]方法允许一个结构类型的实例用作字典。执行@racket[gen:custom-write]方法允许一个如何被@racket[显示（display）]的结构类型的一个实例的定制。
 
   @defexamples[
     (struct cake (candles)
@@ -608,7 +607,7 @@ at the structure-type level and at the level of individual fields:}
    structure instance to be used as a function; the property value
    determines how a call is implemented when using the structure as a
    function.}
-将@deftech{属性（property）}和值与结构类型相关联。例如，@racket[prop:procedure]属性允许一个结构实例作为函数使用；属性值决定当使用结构作为函数时如何执行。
+使一个@deftech{属性（property）}和值与结构类型相关联。例如，@racket[prop:procedure]属性允许一个结构实例用作一个函数；属性值决定当使用这个结构作为一个函数时一个调用如何被执行。
 
  @defexamples[
    (struct greeter (name)
@@ -629,7 +628,7 @@ at the structure-type level and at the level of individual fields:}
   @tech{structure type descriptor} value. An advantage of
   @racket[#:super] is that structure type descriptors are values, so
   they can be passed to procedures.}
-一种替代提供@racket[super-id]与@racket[struct-id]紧邻。代替这个结构类型的名字（它是一个表达式），@racket[super-expr]应该产生一种@tech{结构类型的描述符（structure type descriptor）}的值。对@racket[#:super]更高级形式是结构类型的描述符是值，所以他们可以通过程序。
+用于一个与@racket[struct-id]紧邻的@racket[super-id]的一个替代者。代替一个结构类型的这个名字（它是一个表达式），@racket[super-expr]应该产生一个@tech{结构类型的描述符（structure type descriptor）}值。@racket[#:super]的一个优点是结构类型的描述符是值，所以可以被传递给过程。
 
   @defexamples[
     #:eval posn-eval
@@ -648,6 +647,6 @@ at the structure-type level and at the level of individual fields:}
 @; ----------------------------------------
 
 @;{@refdetails["structures"]{structure types}}
-@refdetails["structures"]{数据结构类型}
+@margin-note{在《Racket参考》中的“（structures）”里提供有更多关于数据结构类型的内容。}
 
 @close-eval[posn-eval]

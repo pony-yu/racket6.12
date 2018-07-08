@@ -162,14 +162,14 @@ or @racket[unquote-splicing] is needed.}
 shorthand form of @racket[quasiquote] and @racket[unquote] will be
 used: @litchar{`} (i.e., a backquote) and @litchar{,} (i.e., a comma).
 The same shorthands can be used in expressions:}
-上面的求值实际上不会像显示那样打印。相反，@racket[quasiquote]和@racket[unquote]的速记形式将被使用：@litchar{`}（即一个反引号）和@litchar{,}（即一个逗号）。同样的速记可在表达式中使用：
+上面的求值实际上不会像显示那样打印。相反，@racket[quasiquote]和@racket[unquote]的速记形式将被使用：@litchar{`}（即一个反引号）和@litchar{,}（即一个逗号）。同样的简写可在表达式中使用：
 
 @examples[
 `(1 2 `(,(+ 1 2) ,,(- 5 1)))
 ]
 
 @;{The shorthand form of @racket[unquote-splicing] is @litchar[",@"]:}
-@racket[unquote-splicing]的速记形式是@litchar[",@"]：
+@racket[unquote-splicing]的简写形式是@litchar[",@"]：
 
 @examples[
 `(1 2 ,@(list (+ 1 2) (- 5 1)))

@@ -186,7 +186,7 @@ error is raised, just as for internal definitions.}
 @include-section["named-let.scrbl"]
 
 @; ----------------------------------------
-@section{Multiple Values: @racket[let-values], @racket[let*-values], @racket[letrec-values]}
+@;{@section{Multiple Values: @racket[let-values], @racket[let*-values], @racket[letrec-values]}}
 @section[#:tag "Multiple-Values-let"]{多值绑定：let-values，let*-values，letrec-values}
 
 @;{@refalso["let"]{multiple-value binding forms}}

@@ -148,7 +148,7 @@ guidelines may help explain when using @racket[set!] is appropriate.}
        fine.}
        对于在有状态对象是必要或合适的情况下，那么用@racket[set!]实现对象的状态很好的。
 
-       @as-examples[@t{Ok example:}
+       @as-examples[@t{@;{Ok example:}好的例子：}
        @def+int[
        (define next-number!
          (let ([n 0])

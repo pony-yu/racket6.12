@@ -96,11 +96,11 @@ non-@racket[#f] value from its @racket[expr]s.  As a special case,
 (got-milk? '(apple milk banana))
 ]
 
-If evaluation reaches the last @racket[_expr] of an @racket[and] or
+@;{If evaluation reaches the last @racket[_expr] of an @racket[and] or
 @racket[or] form, then the @racket[_expr]'s value directly determines
 the @racket[and] or @racket[or] result. Therefore, the last
 @racket[_expr] is in tail position, which means that the above
-@racket[got-milk?] function runs in constant space.
+@racket[got-milk?] function runs in constant space.}
 如果求值达到一个@racket[and]或@racket[or]}表的最后的@racket[_expr]，那么@racket[_expr]的值直接决定@racket[and]或@racket[or]}的结果。因此，最后的@racket[_expr]是在尾部的位置，这意味着上面的@racket[got-milk?]函数在固定空间中运行。
 
 @;{@guideother{@secref["tail-recursion"] introduces tail calls and tail positions.}}

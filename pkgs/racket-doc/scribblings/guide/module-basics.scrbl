@@ -20,7 +20,7 @@ racket
 
 (provide print-cake)
 
-(code:comment @#,t{@;{draws a cake with @racket[n] candles}用@racket[n]支蜡烛做蛋糕。})
+(code:comment @#,t{@;{draws a cake with @racket[n] candles}画一个带@racket[n]支蜡烛的蛋糕。})
 (define (print-cake n)
   (show "   ~a   " n #\.)
   (show " .-~a-. " n #\|)
@@ -38,7 +38,7 @@ racket
 @racket[print-cake]. The @racket[show] function is private to
 @filepath{cake.rkt} (i.e., it cannot be used from other modules),
 since @racket[show] is not exported.}
-然后，其他模块可以导入@filepath{cake.rkt}以使用@racket[print-cake]的函数，因为@filepath{cake.rkt}的@racket[provide]行明确导出了@racket[print-cake]的定义。@racket[show]函数对@filepath{cake.rkt}是私有的（即它不能从其他模块被使用），因为@racket[show]没有被导出。
+然后，其它模块可以导入@filepath{cake.rkt}以使用@racket[print-cake]函数，因为@filepath{cake.rkt}中的@racket[provide]行明确导出这个定义@racket[print-cake]。@racket[show]函数对@filepath{cake.rkt}是私有的（即它不能从其它模块被使用），因为@racket[show]没有被导出。
 
 @;{The following @filepath{random-cake.rkt} module imports
 @filepath{cake.rkt}:}
@@ -58,7 +58,7 @@ racket
 @filepath{random-cake.rkt} modules are in the same
 directory. Unix-style relative paths are used for relative module
 references on all platforms, much like relative URLs in HTML pages.}
-相对在导入@racket[(require "cake.rkt")]内的引用@racket["cake.rkt"]的运行来说，如果@filepath{cake.rkt}和@filepath{random-cake.rkt}模块在同一个目录里。UNIX样式的相对路径用于所有平台上的相对模块引用，就像HTML页面中的相对的URL一样。
+如果@filepath{cake.rkt}和@filepath{random-cake.rkt}模块在同一个目录里，在导入@racket[(require "cake.rkt")]中的这个相对引用内的引用@racket["cake.rkt"]就会工作。UNIX样式的相对路径用于所有平台上的相对模块引用，就像HTML页面中的相对的URL一样。
 
 @; ----------------------------------------
 @;{@section[#:tag "module-org"]{Organizing Modules}}
@@ -72,7 +72,7 @@ through relative paths. A directory of modules can act as a
 project, since it can be moved around on the filesystem or copied to
 other machines, and relative paths preserve the connections among
 modules.}
-@filepath{cake.rkt}和@filepath{random-cake.rkt}示例演示如何组织一个程序模块的最常用的方法：把所有的模块文件在一个目录（也许是子目录），然后有模块通过相对路径相互引用。模块目录可以作为一个项目，因为它可以在文件系统上移动或复制到其它机器上，而相对路径则保存模块之间的连接。
+@filepath{cake.rkt}和@filepath{random-cake.rkt}示例演示如何组织一个程序模块的最常用的方法：把所有的模块文件在一个目录（也许是子目录），然后有模块通过相对路径相互引用。模块的一个目录可以作为一个项目，因为它可以在文件系统上移动或复制到其它机器上，并且相对路径保存模块之间的连接。
 
 @;{As another example, if you are building a candy-sorting program, you
 might have a main @filepath{sort.rkt} module that uses other modules
@@ -84,7 +84,7 @@ be @filepath{db/lookup.rkt} that uses helper modules
 the sorting-machine driver @filepath{machine/control.rkt} might use
 helper modules @filepath{machine/sensors.rkt} and
 @filepath{machine/actuators.rkt}.}
-另一个例子，如果你正在开发一个糖果分类程序，你可能有一个主要的@filepath{sort.rkt}模块，使用其他模块访问糖果数据库和控制分拣机。如果糖果数据库模块本身被组织成子模块以处理条码和厂家信息，那么数据库模块可以是@filepath{db/lookup.rkt}，它使用辅助模块@filepath{db/barcodes.rkt}和@filepath{db/makers.rkt}。同样，分拣机驱动程序@filepath{machine/control.rkt}可能会使用辅助模块@filepath{machine/sensors.rkt}和@filepath{machine/actuators.rkt}。
+作为另一个例子，如果你正在构建一个糖果分类程序，你可能有一个主@filepath{sort.rkt}模块，它使用其它模块访问一个糖果数据库和一个控制分拣机。如果这个糖果数据库模块本身被组织进了处理条码和厂家信息的子模块，那么这个数据库模块可以是@filepath{db/lookup.rkt}，它使用辅助器模块@filepath{db/barcodes.rkt}和@filepath{db/makers.rkt}。同样，这个分拣机驱动器@filepath{machine/control.rkt}可能会使用辅助器模块@filepath{machine/sensors.rkt}和@filepath{machine/actuators.rkt}。
 
 @centerline[module-hierarchy]
 
@@ -102,7 +102,7 @@ racket
 @;{The @filepath{db/lookup.rkt} module similarly uses paths relative to
 its own source to access the @filepath{db/barcodes.rkt} and
 @filepath{db/makers.rkt} modules:}
-@filepath{db/lookup.rkt}模块类似地使用相对路径给它自己的源码以访问@filepath{db/barcodes.rkt}和@filepath{db/makers.rkt}模块：
+@filepath{db/lookup.rkt}模块类似地使用相对路径给它自己的源来访问@filepath{db/barcodes.rkt}和@filepath{db/makers.rkt}模块：
 
 @racketmod[
 #:file "db/lookup.rkt"
@@ -120,21 +120,20 @@ racket
 ....]
 
 @;{Racket tools all work automatically with relative paths. For example,}
-Racket工具所有运行都自动使用相对路径。例如，
+Racket工具所有工作自动使用相对路径。例如，
 
 @commandline{racket sort.rkt}
 
 @;{on the command line runs the @filepath{sort.rkt} program and
 automatically loads and compiles required modules. With a large enough
 program, compilation from source can take too long, so use}
-在命令行运行@filepath{sort.rkt}程序和自动加载并编译所需的模块。对于一个足够大的程序，从源码编译可能需要很长时间，所以使用
+在命令行运行@filepath{sort.rkt}程序和自动加载并编译所需的模块。对于一个足够大的程序，从源编译可能需要很长时间，所以使用
 
 @commandline{raco make sort.rkt}
 
 @;{@margin-note{See @secref[#:doc '(lib "scribblings/raco/raco.scrbl")
 "make"] for more information on @exec{raco make}.}}
-@margin-note{参见@secref[#:doc '(lib "scribblings/raco/raco.scrbl")
-"make"]以获取更多@exec{raco make}方面的信息。}
+@margin-note{参见《raco：Racket命令行工具（raco:Racket Command-Line Tools）》中的“raco make: Compiling Source to Bytecode”部分以获取更多关于@exec{raco make}的信息。}
 
 @;{to compile @filepath{sort.rkt} and all its dependencies to bytecode
 files. Running @exec{racket sort.rkt} will automatically use bytecode
@@ -150,7 +149,7 @@ module in a @tech{collection} is referenced through an unquoted,
 suffixless path. For example, the following module refers to the
 @filepath{date.rkt} library that is part of the @filepath{racket}
 @tech{collection}:}
-一个@deftech{集合（collection）}是已安装的库模块的按等级划分的组。一个@tech{集合}中的模块通过一个引号引用，无后缀路径。例如，下面的模块引用@filepath{date.rkt}库，它是部分@filepath{racket}@tech{集合}的一部分：
+一个@deftech{集合（collection）}是一个已安装的库模块的按等级划分的组。一个@tech{集合}中的一个模块通过一个引号引用，无后缀路径。例如，下面的模块引用@filepath{date.rkt}库，它是@filepath{racket}@tech{集合}的一部分：
 
 @racketmod[
 racket
@@ -166,14 +165,14 @@ indicate the module that provides each binding. Alternatively, if you
 reach a binding's documentation by clicking on hyperlinks, you can
 hover over the binding name to find out which modules provide
 it.}
-当搜索在线Racket文档时，搜索结果显示提供每个绑定的模块。或者，如果通过单击超链接到达绑定文档，则可以在绑定名称上悬停以查找哪些模块提供了它。
+当你搜索在线Racket文档时，搜索结果显示提供每个绑定的模块。或者，如果你通过单击超链接到达一个绑定文档，则可以在绑定名称上悬停以查找哪些模块提供了它。
 
 @;{A module reference like @racketmodname[racket/date] looks like an
 identifier, but it is not treated in the same way as @racket[printf]
 or @racket[date->string]. Instead, when @racket[require] sees a module
 reference that is unquoted, it converts the reference to a
 collection-based module path:}
-一个模块的引用，像@racketmodname[racket/date]，看起来像一个标识符，但它并不是和@racket[printf]或@racket[date->string]相同的方式对待。相反，当@racket[require]发现一个被引号包括的模块的引用，它转化这个引用为基于@tech{集合}的路径：
+一个模块的引用，像@racketmodname[racket/date]，看起来像一个标识符，但它并不是和@racket[printf]或@racket[date->string]相同的方式对待。相反，当@racket[require]发现一个被引号包括的模块引用，它转化这个引用为一个基于@tech{集合}的模块路径：
 
 @itemlist[
 
@@ -183,22 +182,21 @@ collection-based module path:}
        reference. For example, @racket[(require
        @#,racketmodname[slideshow])] is equivalent to @racket[(require
        slideshow/main)].}
-首先，如果这个引用路径不包含@litchar{/}，那么@racket[require]自动添加一个@filepath{/main}给参考。例如，@racket[(require
-       @#,racketmodname[slideshow])]相当于@racket[(require
+首先，如果这个引用路径不包含@litchar{/}，那么@racket[require]自动添加一个@filepath{/main}给这个引用。例如，@racket[(require @#,racketmodname[slideshow])]等价于@racket[(require
        slideshow/main)]。
     }
 
  @item{
   @;{Second, @racket[require] implicitly adds a @filepath{.rkt}
        suffix to the path.}
-    其次，@racket[require]隐式添加@filepath{.rkt}后缀给路径。
+    其次，@racket[require]隐式添加一个@filepath{.rkt}后缀给这个路径。
     }
 
  @item{
   @;{Finally, @racket[require] resolves the path by searching among
        installed @tech{collections}, instead of treating the path as relative to
        the enclosing module's path.}
-最后，@racket[require]通过在已安装的@tech{集合}中搜索路径来决定路径，而不是将路径处理为相对于封闭模块的路径。
+最后，@racket[require]在已安装的@tech{集合}中通过搜索来决定路径，而不是将路径处理为相对于封闭模块的路径。
     }
 
 ]
@@ -207,7 +205,7 @@ collection-based module path:}
 filesystem directory. For example, the @filepath{racket} collection is
 mostly located in a @filepath{racket} directory within the Racket
 installation's @filepath{collects} directory, as reported by}
-作为一个最近似情况，@tech{集合}作为文件系统目录实现。例如，@filepath{racket}@tech{集合}大多位于Racket安装的@filepath{collects}目录中的@filepath{racket}目录中，如以下报告：
+作为一个最近似情况，一个@tech{集合}被实现为一个文件系统目录。例如，@filepath{racket}集合大多位于@filepath{racket}安装的@filepath{collects}目录中的一个@filepath{racket}目录中，如以下报告：
 
 @racketmod[
 racket
@@ -224,7 +222,7 @@ Other places include the user-specific directory reported by
 @racket[(find-user-collects-dir)] and directories configured through
 the @envvar{PLTCOLLECTS} search path. Finally, and most typically,
 collections are found through installed @tech{packages}.}
-然而，Racket安装的@filepath{collects}目录仅仅是一个@racket[require]寻找目录@tech{集合}的地方。其它地方包括用户指定的通过@racket[(find-user-collects-dir)]报告的目录以及通过@envvar{PLTCOLLECTS}搜索路径配置的目录。最后，最典型的是，通过安装@tech{包（packages）}找到@tech{集合}。
+然而，Racket安装的@filepath{collects}目录仅仅是一个@racket[require]寻找集合目录的地方。其它地方包括用户指定通过@racket[(find-user-collects-dir)]报告的目录以及通过@envvar{PLTCOLLECTS}搜索路径配置的目录。最后，并且最典型，集合通过安装的@tech{包（packages）}找到。
 
 @; ----------------------------------------
 @;{@section[#:tag "packages-and-collections"]{Packages and Collections}}
@@ -241,7 +239,7 @@ provided by the @filepath{gui} package, while
 @filepath{parser-tools-lib}, and the @filepath{gui} and
 @filepath{parser-tools} packages extend @filepath{gui-lib} and
 @filepath{parser-tools-lib} with documentation.}}
-一个@deftech{包（package）}是通过Racket包管理器安装的一组库（或者预先安装在Racket分发中）。例如，@racketmodname[racket/gui]库是由@filepath{gui}包提供的，而@racketmodname[parser-tools/lex]是由@filepath{parser-tools}库提供的。@margin-note{更确切地说，@racketmodname[racket/gui]由 @filepath{gui-lib}提供，@racketmodname[parser-tools/lex]由@filepath{parser-tools-lib}提供，并且@filepath{gui}和@filepath{parser-tools}包用文档扩展@filepath{gui-lib}和@filepath{parser-tools-lib}。}
+一个@deftech{包（package）}是通过Racket包管理器（或者作为一个预安装包括在一个Racket分发中）。例如，@racketmodname[racket/gui]库是由@filepath{gui}包提供的，而@racketmodname[parser-tools/lex]是由@filepath{parser-tools}库提供的。@margin-note{更确切地说，@racketmodname[racket/gui]由 @filepath{gui-lib}提供，@racketmodname[parser-tools/lex]由@filepath{parser-tools-lib}提供，并且@filepath{gui}和@filepath{parser-tools}包用文档扩展@filepath{gui-lib}和@filepath{parser-tools-lib}。}
 
 @;{Racket programs do not refer to @tech{packages} directly. Instead,
 programs refer to libraries via @tech{collections}, and adding or
@@ -251,16 +249,16 @@ libraries in multiple collections, and two different packages can
 supply libraries in the same collection (but not the same libraries,
 and the package manager ensures that installed packages do not
 conflict at that level).}
-Racket程序不直接针对@tech{包}。相反，程序通过@tech{集合（collections）}针对库，添加或删除一个包会改变可用的基于@tech{集合}的库集。单个包可以为多个@tech{集合}提供库，两个不同的包可以在同一@tech{集合}中提供库（但不是同一个库，并且包管理器确保安装的包在该层级不冲突）。
+Racket程序不直参考@tech{包（packages）}。相反，程序通过@tech{集合（collections）}参考库，添加或删除一个@tech{包}改变可获得的基于集合库的集合。一个单个包可以在多个集合中提供库，并且两个不同的包可以在同一集合（但不是同一个库，并且包管理器确保安装的包在该层级不冲突）中提供库。
 
 @;{For more information about packages, see @other-manual['(lib
 "pkg/scribblings/pkg.scrbl")].}
-有关包的更多信息，请参阅@other-manual['(lib
-"pkg/scribblings/pkg.scrbl")]。
+有关包的更多信息，请参阅《Racket中的包管理》（Package Management in Racket）。
 
 @; ----------------------------------------
 @;{@section[#:tag "link-collection"]{Adding Collections}}
 @section[#:tag "link-collection"]{添加集合}
+@;???????????????????????????????????????????????????????
 
 @;{Looking back at the candy-sorting example of @secref["module-org"],
 suppose that modules in @filepath{db/} and @filepath{machine/} need a

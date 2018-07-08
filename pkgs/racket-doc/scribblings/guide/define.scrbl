@@ -210,7 +210,7 @@ equivalent to a @racket[define-values] form with a single @racket[_id].}
 一个@racket[define]表（不是一个函数简写）等价于一个带有一个单个@racket[_id]的@racket[define-values]表。
 
 @;{@refdetails["define"]{definitions}}
-@refdetails["define"]{定义}
+@margin-note{在《Racket参考》中的“（define）”部分提供了更多关于定义的内容。}
 
 @;------------------------------------------------------------------------
 @;{@section[#:tag "intdefs"]{Internal Definitions}}
