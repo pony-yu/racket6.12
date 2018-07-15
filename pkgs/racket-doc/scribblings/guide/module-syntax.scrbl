@@ -124,7 +124,6 @@ _decl ...]
 contains the @racketmodfont{#lang} form.}
 这里@racket[_name]是衍生自包含@racketmodfont{#lang}表的文件的名称。
 
-@;????????????????????????????????????????????????????????????????
 @;{The @racketmodfont{#lang} @racketmodname[racket/base] form has the same
 syntax as @racketmodfont{#lang} @racketmodname[racket], except that
 the longhand expansion uses @racketmodname[racket/base] instead of
@@ -138,8 +137,8 @@ like Racket, and which we do not attempt to describe in this guide.}
 @racket[module] in the same way as @racketmodfont{#lang}
 @racketmodname[racket]. The documented language name can be used
 directly with @racket[module] or @racket[require], too.}
-除非另有规定，一个模块是一个文档，它作为“语言”使用@racketmodfont{#lang}标记法表示将以和@racketmodfont{#lang}
-@racketmodname[racket]同样的方式扩大到@racket[module]中。文档的语言名也可以直接使用@racket[module]或@racket[require]。
+除非另有规定，被作为一个使用@racketmodfont{#lang}记号的“语言”文件化的一个模块将以和@racketmodfont{#lang}
+@racketmodname[racket]同样的方式扩展到@racket[module]。这个文件化的语言名称也可以用@racket[module]或@racket[require]来直接使用。
 
 @; ----------------------------------------------------------------------
 @;{@section[#:tag "submodules"]{Submodules}}
@@ -151,7 +150,7 @@ the nested @racket[module] form declares a
 enclosing module using a quoted name. The following example prints
 @racket["Tony"] by importing @racket[tiger] from the @racket[zoo]
 submodule:}
-一个@racket[module]表可以被嵌套在一个模块内，在这种情况下，这个嵌套@racket[module]表声明一个@deftech{子模块（submodule）}。子模块可以通过外围模块使用一个引用名称直接引用。下面的例子通过从@racket[zoo]子模块导入@racket[tiger]打印@racket["Tony"]：
+一个@racket[module]表可以被嵌套在一个模块内，在这种情况下，这个嵌套的@racket[module]表声明一个@deftech{子模块（submodule）}。子模块可以通过用一个引用名称的外围模块使直接引用。下面的例子通过从@racket[zoo]子模块输入@racket[tiger]打印@racket["Tony"]：
 
 @racketmod[
   #:file "park.rkt"
@@ -173,12 +172,12 @@ only because the @filepath{park.rkt} module @racket[require]s the
 independently. Furthermore, if @filepath{park.rkt} is compiled to a
 bytecode file (via @exec{raco make}), then the code for
 @filepath{park.rkt} or the code for @racket[zoo] can be loaded independently.}
-运行一个模块不是必须运行子模块。在上面的例子中，运行@filepath{park.rkt}运行它的子模块@racket[zoo]仅因为@filepath{park.rkt}模块@racket[require]了这个@racket[zoo]子模块。否则，一个模块及其子模块可以独立运行。此外，如果@filepath{park.rkt}被编译成字节码文件（通过@exec{raco make}），那么@filepath{park.rkt}代码或@racket[zoo]代码可以独立下载。
+运行一个模块不是必须运行其子模块。在上面的例子中，运行@filepath{park.rkt}来运行它的子模块@racket[zoo]仅因为@filepath{park.rkt}模块@racket[require]这个@racket[zoo]子模块。否则，一个模块及其每一个子模块可以独立运行。此外，如果@filepath{park.rkt}被编译成一个字节码文件（通过@exec{raco make}），那么@filepath{park.rkt}代码或@racket[zoo]代码可以独立加载。
 
 @;{Submodules can be nested within submodules, and a submodule can be
 referenced directly by a module other than its enclosing module by
 using a @elemref["submod"]{submodule path}.}
-子模块可以嵌套子模块，而且子模块可以被一个模块通过使用@elemref["submod"]{子模块路径（submodule path）}直接引用，不同于它的外围模块。
+子模块可以嵌套于子模块，而且一个子模块可以被一个模块而不是其外围模块通过使用一个@elemref["submod"]{子模块路径（submodule path）}直接引用。
 
 @;{A @racket[module*] form is similar to a nested @racket[module] form:}
 一个@racket[module*]表类似于一个嵌套的@racket[module]表：
@@ -191,7 +190,7 @@ using a @elemref["submod"]{submodule path}.}
 @;{The @racket[module*] form differs from @racket[module] in that it
 inverts the possibilities for reference between the submodule and
 enclosing module:}
-@racket[module*]表不同于@racket[module]，它反转这个对于子模块和外围模块的参考的可能性：
+@racket[module*]表不同于@racket[module]在于它反转这个对于子模块和外围模块的参考的可能性：
 
 @itemlist[
 
@@ -200,14 +199,14 @@ enclosing module:}
        @racket[require]d by its enclosing module, but the submodule
        cannot @racket[require] the enclosing module or lexically
        reference the enclosing module's bindings.}
-用@racket[module]申明的一个子模块模块可通过其外围模块@racket[require]，但子模块不能@racket[require]外围模块或在词法上参考外围模块的绑定。
+用@racket[module]申明的一个子模块模块可通过其外围模块@racket[require]，但这个子模块不能@racket[require]这个外围模块或在词法上参考外围模块的绑定。
  }
 
  @item{
   @;{A submodule declared with @racket[module*] can @racket[require]
        its enclosing module, but the enclosing module cannot
        @racket[require] the submodule.}
-用@racket[module*]申明的一个子模块可以@racket[require]其外围模块，但外围模块不能@racket[require]子模块。
+用@racket[module*]申明的一个子模块可以@racket[require]其外围模块，但是这个外围模块不能@racket[require]这个子模块。
     }
 
 ]
@@ -216,12 +215,12 @@ enclosing module:}
 @racket[_initial-module-path], in which case the submodule sees all of
 the enclosing module's bindings---including bindings that are not
 exported via @racket[provide].}
-此外，一个@racket[module*]表可以在@racket[_initial-module-path]的位置指定@racket[#f]，在这种情况下，所有外围模块的绑定对子模块可见——包括没有使用@racket[provide]输出的绑定。
+此外，一个@racket[module*]表可以在一个@racket[_initial-module-path]的位置指定@racket[#f]，在这种情况下，子模块领会所有外围模块的绑定——包括没有使用@racket[provide]输出的绑定。
 
 @;{One use of submodules declared with @racket[module*] and @racket[#f] is
 to export additional bindings through a submodule that are not
 normally exported from the module:}
-用@racket[module*]和@racket[#f]申明的子模块的一个应用是通过子模块输出附加绑定，那不是通常的从模块输出：
+用@racket[module*]和@racket[#f]申明的子模块的一个使用是通过一个并不从这个模块通常输出的子模块输出附加绑定：
 
 @racketmod[
 #:file "cake.rkt"
@@ -250,7 +249,7 @@ module can require the @racket[extra] @tech{submodule} using
 @racket[(require (submod "cake.rkt" extras))] to access the otherwise
 hidden @racket[show] function.@margin-note*{See @elemref["submod"]{submodule paths}
 for more information on @racket[submod].}}
-在这个修订的@filepath{cake.rkt}模块，@racket[show]不是被一个模块输入，它采用@racket[(require "cake.rkt")]，因为大部分@filepath{cake.rkt}的用户不想要那些额外的函数。一个模块可以要求@racket[extra]@tech{子模块（submodule）}使用@racket[(require (submod "cake.rkt" extras))]访问另外的隐藏的@racket[show]函数。
+在这个修订的@filepath{cake.rkt}模块里，@racket[show]不是被一个采用@racket[(require "cake.rkt")]的模块输入，因为大部分@filepath{cake.rkt}的客户端不想要这个额外的函数。一个模块可以需要这个使用@racket[(require (submod "cake.rkt" extras))]访问另外的隐藏@racket[show]函数的@racket[extra]@tech{子模块}。
 
 @; ----------------------------------------------------------------------
 @;{@section[#:tag "main-and-test"]{Main and Test Submodules}}
@@ -258,7 +257,7 @@ for more information on @racket[submod].}}
 
 @;{The following variant of @filepath{cake.rkt} includes a @racket[main]
 submodule that calls @racket[print-cake]:}
-下面@filepath{cake.rkt}的变体包括一个@racket[main]子模块，它调用@racket[print-cake]：
+下面@filepath{cake.rkt}的变体包括一个调用@racket[print-cake]的@racket[main]子模块：
 
 @racketmod[
 #:file "cake.rkt"
@@ -282,7 +281,7 @@ racket
 submodules. Nevertheless, running the above module via @exec{racket}
 or DrRacket prints a cake with 10 candles, because the @racket[main]
 @tech{submodule} is a special case.}
-运行一个模块不会运行@racket[module*]定义的子模块。尽管如此，还是可以通过@exec{racket}或DrRacket运行上面的模块打印一个带10支蜡烛的蛋糕，因为@racket[main]@tech{子模块（submodule）}是一个特殊情况。
+运行一个模块不会运行其@racket[module*]定义的子模块。尽管如此，还是可以通过@exec{racket}或DrRacket运行上面的模块打印一个带10支蜡烛的蛋糕，因为@racket[main]@tech{子模块}是一个特殊情况。
 
 @;{When a module is provided as a program name to the @exec{racket}
 executable or run directly within DrRacket, if the module has a
@@ -290,14 +289,14 @@ executable or run directly within DrRacket, if the module has a
 after its enclosing module. Declaring a @racket[main] submodule
 thus specifies extra actions to be performed when a module is run directly,
 instead of @racket[require]d as a library within a larger program.}
-当一个模块作为一个可执行程序的名称提供给@exec{racket}在DrRacket中直接运行或执行在，如果模块有一个@as-index{@racket[main]子模块}，@racket[main]子模块会在其外围模块之后运行。当一个模块直接运行时，声明一个@racket[main]子模块从而指定额外的行为去被执行，以代替@racket[require]作为在一个较大程序里的一个库。
+当一个模块作为一个程序名称提供给@exec{racket}可执行文件或在DrRacket中直接运行，如果这个模块有一个@as-index{@racket[main]子模块}，这个@racket[main]子模块会在其外围模块之后运行。当一个模块直接运行时，声明一个@racket[main]子模块从而指定额外的行为去被执行，以代替@racket[require]作为在一个更大的程序里的一个库。
 
 @;{A @racket[main] submodule does not have to be declared with
 @racket[module*]. If the @racket[main] module does not need to use
 bindings from its enclosing module, it can be declared with
 @racket[module]. More commonly, @racket[main] is declared using
 @racket[module+]:}
-一个@racket[main]子模块不必用@racket[module*]声明。如果@racket[main]模块不需要使用其外围模块的绑定，则可以用@racket[module]声明它。更通常的是，@racket[main]使用@racket[module+]声明：
+一个@racket[main]子模块不必用@racket[module*]声明。如果@racket[main]模块不需要使用其外围模块的绑定，则可以被用@racket[module]来声明。更通常的是，@racket[main]使用@racket[module+]来声明：
 
 @specform[
 (module+ name-id
@@ -310,7 +309,7 @@ bindings from its enclosing module, it can be declared with
 multiple @racket[module+] forms can specify the same submodule name,
 in which case the bodies of the @racket[module+] forms are combined to
 create a single submodule.}
-用@racket[module+]申明的一个子模块就像一个由@racket[module*]用@racket[#f]代替@racket[_initial-module-path]申明的模块。此外，多个@racket[module+]表可以指定相同的子模块名称，在这种情况下，@racket[module+]表的主体被组合起来以创建一个单独的子模块。
+用@racket[module+]申明的一个子模块就像一个以使用@racket[#f]作为其@racket[_initial-module-path]的@racket[module*]申明的子模块。此外，多个@racket[module+]表可以指定相同的子模块名称，在这种情况下，@racket[module+]表的主体被组合以创建一个单独的子模块。
 
 @;{The combining behavior of @racket[module+] is particularly useful for
 defining a @racket[test] submodule, which can be conveniently run
@@ -319,7 +318,7 @@ conveniently run with @exec{racket}. For example, the following
 @filepath{physics.rkt} module exports @racket[drop] and
 @racket[to-energy] functions, and it defines a @racket[test] module to
 hold unit tests:}
-@racket[module+]的组合行为对定义一个@racket[test]子模块是非常有用的，它可以方便地使用@exec{raco test}运行，用同样的方式@racket[main]也可以方便地使用@exec{racket}运行。例如，下面的@filepath{physics.rkt}模块输出@racket[drop]和@racket[to-energy]函数，它定义了一个@racket[test]模块支持单元测试：
+@racket[module+]的组合行为对定义一个@racket[test]子模块是非常有用的，它可以使用@exec{raco test}方便地运行，用同样的方式@racket[main]也可以方便地使用@exec{racket}运行。例如，下面的@filepath{physics.rkt}模块输出@racket[drop]和@racket[to-energy]函数，并且它定义了一个@racket[test]模块以支持单元测试：
 
 @racketmod[
 #:file "physics.rkt"
@@ -350,11 +349,11 @@ racket
 the @racket[drop] and @racket[to-energy] tests---or even trigger the
 loading of the test code, if the module is compiled---but running
 @exec{raco test physics.rkt} at a command line runs the tests.}
-引入@filepath{physics.rkt}到一个更大的程序不会运行@racket[drop]和@racket[to-energy]测试——即使引发这个测试代码的加载，如果模块被编译——但在运行@exec{raco test physics.rkt}的时候会同时运行这个测试。
+输入@filepath{physics.rkt}到一个更大的程序不会运行@racket[drop]和@racket[to-energy]测试——即使引发这个测试代码的加载，如果模块被编译——但在一个命令行中运行@exec{raco test physics.rkt}会运行这个测试。
 
 @;{The above @filepath{physics.rkt} module is equivalent to using
 @racket[module*]:}
-上述@filepath{physics.rkt}模块相当于使用@racket[module*]：
+上边的@filepath{physics.rkt}模块相当于使用@racket[module*]：
 
 @racketmod[
 #:file "physics.rkt"
@@ -380,13 +379,13 @@ racket
 
 @;{Using @racket[module+] instead of @racket[module*] allows tests to be
 interleaved with function definitions.}
-使用@racket[module+]代替@racket[module*]允许测试与函数定义交叉。
+使用@racket[module+]代替@racket[module*]允许对交错函数定义进行测试。
 
 @;{The combining behavior of @racket[module+] is also sometimes helpful
 for a @racket[main] module. Even when combining is not needed,
 @racket[(module+ main ....)] is preferred as it is more readable than
 @racket[(module* main #f ....)].}
-@racket[module+]的组合行为有时对@racket[main]模块也有帮助。即使组合是不需要的，@racket[(module+ main ....)]仍是首选，因为它比@racket[(module* main #f ....)]更具可读性。
+@racket[module+]的组合行为有时也是对一个@racket[main]模块有帮助的。即使在组合不被需要时，@racket[(module+ main ....)]因为它比@racket[(module* main #f ....)]更具可读性而是首选。
 
 @; ----------------------------------------------------------------------
 
