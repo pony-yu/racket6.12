@@ -258,7 +258,6 @@ Racket程序不直参考@tech{包（packages）}。相反，程序通过@tech{�
 @; ----------------------------------------
 @;{@section[#:tag "link-collection"]{Adding Collections}}
 @section[#:tag "link-collection"]{添加集合}
-@;???????????????????????????????????????????????????????
 
 @;{Looking back at the candy-sorting example of @secref["module-org"],
 suppose that modules in @filepath{db/} and @filepath{machine/} need a
@@ -269,7 +268,7 @@ that start @filepath{../utils/}. As long as a set of modules work
 together in a single project, it's best to stick with relative paths.
 A programmer can follow relative-path references without knowing about
 your Racket configuration.}
-回顾《@secref["module-org"]》部分的糖果排序示例，假设@filepath{db/}和@filepath{machine/}中的模块需要一组常见的助手函数集。辅助函数可以放在一个@filepath{utils/}目录，同时模块@filepath{db/}或@filepath{machine/}可以以开始于@filepath{../utils/}的相对路径访问公用模块。只要一组模块在一个项目中协同工作，最好保持相对路径。程序员可以在不知道你的Racket配置的情况下跟踪相关路径的引用。
+回顾《@secref["module-org"]》部分的糖果排序示例，假设@filepath{db/}和@filepath{machine/}中的那个模块需要一套公共的助手函数。辅助函数可以被放在一个@filepath{utils/}目录里，同时@filepath{db/}或@filepath{machine/}中的模块可以用开始于@filepath{../utils/}的相对路径访问公用模块。只要一组模块在一个单一项目中协同工作，最好保持相对路径。一个程序员可以不用知道你的Racket配置而继承相对路径引用。
 
 @;{Some libraries are meant to be used across multiple projects, so that
 keeping the library source in a directory with its uses does not make
@@ -277,7 +276,7 @@ sense. In that case, the best option is add a new
 @tech{collection}. After the library is in a collection, it can be
 referenced with an unquoted path, just like libraries that are
 included with the Racket distribution.}
-有些库是用于跨多个项目的，因此将库的源码保存在目录中使用是没有意义的。在这种情况下，最好的选择是添加一个新的集合。有了在一个集合中的库后，它可以通过一个封闭路径引用，就像是包括了Racket发行库的库一样。
+有些库是为了被用于跨多个项目，因此将库的源保存在一个目录内与它的使用没有意义。在这种情况下，最好的选择是添加一个新@tech{集合}。这个库处于一个集合里后，它可以用一个非引用路径引用，就像是包括在Racket发行里的库一样。
 
 @;{You could add a new collection by placing files in the Racket
 installation or one of the directories reported by
@@ -287,14 +286,14 @@ environment variable.@margin-note*{If you set @envvar{PLTCOLLECTS},
 include an empty path in by starting the value with a colon (Unix and
 Mac OS) or semicolon (Windows) so that the original search paths are
 preserved.} The best option, however, is to add a @tech{package}.}
-你可以通过将文件放置在Racket安装包里或通过@racket[(get-collects-search-dirs)]报告的一个目录下添加一个新的集合。或者，你可以通过设置@envvar{PLTCOLLECTS}环境变量添加到搜索目录列表。但最好的选择，是添加一个@tech{包}。
+你可以通过将文件放置在Racket安装包里或通过@racket[(get-collects-search-dirs)]报告的一个目录下添加一个新的集合。或者，你可以通过设置@envvar{PLTCOLLECTS}环境变量添加到搜索目录列表。@margin-note*{如果你设置@envvar{PLTCOLLECTS}，通过用冒号（UNIX和Mac OS）或分号（Windows）启动这个值包括一个空路径，从而保留原始搜索路径。}然而，最好的选择是添加一个@tech{包}。
 
 @;{Creating a package @emph{does not} mean that you have to register with
 a package server or perform a bundling step that copies your source
 code into an archive format. Creating a package can simply mean using
 the package manager to make your libraries locally accessible as a
 collection from their current source locations.}
-创建包@emph{并不}意味着您必须注册一个包服务器，或者执行一个将源代码复制到归档格式中的绑定步骤。创建包只意味着使用包管理器将你的库的本地访问作为当前源码位置的集合。
+创建一个包@emph{并不}意味着你必须用一个包服务器或者执行一个复制你的源代码到一个归档格式中的绑定步骤注册。创建一个包只简单地意味着使用包管理器将你的库作为一个来自它们当前源位置的的集合的本地访问。
 
 @;{For example, suppose you have a directory @filepath{/usr/molly/bakery}
 that contains the @filepath{cake.rkt} module (from the
@@ -313,7 +312,7 @@ collection, either}
 
        @;{where the @DFlag{link} flag is not actually needed when the
        provided path includes a directory separator.}
-         当所提供的路径包含目录分隔符时，实际上不需要@DFlag{link}标记。
+         当所提供的路径包含一个目录分隔符时，这里@DFlag{link}标记实际上不需要。
  }
 
  @item{
@@ -322,7 +321,7 @@ collection, either}
        click @onscreen{Browse...}, choose the
        @filepath{/usr/molly/bakery} directory, and click
        @onscreen{Install}.}
-    从@onscreen{File}（文件）菜单使用DrRacket的DrRacket的@onscreen{Package Manager}（包管理器）项。在@onscreen{Do What I Mean}面板，点击@onscreen{Browse...}（浏览），选择@filepath{/usr/molly/bakery}目录，然后单击@onscreen{Install}（安装）。
+    从@onscreen{File（文件）}菜单使用DrRacket的@onscreen{Package Manager（包管理器）}项。在@onscreen{Do What I Mean（做我打算的）}面板，点击@onscreen{Browse...（浏览……）}，选择@filepath{/usr/molly/bakery}目录，并且单击@onscreen{Install（安装）}。
     }
 
 ]
@@ -330,7 +329,7 @@ collection, either}
 @;{Afterward, @racket[(require bakery/cake)] from any module will import
 the @racket[print-cake] function from
 @filepath{/usr/molly/bakery/cake.rkt}.}
-后来，@racket[(require bakery/cake)]从任何模块将从@filepath{/usr/molly/bakery/cake.rkt}输入@racket[print-cake]函数。
+之后，从任何模块中@racket[(require bakery/cake)]将从@filepath{/usr/molly/bakery/cake.rkt}输入@racket[print-cake]函数。
 
 @;{By default, the name of the directory that you install is used both as
 the @tech{package} name and as the @tech{collection} that is provided
@@ -338,8 +337,7 @@ by the package.  Also, the package manager normally defaults to
 installation only for the current user, as opposed to all users of a
 Racket installation. See @other-manual['(lib
 "pkg/scribblings/pkg.scrbl")] for more information.}
-默认情况下，你安装的目录的名称既用作@tech{包}名称，又用作包提供的@tech{集合}。而且，包管理器通常默认只为当前用户安装，而不是在Racket安装的所有用户。有关更多信息，请参阅@other-manual['(lib
-"pkg/scribblings/pkg.scrbl")]。
+默认情况下，你安装的目录的名称既用作@tech{包}名称，又用作包提供的@tech{集合}。同样，包管理器通常默认只为当前用户安装，而不是在一个Racket安装的所有用户。有关更多信息，请参阅《Racket中的包管理（Package Management in Racket）。
 
 @;{If you intend to distribute your libraries to others, choose
 collection and package names carefully. The collection namespace is
@@ -348,7 +346,7 @@ package namespace is flat. Consider putting one-off libraries under
 some top-level name like @filepath{molly} that identifies the
 producer.  Use a collection name like @filepath{bakery} when producing
 the definitive collection of baked-goods libraries.}
-如果打算将库分发给其他人，请仔细选择集合和包名称。集合名称空间是分层的，但顶级集合名是全局的，包名称空间是扁平的。考虑将一次性库放在一些顶级名称，像@filepath{molly}这种标识制造者。在制作烘焙食品库的最终集合时，使用像@filepath{bakery}这样的集合名。
+如果你打算分发你的库给其他人，请仔细选择集合和包名称。集合名称空间是分层的，但顶级集合名是全局的，包名称空间是扁平的。考虑将一次性库放在一些顶级名称下，就像@filepath{molly}这种标识制造器。在制作烘焙食品库的最终集合时，使用像@filepath{bakery}这样的一个集合名。
 
 @;{After your libraries are put in a @tech{collection} you can still
 use @exec{raco make} to compile the library sources, but it's better
@@ -359,4 +357,4 @@ build documentation for the collection and add it to the documentation
 index, as specified by a @filepath{info.rkt} module in the collection.
 See @secref[#:doc '(lib "scribblings/raco/raco.scrbl") "setup"] for
 more information on @exec{raco setup}.}
-在你的库之后被放入一个@tech{集合}，你仍然可以使用@exec{raco make}以编译库源，但更好而且更方便的是使用@exec{raco setup}。@exec{raco setup}命令取得一个集合名（而不是文件名）并编译集合内所有的库。此外，@exec{raco setup}可以建立文档，并收集和添加文档到文档的索引，通过集合中的一个@filepath{info.rkt}模块做详细说明。有关@exec{raco setup}的详细信息请看@secref[#:doc '(lib "scribblings/raco/raco.scrbl") "setup"]。
+在你的库被放入一个@tech{集合}之后，你仍然可以使用@exec{raco make}以编译库源，但更好而且更方便的是使用@exec{raco setup}。@exec{raco setup}命令取得一个集合名（而不是一个文件名）并编译集合内所有的库。此外，@exec{raco setup}可以建立文档以收集和添加文档到文档索引，作为通过集合中的一个@filepath{info.rkt}模块做详细说明。有关@exec{raco setup}的详细信息请看《raco设置：安装管理（raco setup: Installation Management）》。

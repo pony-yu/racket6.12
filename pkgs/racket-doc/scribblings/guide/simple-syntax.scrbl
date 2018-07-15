@@ -27,7 +27,7 @@ same as whitespace.}
 在语法规范里，文本使用灰色背景，比如@litchar{#lang}，代表文本。除了@litchar{(}、@litchar{)}及@litchar{[}、@litchar{]}之前或之后不需要空格之外，文本与非结束符（像@nonterm{ID}）之间必须有空格。注释以@litchar{;}开始，直至这一行结束，空白也做相同处理。
 
 @;{@refdetails["parse-comment"]{different forms of comments}}
-@refdetails["parse-comment"]{注释的不同形式}
+@margin-note{《Racket参考》中的“（parse-comment）”提供有更多的有关注释的不同形式内容。}
 
 @;{Following the usual conventions, @kleenestar{} in a grammar means zero
 or more repetitions of the preceding element, @kleeneplus{} means one

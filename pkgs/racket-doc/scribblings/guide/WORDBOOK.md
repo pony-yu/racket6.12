@@ -8,8 +8,9 @@
 - shorthand form 速记形式
 - evaluate 求值
 - load 加载
-- import 导入
-- export 导出
+- import 输入
+- export 输出
+- provide 提供
 - access 存取（这个词有保存、读取双功能，不译作访问是为了传达的意思更明确）
 - dissect 解析
 - describe 叙述

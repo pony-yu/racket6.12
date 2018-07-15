@@ -449,7 +449,7 @@ abstraction. @tech{Opaque} and @tech{transparent} structures also can
 be serialized, however, if they are defined with
 @racket[serializable-struct] as described in
 @secref["serialization"].}
-由于表达式读取器可以生成@tech{预制}实例，所以在便利的@tech{序列化（serialization）}比抽象更重要时它们是有用的。然而，如果他们如《@secref["serialization"]》所描述那样被用@racket[serializable-struct]定义，@tech{不透明}和@tech{透明}的结构也可以被序列化。}]
+由于表达式读取器可以生成@tech{预制}实例，所以在便利的@tech{序列化（serialization）}比抽象更重要时它们是有用的。然而，如果他们如《@secref["serialization"]》所描述那样被用@racket[serializable-struct]定义，@tech{不透明}和@tech{透明}的结构也可以被序列化。
 
 @; ------------------------------------------------------------
 @;{@section[#:tag "struct-options"]{More Structure Type Options}}

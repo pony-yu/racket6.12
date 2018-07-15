@@ -13,7 +13,7 @@ for a @racket[module] form, much like @litchar{'} is a shorthand for a
 shorthand does not work well in a @tech{REPL}, in part because it must be
 terminated by an end-of-file, but also because the longhand expansion
 of @litchar{#lang} depends on the name of the enclosing file.}
-@litchar{#lang}在一个模块文件的开始，它开始一个对@racket[module]表的简写，就像@litchar{'}是一种对@racket[quote]表的简写。不同于@litchar{'}，@litchar{#lang}简写在@tech{REPL}内不能正常执行，部分是因为它必须由end-of-file（文件结束）终止，也因为@litchar{#lang}的普通写法依赖于封闭文件的名称。
+在一个模块文件的开始的这个@litchar{#lang}开始对一个@racket[module]表的一个简写，很像@litchar{'}是对一个@racket[quote]表的一个简写。不同于@litchar{'}，@litchar{#lang}简写在@tech{REPL}内不能正常执行，部分是因为它必须由一个文件结束（end-of-file）终止，也因为@litchar{#lang}的普通写法依赖于封闭文件的名称。
 
 @;------------------------------------------------------------------------
 @;{@section[#:tag "module-syntax"]{The @racket[module] Form}}
@@ -21,7 +21,7 @@ of @litchar{#lang} depends on the name of the enclosing file.}
 
 @;{The longhand form of a module declaration, which works in a
 @tech{REPL} as well as a file, is}
-一个模块声明的普通写法形式，既可在@tech{REPL}又可在一个文件中执行的是
+既可在@tech{REPL}又可在一个文件中工作的一个模块声明的普通写法表，是
 
 @specform[
 (module name-id initial-module-path
@@ -35,7 +35,7 @@ the case of a file, @racket[_name-id] normally matches the name of the
 containing file, minus its directory path or file extension, but
 @racket[_name-id] is ignored when the module is @racket[require]d
 through its file's path.}
-其中的@racket[_name-id]是一个模块名，@racket[_initial-module-path]是一个初始的导入口，每个@racket[_decl]是一个导入口、导出口、定义或表达式。在文件的情况下，@racket[_name-id]通常与包含文件的名称相匹配，减去其目录路径或文件扩展名，但在模块通过其文件路径@racket[require]时@racket[_name-id]被忽略。
+其中的@racket[_name-id]是模块的一个名称，@racket[_initial-module-path]是一个初始的输入口，每个@racket[_decl]是一个输入口、输出口、定义或表达式。在一个文件的情况下，@racket[_name-id]通常匹配包含文件的名称，减去其目录路径或文件扩展名，但在模块通过其文件路径@racket[require]时@racket[_name-id]被忽略。
 
 @;{The @racket[_initial-module-path] is needed because even the
 @racket[require] form must be imported for further use in the module
@@ -47,11 +47,11 @@ of the bindings described in this guide, including @racket[require],
 @racket[_initial-module-path] is @racketmodname[racket/base], which provides
 less functionality, but still much of the most commonly needed
 functions and syntax.}
-@racket[_initial-module-path]是必需的，因为即使是@racket[require]表必须导入，以便在模块主体中进一步使用。换句话说，@racket[_initial-module-path]导入在主体内可供使用的引导语法。最常用的@racket[_initial-module-path]是@racketmodname[racket]，它提供了本指南中描述的大部分绑定，包括@racket[require]、@racket[define]和@racket[provide]。另一种常用的@racket[_initial-module-path]是@racketmodname[racket/base]，它提供了较少的函数，但仍然是大多数最常用的函数和语法。
+@racket[_initial-module-path]是必需的，因为为了在模块主体中进一步使用，@racket[require]表更必须被输入。换句话说，@racket[_initial-module-path]输入引导语法，它在主体内可被使用。最常用的@racket[_initial-module-path]是@racketmodname[racket]，它提供了本指南中描述的大部分绑定，包括@racket[require]、@racket[define]和@racket[provide]。另一种常用的@racket[_initial-module-path]是@racketmodname[racket/base]，它提供了较少的功能，但仍然是大多数最常用的函数和语法。
 
 @;{For example, the @filepath{cake.rkt} example of the
 @seclink["module-basics"]{previous section} could be written as}
-例如，@seclink["module-basics"]{前面一节}里的@filepath{cake.rkt}例子可以写为
+例如，@seclink["module-basics"]{前面一节}的@filepath{cake.rkt}例子可以编写为
 
 @racketblock+eval[
 #:eval cake-eval
@@ -73,7 +73,7 @@ functions and syntax.}
 @tech{REPL} to declare a @racket[cake] module that is not associated
 with any file. To refer to such an unassociated module, quote the
 module name:}
-此外，@racket[module]表可以在@tech{REPL}中求值以申明一个@racket[cake]模块，不与任何文件相关联。为指向是这样一个独立模块，这样引用模块名称：
+此外，这个@racket[module]表可以在一个@tech{REPL}中被求值以申明一个@racket[cake]模块，它不与任何文件相关联。为指向是这样一个独立模块，这样引用模块名称：
 
 @examples[
 #:eval cake-eval
@@ -86,7 +86,7 @@ and expressions of the module. The module must be explicitly
 @racket[require]d at the top level to trigger evaluation. After
 evaluation is triggered once, later @racket[require]s do not
 re-evaluate the module body.}
-声明模块不会立即求值这个模块的主体定义和表达式。这个模块必须在顶层明确地被@racket[require]以来触发求值。在求值被触发一次之后，后续的@racket[require]不会重新对模块主体求值。
+声明一个模块不会立即求值这个模块的主体定义和表达式。这个模块必须在顶层明确地被@racket[require]以触发求值。在求值被触发一次之后，后续的@racket[require]不会重新求值模块主体。
 
 @examples[
 (module hi racket
@@ -102,7 +102,7 @@ re-evaluate the module body.}
 @;{The body of a @racketmodfont{#lang} shorthand has no specific syntax,
 because the syntax is determined by the language name that follows
 @racketmodfont{#lang}.}
-@racketmodfont{#lang}简写的主体没有特定的语法，因为语法是由如下@racketmodfont{#lang}语言名称确定的。
+一个@racketmodfont{#lang}简写的主体没有特定的语法，因为这个语法是由接着的@racketmodfont{#lang}语言名称确定。
 
 @;{In the case of @racketmodfont{#lang} @racketmodname[racket], the syntax
 is}
@@ -113,7 +113,7 @@ racket
 _decl ...]
 
 @;{which reads the same as}
-其读作如下同一内容：
+其如同以下内容读取：
 
 @racketblock[
 (module _name racket
@@ -122,8 +122,9 @@ _decl ...]
 
 @;{where @racket[_name] is derived from the name of the file that
 contains the @racketmodfont{#lang} form.}
-这里的@racket[_name]是来自包含@racketmodfont{#lang}表的文件名称。
+这里@racket[_name]是衍生自包含@racketmodfont{#lang}表的文件的名称。
 
+@;????????????????????????????????????????????????????????????????
 @;{The @racketmodfont{#lang} @racketmodname[racket/base] form has the same
 syntax as @racketmodfont{#lang} @racketmodname[racket], except that
 the longhand expansion uses @racketmodname[racket/base] instead of
