@@ -3,21 +3,21 @@
           (for-label framework/framework racket/contract racket/gui))
 
 @;{@title[#:tag "contracts-general-functions"]{Contracts on Functions in General}}
-@title[#:tag "contracts-general-functions"]{通常的函数合约}
+@title[#:tag "contracts-general-functions"]{一般功能合约}
 
 @;{The @racket[->] contract constructor works for functions that take a
 fixed number of arguments and where the result contract is independent
 of the input arguments. To support other kinds of functions, Racket
 supplies additional contract constructors, notably @racket[->*] and 
 @racket[->i].}
-@racket[->]合约构造函数为固定数量参数的函数工作，并且结果合约与输入参数无关。为了支持函数的其它类型，Racket提供额外的合约构造函数，尤其是 @racket[->*]和@racket[->i]。
+@racket[->]合约构造器为带有一个固定数量参数的函数工作，并且这里这个结果合约不依赖于这个输入参数。为了支持其它类型的函数，Racket提供额外的合约构造器，尤其是 @racket[->*]和@racket[->i]。
 
 @;{@ctc-section[#:tag "optional"]{Optional Arguments}}
 @ctc-section[#:tag "optional"]{可选参数}
 
 @;{Take a look at this excerpt from a string-processing module, inspired by the
 @link["http://schemecookbook.org"]{Scheme cookbook}: }
-请看一个字符串处理模块的摘录，该灵感来自于@link["http://schemecookbook.org"]{Scheme cookbook}：
+请看一个字符串处理模块的摘录，该灵感来自于《@link["http://schemecookbook.org"]{Scheme cookbook}》：
 
 @racketmod[
 racket
@@ -46,13 +46,14 @@ racket
  different character, it may call @racket[string-pad-center]
  with a third argument, a @racket[char], overwriting the
  default.}
-模块导出@racket[string-pad-center]，该函数用给定字符串在中心创建一个给定的@racket[width]的字符串。默认的填充字符是@racket[#\space]；如果客户机希望使用一个不同的字符，它可以调用@racket[string-pad-center]，用第三个参数，一个@racket[char]，重写默认的值。
+这个模块输出@racket[string-pad-center]，一个函数，它在中心用给定字符串创建一个给定的@racket[width]的一个字符串。这个默认的填充字符是@racket[#\space]；如果这个客户端模块希望使用一个不同的字符，它可以用第三个参数——一个重写默认值的@racket[char]——调用@racket[string-pad-center]。
 
+@;???????????????????????????????????????????????????????????
 @;{The function definition uses optional arguments, which is
 appropriate for this kind of functionality. The interesting
 point here is the formulation of the contract for the
 @racket[string-pad-center].}
-函数定义使用可选参数，这对于这种功能是合适的。这里有趣的一点是@racket[string-pad-center]的合约。
+这个函数定义使用可选参数，这对于这种功能是合适的。这里有趣的一点是@racket[string-pad-center]的合约。
 
 @;{The contract combinator @racket[->*], demands several groups of contracts: }
 合约组合@racket[->*]，要求几组合约：

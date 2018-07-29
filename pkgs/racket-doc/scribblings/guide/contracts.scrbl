@@ -6,9 +6,10 @@
 
 @;{This chapter provides a gentle introduction to Racket's
 contract system.}
-本章对Racket的合约系统作了介绍。
+本章对Racket的合约系统提供了一个详细的介绍。
 
-@refdetails["contracts"]{合约}
+@;@refdetails["contracts"]{合约}
+在《Racket参考》中的“合约（Contracts）”部分提供有对合约更详细的信息。
 
 @local-table-of-contents[]
 
