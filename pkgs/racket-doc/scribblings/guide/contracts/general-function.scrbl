@@ -48,28 +48,27 @@ racket
  default.}
 这个模块输出@racket[string-pad-center]，一个函数，它在中心用给定字符串创建一个给定的@racket[width]的一个字符串。这个默认的填充字符是@racket[#\space]；如果这个客户端模块希望使用一个不同的字符，它可以用第三个参数——一个重写默认值的@racket[char]——调用@racket[string-pad-center]。
 
-@;???????????????????????????????????????????????????????????
 @;{The function definition uses optional arguments, which is
 appropriate for this kind of functionality. The interesting
 point here is the formulation of the contract for the
 @racket[string-pad-center].}
-这个函数定义使用可选参数，这对于这种功能是合适的。这里有趣的一点是@racket[string-pad-center]的合约。
+这个函数定义使用可选参数，它对于这种功能是合适的。这里有趣的一点是@racket[string-pad-center]的合约的表达方式。
 
 @;{The contract combinator @racket[->*], demands several groups of contracts: }
-合约组合@racket[->*]，要求几组合约：
+合约组合器@racket[->*]，要求几组合约：
 
 @itemize[
 @item{
   @;{The first one is a parenthesized group of contracts for all required
 arguments. In this example, we see two: @racket[string?] and
 @racket[natural-number/c]. }
-第一个是一个对所有必需参数合约的括号组。在这个例子中，我们看到两个：@racket[string?]和@racket[natural-number/c]。
+第一个是对所有必需参数的合约的一个括号组。在这个例子中，我们看到两个：@racket[string?]和@racket[natural-number/c]。
     }
 
 @item{
   @;{The second one is a parenthesized group of contracts for all optional
 arguments: @racket[char?]. }
-    第二个是对所有可选参数合约的括号组：@racket[char?]。
+    第二个是对所有可选参数的合约的一个括号组：@racket[char?]。
     }
 
 @item{
@@ -90,11 +89,11 @@ arguments: @racket[char?]. }
 @;{The @racket[max] operator consumes at least one real number, but it
  accepts any number of additional arguments. You can write other such
  functions using a @tech{rest argument}, such as in @racket[max-abs]:}
-@racket[max]操作符至少接受一个实数，但它接受任意数量的附加参数。您可以使用@tech{剩余参数（rest argument）}编写其它此类函数，例如在@racket[max-abs]中：
+@racket[max]操作符至少接受一个实数，但它接受任意数量的附加参数。你可以使用一个@tech{剩余参数（rest argument）}编写其它此类函数，例如在@racket[max-abs]中：
 
 @;{@margin-note{See @secref["rest-args"] for an introduction to rest
 arguments.}}
-@margin-note{参见@secref["rest-args"]以获取剩余参数的介绍。}
+@margin-note{参见《@secref["rest-args"]》以获取剩余参数的介绍。}
 
 @racketblock[
 (define (max-abs n . rst)
@@ -105,7 +104,7 @@ arguments.}}
 extension of @racket[->*]: a @racket[#:rest] keyword specifies a
 contract on a list of arguments after the required and optional
 arguments:}
-通过一个合同描述此函数需要进一步扩展@racket[->*]：一个@racket[#:rest]关键字在必需参数和可选参数之后指定一个参数列表合约：
+通过一个合约描述这个函数需要一个对@racket[->*]进一步的扩展：一个@racket[#:rest]关键字在必需参数和可选参数之后指定在一个参数列表上的一个合约：
 
 @racketblock[
 (provide
@@ -120,7 +119,7 @@ are no optional arguments (not counting the rest arguments). The
 contract for the rest argument follows @racket[#:rest]; since all
 additional arguments must be real numbers, the list of rest arguments
 must satisfy the contract @racket[(listof real?)].}
-正如对@racket[->*]的通常情况，必需参数合约被封闭在第一对括号中，在这种情况下是一个实数。空括号表示没有可选参数（不包括剩余参数）。剩余参数合约如下@racket[#:rest]；因为所有的额外的参数必须是实数，剩余参数列表必须满足合约@racket[(listof real?)]。
+正如对@racket[->*]的通常情况，必需参数合约被封闭在第一对括号中，在这种情况下是一个单一的实数。空括号表示没有可选参数（不包含剩余参数）。剩余参数合约跟着@racket[#:rest]；因为所有的额外的参数必须是实数，剩余参数的列表必须满足合约@racket[(listof real?)]。
 
 @;{@ctc-section[#:tag "keywords"]{Keyword Arguments}}
 @ctc-section[#:tag "keywords"]{关键字参数}
@@ -128,11 +127,11 @@ must satisfy the contract @racket[(listof real?)].}
 @;{It turns out that the @racket[->] contract constructor also contains
 support for keyword arguments. For example, consider this function,
 which creates a simple GUI and asks the user a yes-or-no question:}
-原来@racket[->]合约构造函数也包含对关键字参数的支持。例如，考虑这个函数，它创建一个简单的GUI并向用户询问一个“yes-or-no”的问题：
+其实@racket[->]合约构造器也包含对关键字参数的支持。例如，考虑这个函数，它创建一个简单的GUI并向用户询问一个yes-or-no的问题：
 
 @;{@margin-note{See @secref["lambda-keywords"] for an introduction to
 keyword arguments.}}
-@margin-note{参见@secref["lambda-keywords"]以获取关键字参数的介绍。}
+@margin-note{参见《@secref["lambda-keywords"]》以获取关键字参数的介绍。}
 
 @racketmod[
 racket/gui
@@ -171,7 +170,7 @@ racket/gui
 via a GUI, you should use @racket[message-box/custom]. For that
 matter, it's usually better to provide buttons with more specific
 answers than ``yes'' and ``no.''}}
-@margin-note{如果你真的想通过一个GUI问一个“yes”或“no”的问题，你应该使用@racket[message-box/custom]。在这个问题上，通常会提供比“yes”和“no”更具体的答案的按钮。}
+@margin-note{如果你真的想通过一个GUI问一个yes或no的问题，你应该使用@racket[message-box/custom]。对此事而论，通常会比用较“yes”或“no”更确切的回答来提供按钮更好。}
 
 @;{The contract for @racket[ask-yes-or-no-question] uses @racket[->], and
 in the same way that @racket[lambda] (or @racket[define]-based
@@ -188,7 +187,7 @@ As in a function definition, the order of the keywords in @racket[->]
 relative to each other does not matter for clients of the function;
 only the relative order of argument contracts without keywords
 matters.}
-@racket[ask-yes-or-no-question]的合同使用@racket[->]，同样的方式，@racket[lambda]（或基于@racket[define]的函数）允许关键字在函数正式参数之前，@racket[->]允许关键字先于函数合约的参数合约。在这种情况下，合约表明@racket[ask-yes-or-no-question]必须得到四个关键字参数，各个关键字为：@racket[#:default]、@racket[#:title]、@racket[#:width]和@racket[#:height]。在函数定义中，函数中的关键字之间的@racket[->]相对顺序对函数的客户机并不重要；只有没有关键字的参数合约的相对顺序。
+@racket[ask-yes-or-no-question]的合约使用@racket[->]，同样的方式@racket[lambda]（或基于@racket[define]的函数）允许一个关键字先于一个函数正式的参数，@racket[->]允许一个关键字先于一个函数合约的参数合约。在这种情况下，这个合约表明@racket[ask-yes-or-no-question]必须接收四个关键字参数，每一个关键字为：@racket[#:default]、@racket[#:title]、@racket[#:width]和@racket[#:height]。如同在一个函数定义中，在@racket[->]中关键字的顺序相对于其它的每个来说对函数的客户端无关紧要；只有参数合约的相对顺序没有关键字问题。
 
 @;{@ctc-section[#:tag "optional-keywords"]{Optional Keyword Arguments}}
 @ctc-section[#:tag "optional-keywords"]{可选关键字参数}
@@ -196,7 +195,7 @@ matters.}
 @;{Of course, many of the parameters in
 @racket[ask-yes-or-no-question] (from the previous question)
 have reasonable defaults and should be made optional:}
-当然，@racket[ask-yes-or-no-question]（从上一个问题中引来）中有许多参数有合理的默认值，应该是可选的：
+当然，@racket[ask-yes-or-no-question]（从上一个问题中引来）中有许多参数有合理的默认值并且应该被设为可选的：
 
 @racketblock[
 (define (ask-yes-or-no-question question 
@@ -215,7 +214,7 @@ sections. In this case, we have the mandatory keyword
 @racket[#:title],
 @racket[#:width], and
 @racket[#:height]. So, we write the contract like this:}
-要指定这个函数的合约，我们需要再次使用@racket[->*]。它支持关键字，正如你在可选参数和强制参数部分中所期望的一样。在这种情况下，我们有强制关键字@racket[#:default]和可选关键字@racket[#:title]、@racket[#:width]和@racket[#:height]。所以，我们像这样写合约：
+要指定这个函数的合约，我们需要再次使用@racket[->*]。它支持关键字，正如你在可选参数和强制参数部分中所期望的一样。在这种情况下，我们有强制关键字@racket[#:default]和可选关键字@racket[#:title]、@racket[#:width]和@racket[#:height]。所以，我们像这样编写合约：
 
 @racketblock[
 (provide (contract-out
@@ -231,20 +230,20 @@ sections. In this case, we have the mandatory keyword
 
 @;{That is, we put the mandatory keywords in the first section, and we
 put the optional ones in the second section.}
-也就是说，我们在第一节中使用了强制关键字，并在第二部分中选择了可选关键字。
+也就是说，我们把强制关键字方在第一部分中，同时我们把可选关键字放在在第二部分中。
 
 @;{@ctc-section[#:tag "case-lambda"]{Contracts for @racket[case-lambda]}}
-@ctc-section[#:tag "case-lambda"]{对@racket[case-lambda]的合约}
+@ctc-section[#:tag "case-lambda"]{@racket[case-lambda]的合约}
 
 @;{A function defined with @racket[case-lambda] might impose different
 constraints on its arguments depending on how many are provided. For
 example, a @racket[report-cost] function might convert either a pair
 of numbers or a string into a new string:}
-用@racket[case-lambda]定义的函数可能对其参数施加不同的约束，这取决于其提供了多少。例如，@racket[report-cost]函数可以将一对数字或字符串转换为一个新字符串：
+用@racket[case-lambda]定义的一个函数可以对其参数施加不同的约束取决于多少参数被提供。例如，@racket[report-cost]函数可以既可以转换一对数值也可以转换一个字符串为一个新字符串：
 
 @;{@margin-note{See @secref["case-lambda"] for an introduction to
 @racket[case-lambda].}}
-@margin-note{参见@secref["case-lambda"]以获得@racket[case-lambda]的介绍。}
+@margin-note{参见《@secref["case-lambda"]》以获得@racket[case-lambda]的介绍。}
 
 @def+int[
 (define report-cost
@@ -257,7 +256,7 @@ of numbers or a string into a new string:}
 
 @;{The contract for such a function is formed with the @racket[case->]
  combinator, which combines as many functional contracts as needed: }
-合约对这样的函数用@racket[case->]构成组合，这种结合对多个函数合约是必要的：
+对这样的一个函数的合约用@racket[case->]组合器构成，它根据需要组合多个功能合约：
 
 @racketblock[
 (provide (contract-out
@@ -269,7 +268,7 @@ of numbers or a string into a new string:}
  @;{As you can see, the contract for @racket[report-cost] combines two
  function contracts, which is just as many clauses as the explanation
  of its functionality required.}
-如你所见，@racket[report-cost]合约合并了两个函数合约，这与解释其函数所需的子句一样多。
+如你所见，@racket[report-cost]的合约组合了两个函数合约，它与其功能所需的解释一样多的从句。
 
 @;{
 This isn't supported anymore (yet...?). -robby
@@ -299,10 +298,10 @@ In the case of @racket[substring1], we also know that the indices
 }
 
 @;{@ctc-section[#:tag "arrow-d"]{Argument and Result Dependencies}}
-@ctc-section[#:tag "arrow-d"]{参数和结果的依赖}
+@ctc-section[#:tag "arrow-d"]{参数和结果依赖}
 
 @;{The following is an excerpt from an imaginary numerics module:}
-以下是来自一个虚构的数值模块的摘录：
+以下是来自一个虚构的数值模块的一个摘录：
 
 @racketblock[
 (provide
@@ -317,7 +316,7 @@ In the case of @racket[substring1], we also know that the indices
  independent component. The name was chosen in
  response to two existing labels---``lax'' and ``picky''---for different
  semantics of function contracts in the research literature.}
-这个词“indy”意味着责任可能被分配到合约本身，因为合约必须被认为是一个独立的组件。这个名字是根据两个现有的标签而来的——“lax”和“picky”——具有与研究文献中函数契约不同语义。
+这个词“indy”意味着暗示归咎会被分配到合约本身，因为这个合约必须被认为是一个独立的组件。响应两个现有标签选择名称——“lax”和“picky”——为在研究文献中的函数合约的不同语义。
 }
 
 @;{The contract for the exported function @racket[real-sqrt] uses the
@@ -329,13 +328,14 @@ that the result depends on the argument. In this
 particular case, the argument of @racket[real-sqrt] is greater or
 equal to 1, so a very basic correctness check is that the result is
 smaller than the argument.}
-为导出函数@racket[real-sqrt]的合约，使用@racket[->i]函数合约比@racket[->*]更好。“i”代表是一个@italic{印依赖合约（indy dependent contract）}（意味着责任可能被分配到合同本身，因为合同必须被认为是一个独立的组件），意味着作用范围的合约取决于该参数的值。为了@racket[result]的合约的实现在程序行中出现@racket[argument]意味着结果取决于参数。在特别情况下，@racket[real-sqrt]的参数大于或等于1，那么一个很基本的正确性检查是，结果小于参数。
+这个输出函数@racket[real-sqrt]的合约使用@racket[->i]比使用@racket[->*]更好。这个“i”代表是一个@italic{印地依赖（indy dependent）}合约，意味函数值域的合约依赖于该参数的值。在@racket[result]的合约这一行里@racket[argument]的出现意味着那个结果依赖于这个参数。在特别情况下，@racket[real-sqrt]的参数大于或等于1，所以一个很基本的正确性检查是结果小于参数。
 
 @;{In general, a dependent function contract looks just like
 the more general @racket[->*] contract, but with names added
 that can be used elsewhere in the contract.}
-一般来说，一个从属函数合约看起来更像一般的@racket[->*]合约，但添加的名称可以在合约的其它地方使用。
+一般来说，一个依赖函数合约看起来更像一般的@racket[->*]合约，但是在合约的其它地方可以使用名字。
 
+@;?????????????????????????????????????????????????????????????????
 @;{
 Yes, there are many other contract combinators such as @racket[<=/c]
 and @racket[>=/c], and it pays off to look them up in the contract

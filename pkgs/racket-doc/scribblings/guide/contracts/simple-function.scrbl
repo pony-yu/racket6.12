@@ -232,8 +232,8 @@ racket
   (and (number? a) (integer? a) (exact? a) (>= a 0)))
 
 (provide (contract-out
-          (code:comment @;{"an amount is a natural number of cents"}"一个amount是一个美分的自然数")
-          (code:comment @;{"is the given number an amount?"}"是给定的数字amount?")
+          (code:comment @;{"an amount is a natural number of cents"}"一个金额是一个美分的自然数")
+          (code:comment @;{"is the given number an amount?"}"是给定的数字的一个amount?")
           [deposit (-> amount? any)]
           [amount? (-> any/c boolean?)]
           [balance (-> amount?)]))
@@ -312,8 +312,8 @@ racket
           (code:comment @;{"convert a random number to a string"}"转换一个随机数为一个字符串")
           [format-number (-> number? string?)]
 
-          (code:comment @;{"convert an amount into a string with a decimal"}"用一个十进制数转换一个数字为一个字符串。")
-          (code:comment @;{"point, as in an amount of US currency"}"点，如一个美国货币的数量")
+          (code:comment @;{"convert an amount into a string with a decimal"}"用一个十进制点转换一个金额为一个字符串，")
+          (code:comment @;{"point, as in an amount of US currency"}"就像在美国货币的一个金额那样。")
           [format-nat (-> natural-number/c
                           (and/c string? has-decimal?))]))
 ]
@@ -354,7 +354,7 @@ racket
 
 (provide (contract-out
           ....
-          (code:comment @;{"convert an  amount (natural number) of cents"}"转换美分的数量（自然数）")
+          (code:comment @;{"convert an  amount (natural number) of cents"}"转换美分的一个金额（自然数）")
           (code:comment @;{"into a dollar-based string"}"成为一个基于美元的字符串")
           [format-nat (-> natural-number/c 
                           (and/c string? 
