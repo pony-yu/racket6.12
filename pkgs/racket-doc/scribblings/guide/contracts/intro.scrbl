@@ -52,7 +52,7 @@ racket/base
 (define amount ...)
 ]
 
-@ctc-section[#:tag "amount0"]{Contract Violations}
+@;@ctc-section[#:tag "amount0"]{Contract Violations}
 @ctc-section[#:tag "amount0"]{合约的违反}
 
 @;{If we bind @racket[amount] to a number that is not positive,}

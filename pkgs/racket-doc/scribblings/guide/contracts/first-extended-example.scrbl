@@ -8,7 +8,7 @@
 @;(require "shared.rkt" (only-in racket/list argmax))
 
 @;{@title[#:tag "contracts-first"]{Contracts: A Thorough Example}}
-@title[#:tag "contracts-first"]{合约：一个全面的例子}
+@title[#:tag "contracts-first"]{合约：一个完整的例子}
 
 @;{This section develops several different flavors of contracts for one and
  the same example: Racket's @racket[argmax] function. According to
@@ -18,7 +18,7 @@
  returns the @emph{first} element in the list @racket[lst] that maximizes
  the result of @racket[proc].}  
  The emphasis on @emph{first} is ours.} 
-这部分发掘几种不同的特点，针对一个相同实例的合约：Racket的@racket[argmax]函数。根据它的Racket文档，函数接受一个过程@racket[proc]和一个非空的值列表，即@racket[lst]。它返回列表@racket[lst]中的@emph{first}元素，将结果@racket[proc]最大化。对@emph{first}的强调是我们的。
+本节开发对于同一个例子的合约的几种不同特点：Racket的@racket[argmax]函数。根据它的Racket文档，这个函数接受一个过程@racket[proc]和一个非空的值列表，@racket[lst]。它@nested[#:style 'inset]{返回在最大化@racket[proc]的结果的列表@racket[lst]中的@emph{first}元素。对@emph{first}的强调是我们的。}
 
 @;{Examples: }
 例子：
@@ -29,7 +29,7 @@
 ]
 
 @;{Here is the simplest possible contract for this function:}
-下面是对这个函数可能的最简单的合约：
+这里是这个函数的可能最简单的合约：
 
 @racketmod[#:file @tt{version 1} 
 racket
@@ -43,7 +43,7 @@ racket
 
  @;{This contract captures two essential conditions of the informal
  description of @racket[argmax]: }
-本合约捕捉@racket[argmax]的非正式描述的两个必备条件：
+这个合约捕捉@racket[argmax]的非正式描述的两个必备条件：
 
 @itemlist[
 
@@ -52,7 +52,7 @@ racket
 to @racket[<]. In particular, the contract @racket[(-> any/c number?)]
 would not do, because @racket[number?] also recognizes complex numbers in
 Racket.}
-    给定的函数必须生成可以依据@racket[<]进行比较的数字。特别是，合约@racket[(-> any/c number?)]不可行，因为@racket[number?]也承认Racket中的复数有效。
+    这个给定的函数必须产生按@racket[<]进行比较的数值。特别是，这个合约@racket[(-> any/c number?)]不可行，因为@racket[number?]也承认Racket中的复数有效。
     }
 
 @item{
@@ -64,11 +64,11 @@ Racket.}
  @;{When combined with the name, the contract explains the behavior of 
  @racket[argmax] at the same level as an ML function type in a
  module signature (except for the non-empty list aspect). }
-当名称组合时，合约解释同级 @racket[argmax]的行为，作为在模块中的机器（ML）函数类型签名（除空表方面外）。
+当组合名称时，合约解释在同级的@racket[argmax]的行为作为在一个模块签名（除空表方面外）中的一个ML（机器语言）函数类型。
 
 @;{Contracts may communicate significantly more than a type signature,
  however. Take a look at this second contract for @racket[argmax]:}
-然而，合同可能比类型签名传达更多的信息。看一下@racket[argmax]的第二个合约：
+然而，合约可能比一个类型签名更值得关注。看一看@racket[argmax]的第二个合约：
 
 @racketmod[#:file @tt{version 2}
 racket
@@ -90,12 +90,12 @@ racket
  @racket[(f r)] -- where @racket[r] is the result of @racket[argmax] -- and
  then validates that this value is greater than or equal to all values
  of @racket[f] on the items of @racket[lov].}
-它是一个@emph{独立（dependent）}的合约，它命名两个参数并使用名称给结果添加一个断言。该断言计算 @racket[(f r)]——这里@racket[r]是@racket[argmax]的结果——并验证了该值大于或等于所有对@racket[lov]项的@racket[f]值。
+它是一个@emph{依赖}合约，它命名两个参数并使用这个名称在结果上添加一个判断。这个判断计算 @racket[(f r)]——这里@racket[r]是@racket[argmax]的结果——并接着验证这个值大于或等于在@racket[lov]的项目上的所有@racket[f]值。
 
 @;{Is it possible that @racket[argmax] could cheat by returning a random value
  that accidentally maximizes @racket[f] over all elements of @racket[lov]? 
  With a contract, it is possible to rule out this possibility: }
-@racket[argmax]会被返回一个因意外最大化@racket[f]而超过@racket[lov]的所有元素的随机值欺骗是可能的吗？有了合约，就有可能排除这种可能性：
+这是可能的吗？——@racket[argmax]会通过返回一个随机值作弊，这个随机值意外地最大化@racket[f]超过@racket[lov]的所有元素。用一个合约，就有可能排除这种可能性：
 
 @racketmod[#:file @tt{version 2 rev. a}
 racket
@@ -121,8 +121,9 @@ racket
  function, it is impossible to determine whether some random input value
  produces an output value or triggers some exception. So we ignore this
  possibility from here on.}
-@racket[memq]函数确保@racket[r] @emph{i等于（ntensionally equal）}@racket[lov]的成员之一。当然，值得反思的是，要弥补这样的值是不可能的。函数是Racket中的不透明值，不使用函数，无法确定某个随机输入值是否产生输出值或触发某些异常。因此我们从这里开始忽略这种可能性。
+@racket[memq]函数确保@racket[r]是@emph{相等（intensionally equal）}@margin-note*{也就是说，那些喜欢在硬件层面思考的人的“指针相等（pointer equality）”。}于@racket[lov]的其中一个成员。当然，片刻的反思显露出要构成这样一个值是不可能的。函数是Racket中的不透明值，并且没有应用一个函数，无法确定某个随机输入值是否产生一个输出值或触发某些异常。因此我们从这里开始忽略这种可能性。
 
+@;??????????????????????????????????????????????????????????????????
 @;{Version 2 formulates the overall sentiment of @racket[argmax]'s
  documentation, but it fails to bring across that the result is the
  @emph{first} element of the given list that maximizes the given function

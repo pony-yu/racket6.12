@@ -335,7 +335,6 @@ the more general @racket[->*] contract, but with names added
 that can be used elsewhere in the contract.}
 一般来说，一个依赖函数合约看起来更像一般的@racket[->*]合约，但是在合约的其它地方可以使用名字。
 
-@;?????????????????????????????????????????????????????????????????
 @;{
 Yes, there are many other contract combinators such as @racket[<=/c]
 and @racket[>=/c], and it pays off to look them up in the contract
@@ -347,7 +346,8 @@ and make them more accessible to potential clients.
 module to support multiple accounts and that we also include a
 withdrawal operation. The improved bank-account module includes an
 @racket[account] structure type and the following functions:}
-回到银行帐户示例，假设我们将模块泛化为支持多个帐户，并且我们还包括一个取款操作。改进后的银行帐户模块包括@racket[account]结构类型和以下函数：
+回到银行帐户示例，假设我们一般化这个模块以支持多个帐户并且我们也包括一个取款操作。
+改进后的银行帐户模块包括一个@racket[account]结构类型和以下函数：
 
 @racketblock[
 (provide (contract-out
@@ -363,16 +363,16 @@ it started with. Similarly, the module might promise that a deposit
 produces an account with money added to the account. The following
 implementation enforces those constraints and guarantees through
 contracts:}
-但是，除了要求客户为取款提供有效金额外，金额应小于或等于指定账户的余额，由此产生的账户将比开始时的钱少。同样，该模块可能承诺存款产生一个帐户，加上账户中的钱。以下实现通过契约强制执行这些约束和保证：
+但是，除了要求一个客户端为一个取款提供一个有效金额外，金额应小于或等于指定账户的余额，并且结果账户会比它开始时的钱少。同样，该模块可能承诺一个存款通过为账户增加钱来产生一个帐户。以下实现通过合约强制执行这些约束和保证：
 
 @racketmod[
 racket
 
-(code:comment @;{"section 1: the contract definitions"}"第1节：合约定义")
+(code:comment @;{"section 1: the contract definitions"}"第1部分：合约定义")
 (struct account (balance))
 (define amount/c natural-number/c)
 
-(code:comment @;{"section 2: the exports"}"第2节：导出")
+(code:comment @;{"section 2: the exports"}"第2部分：输出")
 (provide
  (contract-out
   [create   (amount/c . -> . account?)]
@@ -392,7 +392,7 @@ racket
                                   (>= (balance res) 
                                       (+ (balance acc) amt))))])]))
 
-(code:comment @;{"section 3: the function definitions"}"第3节：函数定义")
+(code:comment @;{"section 3: the function definitions"}"第3部分：函数定义")
 (define balance account-balance)
 
 (define (create amt) (account amt))
@@ -417,18 +417,18 @@ guarantee that no more than that requested amount was withdrawn. The
 contract on @racket[deposit] similarly uses @racket[acc] and
 @racket[amount] in the result contract to guarantee that at least as
 much money as provided was deposited into the account.}
-第2节中的合约提供了典型的@racket[create]和@racket[balance]的类型保证。然而，对于@racket[withdraw]和@racket[deposit]，合约检查并保证对@racket[balance]和@racket[deposit]的更为复杂的约束。第二个参数@racket[withdraw]的合约使用@racket[(balance acc)]检查所提供的取款金额是否足够小，其中@racket[acc]是在@racket[->i]之中给定的函数第一个参数的名称。@racket[withdraw]结果的合约使用@racket[acc]和@racket[amt]保证不超过所要求的金额被取回。@racket[deposit]的合约同样使用结果合约中的@racket[acc]和@racket[amount]来保证提供的至少钱存入账户。
+在第2部分中这个合约为@racket[create]和@racket[balance]提供了典型的类型保证。然而，对于@racket[withdraw]和@racket[deposit]，该合约检查并保证对@racket[balance]和@racket[deposit]的更为复杂的约束。在对@racket[withdraw]的合约上的第二个参数使用@racket[(balance acc)]来检查所提供的取款金额是否足够小，其中@racket[acc]是在@racket[->i]之中给定的函数第一个参数的名称。在@racket[withdraw]结果上的合约使用@racket[acc]和@racket[amt]来保证不超过所要求的金额被提取。在@racket[deposit]上的合约同样在结果合约中使用@racket[acc]和@racket[amount]来保证至少和提供的一样多的钱被存入账户。
 
 @;{As written above, when a contract check fails, the error message is
 not great. The following revision uses @racket[flat-named-contract]
 within a helper function @racket[mk-account-contract] to provide
 better error messages.}
-正如上面所描述的，当合约检查失败时，错误消息不是很显著。下面的修订在辅助函数@racket[mk-account-contract]中使用了@racket[flat-named-contract]（扁平命名合约），以提供更好的错误消息。
+正如上面所编写的，当一个合约检查失败时，该错误消息不是很显著。下面的修订在一个助手函数@racket[mk-account-contract]中使用@racket[flat-named-contract]以提供更好的错误消息。
 
 @racketmod[
 racket
 
-(code:comment @;{"section 1: the contract definitions"}"第1节：合约定义")
+(code:comment @;{"section 1: the contract definitions"}"第1部分：合约定义")
 (struct account (balance))
 (define amount/c natural-number/c)
 
@@ -441,7 +441,7 @@ racket
     (and (account? a) (op balance0 (balance a))))
   (flat-named-contract (format msg balance0) ctr))
 
-(code:comment @;{"section 2: the exports"}"第2节：导出")
+(code:comment @;{"section 2: the exports"}"第2部分：导出")
 (provide
  (contract-out
   [create   (amount/c . -> . account?)]
@@ -454,7 +454,7 @@ racket
                  [result (acc amt) 
                          (mk-account-contract acc amt <= msg<)])]))
 
-(code:comment @;{"section 3: the function definitions"}"第3节：函数定义")
+(code:comment @;{"section 3: the function definitions"}"第3部分：函数定义")
 (define balance account-balance)
 
 (define (create amt) (account amt))
@@ -474,7 +474,7 @@ function only modifies state according to certain
 constraints. For example, consider this contract
 (it is a slightly simplified version from the function
 @racket[preferences:add-panel] in the framework):}
-@racket[->i]合约的组合也可以确保函数按照一定的约束只修改状态。例如，考虑这个合约（它是从框架中函数@racket[preferences:add-panel]首选项中添加的略微简化的版本）：
+@racket[->i]合约组合器也可以确保一个函数仅按照一定的约束修改状态。例如，考虑这个合约（它是来自框架中的函数@racket[preferences:add-panel]的一个略微简化的版本）：
 
 @racketblock[
 (->i ([parent (is-a?/c area-container-window<%>)])
@@ -489,7 +489,7 @@ constraints. For example, consider this contract
 @;{It says that the function accepts a single argument, named
 @racket[parent], and that @racket[parent] must be
 an object matching the interface @racket[area-container-window<%>].}
-它表示函数接受单个参数，命名为@racket[parent]并且@racket[parent]必须是匹配接口@racket[area-container-window<%>]。
+它表示该函数接受一个被命名为@racket[parent]的单一参数，并且@racket[parent]必须是一个匹配这个接口@racket[area-container-window<%>]的对象。
 
 @;{The range contract ensures that the function only modifies
 the children of @racket[parent] by adding a new child to the
@@ -506,11 +506,11 @@ passed in as @racket[child], and the contract ensures that
 the children after the function return are the same as the
 children before the function called, but with one more
 child, at the front of the list.}
-范围合约确保函数只通过在列表前面添加一个新的子代来修改@racket[parent]的子类。这是通过使用@racket[_]代替正常的标识符，它告诉合约库的范围合约并不依赖于任何结果的值，因此合约计算表达式后，@racket[_]库在函数被调用时，而不是返回时。因此，调用@racket[get-children]方法之前发生在合约下的函数调用。当合约下的函数返回时，它的结果作为@racket[child]传递，并且合约确保函数返回后的child与函数调用之前的child相同，但是在列表前面还有一个child。
+这个值域合约确保该函数通过添加一个新的child到列表的前面来仅仅修改@racket[parent]的children。它通过使用@racket[_]代替一个正常的标识符来完成这个，它告诉这个合约库该值域合约并不依赖于任何结果的值，因此当这个函数被调用时，而不是返回时，该合约库求值这个跟着@racket[_]的表达式。因此对@racket[get-children]方法的调用发生在合约被调用下的函数之前。当合约下的函数返回时，它的结果作为@racket[child]被传递进去，并且合约确保该函数返回后的child与该函数调用之前的child相同，但是有许许多多的child，在列表前面。
 
 @;{To see the difference in a toy example that focuses
 on this point, consider this program}
-要看一个集中在这一点上的无实用价值的示例的差异，请考虑这个程序：
+要去明白在一个集中在这点上的玩具例子中的不同，考虑这个程序：
 
 @racketmod[
 racket
@@ -526,13 +526,13 @@ racket
 @;{If you were to require this module, call @racket[f], then
 the result of @racket[get-x] would be @racket['(f ctc)]. In
 contrast, if the contract for @racket[f] were}
-如果你需要这个模块，调用@racket[f]，然后@racket[get-x]结果会@racket['(f ctc)]。相反，如果 @racket[f]的合约是
+如果你将需要这个模块，调用@racket[f]，那么@racket[get-x]的结果会是@racket['(f ctc)]。相反，如果@racket[f]的合约是
 
 @racketblock[(->i () [res (begin (set! x (cons 'ctc x)) any/c)])]
 
 @;{(only changing the underscore to @racket[res]), then
 the result of @racket[get-x] would be @racket['(ctc f)].}
-（只改变下划线@racket[res]），然后 @racket[get-x]结果会是@racket['(ctc f)]。
+（只改变@racket[res]的下划线），那么@racket[get-x]的结果会是@racket['(ctc f)]。
 
 @;{@ctc-section[#:tag "multiple"]{Multiple Result Values}}
 @ctc-section[#:tag "multiple"]{多个结果值}
@@ -540,7 +540,7 @@ the result of @racket[get-x] would be @racket['(ctc f)].}
 @;{The function @racket[split] consumes a list of @racket[char]s
   and delivers the string that occurs before the first occurrence of
   @racket[#\newline] (if any) and the rest of the list: }
-函数 @racket[split]接受@racket[char]列表和传递所发生的 @racket[#\newline] 的第一次出现在字符串（如果有）和其余的列表：
+函数@racket[split]接受@racket[char]的一个列表并且传递在@racket[#\newline]（如果有）的第一次出现之前的字符串以及这个列表的剩余部分：
 
 @racketblock[
 (define (split l)
@@ -555,13 +555,13 @@ the result of @racket[get-x] would be @racket['(ctc f)].}
 
   @;{It is a typical multiple-value function, returning two values by
   traversing a single list.}
-它是一个典型的多值函数，通过遍历单个列表返回两个值。
+它是一个典型的多值函数，通过遍历一个单个列表返回两个值。
 
 @;{The contract for such a function can use the ordinary
 function arrow @racket[->], since @racket[->]
 treats @racket[values] specially when it appears as the
 last result:}
-这种函数的合约可以使用普通函数箭头@racket[->]，那么当它作为最后结果出现时，@racket[->]特别地处理@racket[values]：
+这样一个函数的合约可以使用普通函数箭头@racket[->]，此后当它作为最后结果出现时，@racket[->]特别地处理@racket[values]：
 
 @racketblock[
 (provide (contract-out
@@ -571,7 +571,7 @@ last result:}
 
 @;{The contract for such a function can also be written
 using @racket[->*]:}
-这种函数的合约也可以使用@racket[->*]：
+这样一个函数的合约也可以使用@racket[->*]编写：
 
 @racketblock[
 (provide (contract-out
@@ -586,12 +586,12 @@ using @racket[->*]:}
  there are no optional arguments. The contracts for the
  results are inside @racket[values]: a string and a list of
  characters.}
-和以前一样，与@racket[->*]参数的合约被封装在一对额外的圆括号中（并且必须总是这样包装），而空的括号表示没有可选参数。结果的合约是内部的@racket[values]：字符串和字符列表。
+和前面一样，带@racket[->*]的参数的合约被包裹在一对额外的圆括号中对（并且必须总是这样被包裹）中，并且这个空括号对表示这里没有可选参数。这个结果的合约是在@racket[values]内部：一个字符串和字符的一个列表。
 
 @;{Now, suppose that we also want to ensure that the first result of
  @racket[split] is a prefix of the given word in list format. In that
  case, we need to use the @racket[->i] contract combinator:}
-现在，假设我们还希望确保第一个结果@racket[split]是给定列表格式中给定单词的前缀。在这种情况下，我们需要使用@racket[->i]合约的组合： 
+现在，假设我们还希望确保@racket[split]的第一个结果是在列表格式中的这个给定单词的一个前缀。在这种情况下，我们需要使用这个@racket[->i]合约组合器： 
 
 @racketblock[
 (define (substring-of? s)
@@ -620,7 +620,7 @@ using @racket[->*]:}
 
 @;{This contract is expensive to check, of course. Here is a slightly
   cheaper version: }
-当然，这个合约检查是很值得的。这里有一个稍微廉价一点的版本：
+当然，这个合约对于检查来说是值得的。这里有一个稍微廉价的版本：
 
 @racketblock[
 (provide
@@ -632,13 +632,13 @@ using @racket[->*]:}
 
 
 @;{@ctc-section[#:tag "no-domain"]{Fixed but Statically Unknown Arities}}
-@ctc-section[#:tag "no-domain"]{固定但静态未知数量的参数}
+@ctc-section[#:tag "no-domain"]{固定但静态未知数量}
 
 @;{Imagine yourself writing a contract for a function that accepts some other
 function and a list of numbers that eventually applies the former to the
 latter. Unless the arity of the given function matches the length of the
 given list, your procedure is in trouble. }
-想象一下你自己为一个函数写了一个合约，这个函数接受了另一个函数和一个字列表，最终数值前者应用于后者。如果给定的函数的数量匹配给定列表的长度，你的程序就有困难。
+想象一下你自己为一个函数编写了一个合约，这个函数接受其它一些函数并且一个最终前者应用于后者的数值的列表。除非这个给定的函数的数量匹配给定列表的长度，否则你的过程就会陷入困难。
 
 @;{Consider this @racket[n-step] function:}
 考虑这个@racket[n-step]函数：
@@ -657,7 +657,7 @@ then applies @racket[proc] to the list @racket[inits]. As long as
 @racket[proc] returns a number, @racket[n-step] treats that number
 as an increment for each of the numbers in @racket[inits] and
 recurs. When @racket[proc] returns @racket[false], the loop stops.}
-@racket[n-step]参数是@racket[proc]，一个@racket[proc]函数的结果要么是数字要么是假，或者一个列表。然后应用@racket[proc]到@racket[inits]列表中。只要@racket[proc]返回一个数值，@racket[n-step]对待数值为每个在其数字@racket[inits]和递归的增量值。当@racket[proc]返回@racket[false]时，循环停止。
+@racket[n-step]的参数是@racket[proc]，一个函数@racket[proc]的结果要么是数值要么是假(false)，以及一个列表。它接着应用@racket[proc]到这个列表@racket[inits]中。只要@racket[proc]返回一个数值，@racket[n-step]把那个数值处理为一个在@racket[inits]和递归里的每个数值的增量值。当@racket[proc]返回@racket[false]时，这个循环停止。
   
 @;{Here are two uses:}
 这里有两个应用：
@@ -684,7 +684,7 @@ in @racket[inits], and it must return either a number or
 @racket[#f]. The latter is easy, the former is difficult. At first
 glance, this appears to suggest a contract that assigns a
 @italic{variable-arity} to @racket[proc]: }
-一个@racket[n-step]的合约必须指定@racket[proc]的两方面行为：其数量必须在@racket[inits]里包括元素的数量，它必须返回一个数值或@racket[#f]。后者是容易的，前者是困难的。乍一看，这似乎表明合约分配@italic{variable-arity}给了@racket[proc]：
+一个@racket[n-step]的合约必须指定@racket[proc]的行为的两方面：其数量必须在@racket[inits]里包括元素的数量，同时它必须返回一个数值或@racket[#f]。后者是容易的，前者是困难的。乍一看，这似乎暗示一个合约分配了一个@italic{可变数量（variable-arity）}给了@racket[proc]：
 
 @racketblock[
 (->* () 
@@ -697,13 +697,13 @@ number of arguments, not a @emph{specific} but
 @emph{undetermined} number. Thus, applying @racket[n-step] to
 @racket[(lambda (x) x)] and @racket[(list 1)] breaks the contract
 because the given function accepts only one argument. }
-然而，这个合约说函数必须接受@emph{任意（any）}数量的参数，而不是@emph{特定（specific）}的但@emph{不确定（undetermined）}的数值。因此，应用@racket[n-step]到@racket[(lambda (x) x)] and @racket[(list 1)]违约，因为给定的函数只接受一个参数。
+然而，这个合约表明这个函数必须接受@emph{任意（any）}数量的参数，而不是一个@emph{特定（specific）}的但@emph{不确定（undetermined）}的数值。因此，应用@racket[n-step]到@racket[(lambda (x) x)]和@racket[(list 1)]违反合约，因为这个给定的函数只接受一个参数。
 
  @;{The correct contract uses the @racket[unconstrained-domain->]
  combinator, which specifies only the range of a function, not its
  domain. It is then possible to combine this contract with an arity test to
  specify the correct contract for @racket[n-step]:}
-正确的合约采用@racket[unconstrained-domain->]组合，其仅指定函数的范围，而不是它的域。可以将本合约的数量测试指定正确的合约结合@racket[n-step]：
+正确的合约使用@racket[unconstrained-domain->]组合器，它仅指定一个函数的值域，而不是它的定义域。它接下来可能连接这个合约到一个数量测试以指定@racket[n-step]的正确合约：
 
 @racketblock[
 (provide
