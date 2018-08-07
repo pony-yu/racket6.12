@@ -207,7 +207,7 @@ parsing the language can be specified with @racket[#:read] and
 @secref["readtable"]) to build a language that is like
 @racketmodname[racket] but with a @litchar{$} escape to simple infix
 arithmetic:}
-@racketmodname[syntax/module-reader]语言接受许多可选规范来调整语言的其它特性。例如，另一个 解析语言的@racketidfont{read}和@racketidfont{read-syntax}可以用@racket[#:read]和@racket[#:read-syntax]分别指定。下面的@filepath{dollar-racket.rkt}语言运用@filepath{dollar.rkt}（见@secref["readtable"]）建立一个像@racketmodname[racket]但用一个@litchar{$}避开简单中缀算术的语言：
+@racketmodname[syntax/module-reader]语言接受许多可选规范来调整语言的其它特性。例如，另一个解析语言的@racketidfont{read}和@racketidfont{read-syntax}可以用@racket[#:read]和@racket[#:read-syntax]分别指定。下面的@filepath{dollar-racket.rkt}语言运用@filepath{dollar.rkt}（见@secref["readtable"]）建立一个像@racketmodname[racket]但用一个@litchar{$}避开简单中缀算术的语言：
 
 @racketmodfile["dollar-racket.rkt"]
 

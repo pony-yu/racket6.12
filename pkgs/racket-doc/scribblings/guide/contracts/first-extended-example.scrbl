@@ -16,8 +16,8 @@
  a non-empty list of values, @racket[lst]. It 
 @nested[#:style 'inset]{
  returns the @emph{first} element in the list @racket[lst] that maximizes
- the result of @racket[proc].}  
- The emphasis on @emph{first} is ours.} 
+ the result of @racket[proc].}
+ The emphasis on @emph{first} is ours.}
 本节开发对于同一个例子的合约的几种不同特点：Racket的@racket[argmax]函数。根据它的Racket文档，这个函数接受一个过程@racket[proc]和一个非空的值列表，@racket[lst]。它@nested[#:style 'inset]{返回在最大化@racket[proc]的结果的列表@racket[lst]中的@emph{first}元素。对@emph{first}的强调是我们的。}
 
 @;{Examples: }
@@ -31,7 +31,7 @@
 @;{Here is the simplest possible contract for this function:}
 这里是这个函数的可能最简单的合约：
 
-@racketmod[#:file @tt{version 1} 
+@racketmod[#:file @tt{version 1}
 racket
 
 (define (argmax f lov) ...)
@@ -123,13 +123,12 @@ racket
  possibility from here on.}
 @racket[memq]函数确保@racket[r]是@emph{相等（intensionally equal）}@margin-note*{也就是说，那些喜欢在硬件层面思考的人的“指针相等（pointer equality）”。}于@racket[lov]的其中一个成员。当然，片刻的反思显露出要构成这样一个值是不可能的。函数是Racket中的不透明值，并且没有应用一个函数，无法确定某个随机输入值是否产生一个输出值或触发某些异常。因此我们从这里开始忽略这种可能性。
 
-@;??????????????????????????????????????????????????????????????????
 @;{Version 2 formulates the overall sentiment of @racket[argmax]'s
  documentation, but it fails to bring across that the result is the
  @emph{first} element of the given list that maximizes the given function
  @racket[f]. Here is a version that communicates this second aspect of
  the informal documentation: }
-第2版制定@racket[argmax]文档的整体观点，但它不能传达结果是给定列表的@emph{first}元素，它最大化给定的函数@racket[f]。这是一个传达非正式文件的第二个方面的版本：
+版本2确切地阐述了@racket[argmax]文档的整体观点，但它没能传达出这个结果是这个给定的最大化给定的函数@racket[f]的列表的@emph{第一个}元素。这是一个传达这个非正式文档的第二个方面的版本：
 
 @racketmod[#:file @tt{version 3} 
 racket
@@ -152,7 +151,7 @@ racket
  @racket[lov] whose value under @racket[f] is equal to @racket[r]'s value
  under @racket[f]. If this element is intensionally equal to @racket[r],
  the result of @racket[argmax] is correct.}
-那就是，@racket[memf]函数确定@racket[lov]的第一个元素，它的@racket[f]下的值等于@racket[f]下的@racket[r]的值。如果此元素是有意等于@racket[r]，@racket[argmax]的结果就正确。
+那就是，@racket[memf]函数确定@racket[lov]的第一个元素，@racket[f]下的@racket[lov]的值等于@racket[f]下的@racket[r]的值。如果此元素是有意等于@racket[r]，@racket[argmax]的结果就是正确的。
 
 @;{This second refinement step introduces two problems. First, both conditions
  recompute the values of @racket[f] for all elements of @racket[lov]. Second,
@@ -160,16 +159,18 @@ racket
  formulation that a client can comprehend with a simple scan. Let us
  eliminate the readability problem with two auxiliary functions that have
  reasonably meaningful names: }
-第二个细化步骤引入了两个问题。首先，两者的条件为@racket[lov]的所有元素重新计算@racket[f]的值。第二，合约现在很难读懂。合约应该有一个简洁的表述，让客户机可以用简单的扫描理解。让我们用具有合理含义的两个辅助函数消除可读性问题：
+第二个细化步骤介绍了两个问题。首先，条件都重新计算@racket[lov]的所有元素的@racket[f]的值。第二，这个合约现在很难阅读。合约应该有一个简洁的表达方式，它可以让一个客户端可以用一个简单的扫描进行理解。让我们用具有合理意义的名称的两个辅助函来数消除可读性问题：
 
 @(define dominates1
   @multiarg-element['tt]{@list{
-   @racket[f@r] is greater or equal to all @racket[(f v)] for @racket[v] in @racket[lov]}})
+   @;{@racket[f@r] is greater or equal to all @racket[(f v)] for @racket[v] in @racket[lov]}
+   @racket[f@r]大于或等于在@racket[lov]中@racket[v]的所有@racket[(f v)]}})
 
 @(define first?1
-  @multiarg-element['tt]{
-   @list{@racket[r] is @racket[eq?] to the first element @racket[v] of @racket[lov] 
-         for which @racket[(pred? v)]}})
+  @multiarg-element['tt]{@list{
+   @;{@racket[r] is @racket[eq?] to the first element @racket[v] of @racket[lov] 
+         for which @racket[(pred? v)]}
+@racket[r]是@racket[eq?]于@racket[lov]的第一个元素@racket[v]，因为它的@racket[(pred? v)]}})
 
 @; ---------------------------------------------------------------------------------------------------
 @racketmod[#:file @tt{version 3 rev. a} 
@@ -187,7 +188,7 @@ racket
               (and (is-first-max? r f@r f lov)
                    (dominates-all f@r f lov)))))]))
 
-@code:comment{where}
+@code:comment{@;{where}这里}
 
 @code:comment{@#,dominates1}
 (define (dominates-all f@r f lov)
@@ -200,22 +201,24 @@ racket
 
  @;{The names of the two predicates express their functionality and, in
  principle, render it unnecessary to read their definitions. }
-两个判断的名称表示它们的功能，原则上不需要读取它们的定义。
+原则上，这两个判断的名称表示它们的功能和表达不需要读取它们的定义。
 
 @;{This step leaves us with the problem of the newly introduced inefficiency.
  To avoid the recomputation of @racket[(f v)] for all @racket[v] on
  @racket[lov], we change the contract so that it computes these values and
  reuses them as needed:}
-这一步给我们带来了新引进的低效率问题。为了避免为了@racket[lov]上的所有 @racket[v]而重复计算@racket[(f v)]，我们改变合约，以计算这些值和重用它们是必要的：
+这一步给我们带来了新引进的低效率问题。为了避免因@racket[lov]上的所有 @racket[v]引起的@racket[(f v)]的重复计算，我们改变合约以致其计算这些值和重用它们是必要的：
 
 @(define dominates2
   @multiarg-element['tt]{@list{
-   @racket[f@r] is greater or equal to all @racket[f@v] in @racket[flov]}})
+   @;{@racket[f@r] is greater or equal to all @racket[f@v] in @racket[flov]}
+  @racket[f@r]大于或等于@racket[flov]中所有的@racket[f@v]}})
 
 @(define first?2
-  @multiarg-element['tt]{
-   @list{@racket[r] is @racket[(first x)] for the first
-         @racket[x] in @racket[lov+flov] s.t. @racket[(= (second x) f@r)]}})
+  @multiarg-element['tt]{@list{
+   @;{@racket[r] is @racket[(first x)] for the first
+         @racket[x] in @racket[lov+flov] s.t. @racket[(= (second x) f@r)]}
+ @racket[r]是@racket[lov+flov]里第一个@racket[x]的@racket[(first x)]，整理为@racket[(= (second x) f@r)]}})
 
 @racketmod[#:file @tt{version 3 rev. b} 
 racket
@@ -233,7 +236,7 @@ racket
               (and (is-first-max? r f@r (map list lov flov))
                    (dominates-all f@r flov)))))]))
 
-@code:comment{where}
+@code:comment{@;{where}这里}
 
 @code:comment{@#,dominates2}
 (define (dominates-all f@r flov)
@@ -249,11 +252,11 @@ racket
 
  @;{Now the predicate on the result once again computes all values of @racket[f]
  for elements of @racket[lov] once. }
-现在对结果的断言为@racket[lov]元素再计算@racket[f]的所有值一次。
+现在对结果的判断为@racket[lov]的元素再次计算了@racket[f]的所有值一次。
 
 @;{@margin-note{The word "eager" comes from the literature on the linguistics
  of contracts.}}
-@margin-note{“eager（热切）”一词来自于合约语言学的文献。}
+@margin-note{单词“eager（热切，急切）”来自于合约语言学文献。}
 
 @;{Version 3 may still be too eager when it comes to calling @racket[f]. While
  Racket's @racket[argmax] always calls @racket[f] no matter how many items
@@ -267,7 +270,8 @@ racket
  As a matter of fact, since @racket[f] may diverge or raise an exception
  for some inputs, @racket[argmax] should avoid calling @racket[f] when
  possible.}
-版本3也许还太急，当它去调用@racket[f]时。然而无论@racket[lov]包含有多少成员，Racket的@racket[argmax]总是调用@racket[f]，让我们想象我们自己为了说明的目的，实现首先检查列表是否是单独的。如果是这样，第一个元素将是@racket[lov]的唯一元素，在这种情况下就不需要计算@racket[(f r)]。事实上，由于@racket[f]可能发散或增加一些例外输入，argmax应该尽可能避免调用@racket[f]。
+当版本3去调用@racket[f]时也许还太急切。然而无论@racket[lov]包含有多少成员，Racket的@racket[argmax]总是调用@racket[f]，让我们想象一下，为了说明目的，我们自己的实现首先检查列表是否是单体。如果是这样，第一个元素将是@racket[lov]的唯一元素，在这种情况下就不需要计算@racket[(f r)]。@margin-note*{Racket的@racket[argmax]隐含论证它不仅承诺第一个值，它最大化@racket[f]超过@racket[lov]但同样@racket[f]产生一个结果的值。}
+事实上，由于@racket[f]可能发散或增加一些例外输入，argmax应该尽可能避免调用@racket[f]。
 
 @;{The following contract demonstrates how a higher-order dependent contract
  needs to be adjusted so as to avoid being over-eager: }
@@ -307,7 +311,7 @@ racket
  @;{Note that such considerations don't apply to the world of first-order
  contracts. Only a higher-order (or lazy) language forces the programmer to
  express contracts with such precision.}
-注意，这种考虑不适用于一阶合约的世界。只有高阶（或惰性）语言迫使程序员以如此精确的方式表达合约。
+注意，这种考虑不适用于一阶合同的世界。只有一个高阶（或惰性）语言迫使程序员去以如此精确度去表达合约。
  
 @;{The problem of diverging or exception-raising functions should alert the
  reader to the even more general problem of functions with side-effects. If
@@ -317,13 +321,13 @@ racket
  list of values contains more than one element, the log will contain two
  calls of @racket[f] per value on @racket[lov]. If @racket[f] is expensive
  to compute, doubling the calls imposes a high cost.}
-发散或异常提升函数的问题应该提醒读者注意函数的更普遍问题。如果给定的函数@racket[f]有明显的影响——说明日志文件的调用——那么@racket[argmax]的客户机将能够观察每次调用@racket[argmax]的两套日志。要精确，如果值列表包含多个元素，日志将包含每一个@racket[lov]值的两个@racket[f]调用。如果@racket[f]计算太昂贵，则调用次数加倍会造成高成本。
+发散或异常提升函数的问题应该让读者对带副作用的函数的一般性问题保持警惕。如果这个给定的函数@racket[f]有明显的影响——表明它把它的调用记录到了一个文件——那么@racket[argmax]的客户端将能够观察每次调用@racket[argmax]的两套日志。确切地讲，如果值列表包含多个元素，这个日志将包含@racket[lov]上的每一个值的两个@racket[f]调用。如果@racket[f]对于计算来说太昂贵，则加倍调用承受一个高成本。
 
 @;{To avoid this cost and to signal problems with overly eager contracts, a
  contract system could record the i/o of contracted function arguments and
  use these hashtables in the dependency specification. This is a topic of
  on-going research in PLT. Stay tuned. }
-为了避免这种成本和信号过于依赖的合约问题，合同系统可以记录i/o的函数参数和使用这些哈希表的相关规范。这是PLT研究中的一个课题。敬请关注。
+用过度热切的合约来避免这种成本以及来标志问题，一个合约系统可以记录已约定的函数参数的i/o并使用这些散列表的相关规范。这是PLT研究中的一个课题。敬请关注。
 
 @;{one could randomly check some element here, instead of all of them and
 thus ensure 'correctness' at 1/(length a) probability}
