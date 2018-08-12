@@ -12,7 +12,7 @@
 accept information about the contract (who is to blame,
 source locations, @|etc|) and produce projections (in the
 spirit of Dana Scott) that enforce the contract.}
-合约在内部表现为函数，它接受合约的信息（归咎于谁，源程序位置,《@|etc|》），并以合约的名义产生（Dana Scott精神）的推断。
+合约在内部作为函数来表示，这个函数接受关于合约的信息（归咎于谁、源程序位置等等）并产生执行合约的推断（本着Dana Scott的精神）。
 
 @;{In a general sense, a
 projection is a function that accepts an arbitrary value,
@@ -20,8 +20,8 @@ and returns a value that satisfies the corresponding
 contract. For example, a projection that accepts only
 integers corresponds to the contract @racket[(flat-contract
 integer?)], and can be written like this:}
-一般意义上，推断是接受任意值的函数，并返回满足相应合约的值。例如，只接受整数的推断对应于合约@racket[(flat-contract
-integer?)]可以这样写：
+一般意义上，一个推断是接受一个任意值的一个函数，并返回满足相应合约的一个值。例如，只接受整数的一个推断对应于合约@racket[(flat-contract
+integer?)]，同时可以这样编写：
 
 @racketblock[
 (define int-proj
@@ -33,7 +33,7 @@ integer?)]可以这样写：
 
 @;{As a second example, a projection that accepts unary functions
 on integers looks like this:}
-作为第二个例子，在整数上接受一元函数的推断如下所示：
+作为第二个例子，接受整数上的一元函数的一个推断看起来像这样：
 
 @racketblock[
 (define int->int-proj
@@ -44,6 +44,7 @@ on integers looks like this:}
         (signal-contract-violation))))
 ]
 
+@;?????????????????????????????????????????????????????????????
 @;{Although these projections have the right error behavior,
 they are not quite ready for use as contracts, because they
 do not accommodate blame and do not provide good error
