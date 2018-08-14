@@ -44,7 +44,6 @@ on integers looks like this:}
         (signal-contract-violation))))
 ]
 
-@;?????????????????????????????????????????????????????????????
 @;{Although these projections have the right error behavior,
 they are not quite ready for use as contracts, because they
 do not accommodate blame and do not provide good error
@@ -57,11 +56,11 @@ contract was established and the name of the contract. They
 can then, in turn, pass that information
 to @racket[raise-blame-error] to signal a good error
 message.}
-虽然这些推断具有恰当的错误行为，但它们还不太适合作为合约使用，因为它们不适合容纳归咎问题，也不提供良好的错误消息。为了适应这些，合约不只使用简单的推断，而是使用接受一个@tech[#:doc '(lib "scribblings/reference/reference.scrbl")]{归咎对象（blame object）}的函数，将被归咎的双方的名字封装起来，并记录已建立的合约源代码的位置和该合约的名称。然后，它们可以依次传递这些信息给@racket[raise-blame-error]来发出一个良好的错误信息。
+虽然这些推断具有恰当的错误行为，但它们还不太适合作为合约使用，因为它们不容纳归咎也不提供良好的错误消息。为了适应这些，合约不只使用简单的推断，而是使用接受一个@tech[#:doc '(lib "scribblings/reference/reference.scrbl")]{归咎对象（blame object）}的函数将被归咎双方的名字封装起来，以及合约建立的源代码位置和合约名称的记录。然后，它们可以依次传递这些信息给@racket[raise-blame-error]来发出一个良好的错误信息。
 
 @;{Here is the first of those two projections, rewritten for
 use in the contract system:}
-下面是这两个推断中的第一个，被改写为在合约系统中使用：
+这里是这两个推断中的第一个，被重写以在合约系统中使用：
 
 @racketblock[
 (define (int-proj blame)
@@ -77,7 +76,7 @@ use in the contract system:}
 
 @;{The new argument specifies who is to be blamed for
 positive and negative contract violations.}
-新的论点指明了谁应该为正面和反面的合约违约负责。
+新的论据指明了谁将因为正数和负数的合约违约被归咎。
 
 @;{Contracts, in this system, are always
 established between two parties. One party, called the server, provides some
@@ -89,10 +88,10 @@ that can go wrong is that the value provided is not an
 integer. Thus, only the positive party (the server) can ever accrue
 blame.  The @racket[raise-blame-error] function always blames
 the positive party.}
-在这个系统中，合约总是建立在双方之间。一方称为服务器，根据合约提供一些值；另一方称为客户机，也根据合约接受值。服务器称为正面位置，客户机称为反面位置。因此，对于整数合约，唯一可能出错的是所提供的值不是整数。因此，永远只有正面的一方（服务器）才能获得归咎。@racket[raise-blame-error]函数总是归咎于正面的一方。
+在这个系统中，合约总是建立在双方之间。一方称为服务器，根据这个合约提供一些值；另一方称为客户端，也根据这个合约接受这些值。服务器称为主动位置，客户端称为被动位置。因此，对于仅在整数合约的情况下，唯一可能出错的是所提供的值不是一个整数。因此，永远只有主动的一方（服务器）才能获得归咎。@racket[raise-blame-error]函数总是归咎主动的一方。
 
 @;{Compare that to the projection for our function contract:}
-将之与我们的函数合约的推断进行比较：
+与我们的函数合约的推断的比较：
 
 @racketblock[
 (define (int->int-proj blame)
@@ -115,8 +114,9 @@ the procedure does not accept one argument. As with
 the integer projection, the blame here also lies with the
 producer of the value, which is
 why @racket[raise-blame-error] is passed @racket[blame] unchanged.}
-在这种情况下，唯一明确的归咎于涉及到一个非程序提供给合约或程序不接受一个参数的情况。与整数推断一样，这里的归咎也在于这个值的产生，这就是为什么@racket[raise-blame-error]传递@racket[blame]没有改变。
+在这种情况下，唯一明确的归咎涵盖了一个提供给合约的非过程或一个这个不接受一个参数的过程的情况。与整数推断一样，这里的归咎也在于这个值的生成器，这就是为什么@racket[raise-blame-error]传递没有改变的@racket[blame]。
 
+@;???????????????????????????????????????????????????????????
 @;{The checking for the domain and range are delegated to
 the @racket[int-proj] function, which is supplied its
 arguments in the first two lines of
