@@ -74,7 +74,7 @@
 - optional argument 可选参数
 - rest argument 剩余参数
 - server 服务器
-- client 客户机（不翻译为客户端是因为客户机可以和服务器对应，更合理）
+- client 客户端（不翻译为客户端是因为客户机可以和服务器对应，更合理）
 - contract 合约（有合同、约定双重字面意义，更符合编程带约定的工作内涵）
 - contract-monitoring system 合约监控系统
 - domain 定义域
@@ -86,7 +86,7 @@
 - indy dependent contract 印依赖合约
 - element 元素
 - form 表（在不是表示术语的时候，有时根据上下文翻译为形式）
-- predicate 判定（不翻译为断言，是因为断言不直白，判定更简单易懂）
+- predicate 判断（不翻译为断言，是因为断言不直白，判定更简单易懂）
 - field 字段
 - wrapper function 包装函数
 - variable 变量
