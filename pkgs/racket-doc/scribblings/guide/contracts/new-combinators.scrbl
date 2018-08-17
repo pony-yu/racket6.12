@@ -344,7 +344,7 @@ an s-expression representing the contract:}
 @;{And we can define the projection using a generalization of the 
 projection we defined earlier, this time using 
 @tech[#:doc '(lib "scribblings/reference/reference.scrbl")]{chaperones}:}
-并且我们能够使用我们前面定义的一个广义的推断来定义这个推断，这次使用@tech[#:doc '(lib "scribblings/reference/reference.scrbl")]{监护}：
+并且我们能够使用我们前面定义的一个广义的推断来定义这个推断，这次使用@tech[#:doc '(lib "scribblings/reference/reference.scrbl")]{监护（chaperones）}：
 
 @interaction/no-prompt[#:eval
                        ex-eval
