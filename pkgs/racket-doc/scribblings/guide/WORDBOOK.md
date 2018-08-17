@@ -84,6 +84,7 @@
 - contract-implementing function 合约执行函数
 - clause 从句
 - indy dependent contract 印依赖合约
+- moral 教训
 - element 元素
 - form 表（在不是表示术语的时候，有时根据上下文翻译为形式）
 - predicate 判断（不翻译为断言，是因为断言不直白，判定更简单易懂）
