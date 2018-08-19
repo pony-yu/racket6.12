@@ -15,16 +15,17 @@ pattern against (a portion of) another string or byte string, which we
 will call the @deftech{text string}, when you call functions like
 @racket[regexp-match].  The text string is treated as raw text, and
 not as a pattern.}
-一个@deftech{正则表达式（regexp）}值封装一个模式，描述的是一个字符串或@tech{字节字符串（byte string）}。当你调用像@racket[regexp-match]函数时，正则表达式匹配器尝试对另一个字符串或字节字符串（一部分）匹配这种模式，我们将其称为@deftech{文本字符串（text string）}。文本字符串被视为原始文本，而不是模式。
+一个@deftech{正则表达式（regexp）}值封装一个被一个字符串或@tech{字节字符串（bytestring）}描述的模式。当你调用像@racket[regexp-match]那样的函数时，正则表达式匹配器尝试对（一部分）其它的字符串或字节字符串匹配这个模式，我们将其称为@deftech{文本字符串（text string）}。文本字符串被视为原始文本，而不会视为一个模式。
 
 @local-table-of-contents[]
 
-@refdetails["regexp"]{regexps}
+@;@refdetails["regexp"]{regexps}
+在《Racket参考》中的“正则表达式（regexp）”部分提供有更多关于正则表达式的内容。
 
 @; ----------------------------------------
 
 @;{@section[#:tag "regexp-intro"]{Writing Regexp Patterns}}
-@section[#:tag "regexp-intro"]{写regexp模式}
+@section[#:tag "regexp-intro"]{编写正则表达式模式}
 
 @;{A string or @tech{byte string} can be used directly as a @tech{regexp}
 pattern, or it can be prefixed with @litchar{#rx} to form a literal
@@ -33,8 +34,7 @@ pattern, or it can be prefixed with @litchar{#rx} to form a literal
 string}-based @tech{regexp} value. Alternately, a string or byte
 string can be prefixed with @litchar{#px}, as in @racket[#px"abc"],
 for a slightly extended syntax of patterns within the string.}
-一个字符串或@tech{字节字符串（byte string）}可以直接用作一个@tech{正则表达式（regexp）}模式，也可以@litchar{#rx}形成字面上的正则表达式值。例如，@racket[#rx"abc"]是一个基于@tech{正则表达式（regexp）}值的字符串，并且@racket[#rx"abc"]是一个基于@tech{正则表达式（regexp）}值的@tech{字节字符串（byte
-string）}。或者，一个字符串或字节字符串可以以@litchar{#px}做前缀，如在@racket[#px"abc"]中一样，稍微扩展字符串中模式的语法。
+一个字符串或@tech{字节字符串（byte string）}可以被直接用作一个@tech{正则表达式（regexp）}模式，也可以用@litchar{#rx}来形成一个字面上的@tech{正则表达式}值来做前缀。例如，@racket[#rx"abc"]是一个基于字符串的@tech{正则表达式}值，并且@racket[#rx"abc"]是一个基于@tech{字节字符串}的@tech{正则表达式}值。或者，一个字符串或字节字符串可以用@litchar{#px}做前缀，就像在@racket[#px"abc"]中，给一个稍微扩展的字符串内的模式的语法。
 
 @;{Most of the characters in a @tech{regexp} pattern are meant to match
 occurrences of themselves in the @tech{text string}.  Thus, the pattern
@@ -47,7 +47,7 @@ pattern @racket[#rx"a.c"], the characters @litchar{a} and @litchar{c}
 stand for themselves, but the @tech{metacharacter} @litchar{.} can
 match @emph{any} character.  Therefore, the pattern @racket[#rx"a.c"]
 matches an @litchar{a}, any character, and @litchar{c} in succession.}
-在一个@tech{正则表达式（regexp）}模式的大多数角色都是相匹配的@tech{文本字符串（text string）}中出现的自己。因此，该模式@racket[#rx"abc"]匹配在演替中的一个字符串中包含的字符@litchar{a}、@litchar{b}和@litchar{c}。其它角色扮演的@deftech{元字符（metacharacters）}和字符序列作为@deftech{元序列（metasequences）}。也就是说，它们指定的东西不是字面上的自我。例如，在模@racket[#rx"a.c"]，字符@litchar{a}和@litchar{c}代表它们自己，但@tech{元字符（metacharacter）}@litchar{.}可以匹配任何字符。因此，该模式@racket[#rx"a.c"]在继承中匹配一个@litchar{a}、任意字符和@litchar{c}。
+在一个@tech{正则表达式}模式的大多数字符都表示在@tech{文本字符串}中自相匹配。因此，该模式@racket[#rx"abc"]匹配在继承中包含字符@litchar{a}、@litchar{b}和@litchar{c}的一个字符串。其它字符充当@deftech{元字符（metacharacters）}，而且许多字符序列充当@deftech{元序列（metasequences）}。也就是说，它们指定的东西不是它们字面本身。例如，在模@racket[#rx"a.c"]中，字符@litchar{a}和@litchar{c}代表它们自己，但@tech{元字符}@litchar{.}可以匹配任何字符。因此，该模式@racket[#rx"a.c"]在继承中匹配一个@litchar{a}、任意字符以及@litchar{c}。
 
 @margin-note{
  @;{When we want a literal @litchar{\} inside a Racket string
@@ -57,9 +57,10 @@ end up with two @litchar{\}s: one Racket-string @litchar{\} to escape
 the regexp @litchar{\}, which then escapes the @litchar{.}.  Another
 character that would need escaping inside a Racket string is
 @litchar{"}.}
-当我们想要在一个Racket字符串或正则表达式的文字里面的一个字面上的@litchar{\}，我们必须将它转义以便它出现在所有字符串中。Racket字符串使用@litchar{\}作为转义字符，所以我们结束了两个@litchar{\}：一个Racket字符串@litchar{\}转义为正则表达式@litchar{\}，然后转义为@litchar{.}。另一个在Racket字符串里面需要转义的是@litchar{"}。
+当我们想要在一个Racket字符串或正则表达式原义里的一个字面原义的@litchar{\}，我们必须将它转义以便它出现在所有字符串中。Racket字符串使用@litchar{\}作为转义字符，所以我们用两个@litchar{\}结束：一个Racket字符串@litchar{\}转义正则表达式@litchar{\}，它接着转义@litchar{.}。另一个将要在Racket字符串里转义的字符是@litchar{"}。
 }
 
+@;?????????????????????????????????????????????????????????????????????
 If we needed to match the character @litchar{.} itself, we can escape
 it by precede it with a @litchar{\}.  The character sequence
 @litchar{\.} is thus a @tech{metasequence}, since it doesn't match
