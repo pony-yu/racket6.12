@@ -60,7 +60,6 @@ character that would need escaping inside a Racket string is
 当我们想要在一个Racket字符串或正则表达式原义里的一个字面原义的@litchar{\}，我们必须将它转义以便它出现在所有字符串中。Racket字符串使用@litchar{\}作为转义字符，所以我们用两个@litchar{\}结束：一个Racket字符串@litchar{\}转义正则表达式@litchar{\}，它接着转义@litchar{.}。另一个将要在Racket字符串里转义的字符是@litchar{"}。
 }
 
-@;?????????????????????????????????????????????????????????????????????
 If we needed to match the character @litchar{.} itself, we can escape
 it by precede it with a @litchar{\}.  The character sequence
 @litchar{\.} is thus a @tech{metasequence}, since it doesn't match
@@ -68,7 +67,7 @@ itself but rather just @litchar{.}.  So, to match @litchar{a},
 @litchar{.}, and @litchar{c} in succession, we use the regexp pattern
 @racket[#rx"a\\.c"]; the double @litchar{\} is an artifact of Racket
 strings, not the @tech{regexp} pattern itself.
-如果我们需要匹配字符@litchar{.}本身，我们可以在它前面加上一个@litchar{\}。字符序列@litchar{\.}结果就是一个@tech{元序列（metasequence）}，因为它不匹配它本身而只是@litchar{.}。所以，在继承里匹配@litchar{a}、@litchar{.}和@litchar{c}，我们使用正则表达式模@racket[#rx"a\\.c"]。双@litchar{\}字符是一个Racket字符串神器，它不是@tech{正则表达式（regexp）}模式自己的。
+如果我们需要匹配字符@litchar{.}本身，我们可以在它前面加上一个@litchar{\}。字符序列@litchar{\.}结果就是一个@tech{元序列（metasequence）}，因为它不匹配它本身而只是@litchar{.}。所以，为了在继承里匹配@litchar{a}、@litchar{.}和@litchar{c}，我们使用正则表达式模式@racket[#rx"a\\.c"]。双@litchar{\}字符是一个Racket字符串技巧，不是@tech{正则表达式（regexp）}模式本身。
 
 @;{The @racket[regexp] function takes a string or byte string and
 produces a @tech{regexp} value. Use @racket[regexp] when you construct
@@ -77,14 +76,14 @@ compiled to a @tech{regexp} value before it can be used in a match.
 The @racket[pregexp] function is like @racket[regexp], but using the
 extended syntax. Regexp values as literals with @litchar{#rx} or
 @litchar{#px} are compiled once and for all when they are read.}
-@racket[regexp-quote]函数接受一个字符串或字节字符串并产生一个@tech{正则表达式（regexp）}值。当你使用@racket[regexp]构建模式以匹配多个字符串，因为一个模式在它可以被使用在一个匹配之前被编译成了一个@tech{正则表达式（regexp）}值。这个@racket[pregexp]函数就像@racket[regexp]，但使用扩展语法。尽管当它们可读，作为带@litchar{#rx}或@litchar{#px}的字面形式的正则表达式值被编译一次。
+@racket[regexp-quote]函数接受一个字符串或字节字符串并产生一个@tech{正则表达式}值。因为一个模式在它可以被用于一个匹配之前被编译成了一个@tech{正则表达式}值，当你构建一个模式以被多个字符串匹配时使用@racket[regexp]。这个@racket[pregexp]函数就像@racket[regexp]，但使用扩展语法。正则表达式值作为带@litchar{#rx}或@litchar{#px}的字面形式被编译一次并用于所有被读取的时候。
 
 @;{The @racket[regexp-quote] function takes an arbitrary string and
 returns a string for a pattern that matches exactly the original
 string. In particular, characters in the input string that could serve
 as regexp metacharacters are escaped with a backslash, so that they
 safely match only themselves.}
-@racket[regexp-quote]函数接受任意的字符串并返回一个模式匹配原始字符串。特别是，在输入字符串中的字符，可以作为正则表达式元字符用一个反斜杠转义，所以只有它们自己使他们安全地匹配。
+@racket[regexp-quote]函数接受一个任意的字符串并返回用于一个精确匹配原始字符串的模式的一个字符串。特别是在输入字符串中的字符，它可以作为正则表达式元字符用一个反斜杠转义，以便它们安全地仅匹配它们自己。
 
 @interaction[
 #:eval rx-eval
@@ -94,13 +93,13 @@ safely match only themselves.}
 
 @;{The @racket[regexp-quote] function is useful when building a composite
 @tech{regexp} from a mix of @tech{regexp} strings and verbatim strings.}
-@racket[regexp-quote]函数在从一个混合的@tech{正则表达式（regexp）}字符串和字面的字符串构建一个完整的@tech{正则表达式（regexp）}是有用的。
+@racket[regexp-quote]函数在从一个@tech{正则表达式}字符串的混合和逐字字符串构建一个完整的@tech{正则表达式}是有用的。
 
 @; ----------------------------------------
 
 @;{@section[#:tag "regexp-match"]{Matching Regexp Patterns}}
 @section[#:tag "regexp-match"]{匹配正则表达式模式}
-
+@;???????????????????????????????????????????????????????????????????
 @;{The @racket[regexp-match-positions] function takes a @tech{regexp}
 pattern and a @tech{text string}, and it returns a match if the regexp
 matches (some part of) the @tech{text string}, or @racket[#f] if the regexp
