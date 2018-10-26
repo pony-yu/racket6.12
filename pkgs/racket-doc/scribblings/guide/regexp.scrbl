@@ -99,13 +99,13 @@ safely match only themselves.}
 
 @;{@section[#:tag "regexp-match"]{Matching Regexp Patterns}}
 @section[#:tag "regexp-match"]{匹配正则表达式模式}
-@;???????????????????????????????????????????????????????????????????
+
 @;{The @racket[regexp-match-positions] function takes a @tech{regexp}
 pattern and a @tech{text string}, and it returns a match if the regexp
 matches (some part of) the @tech{text string}, or @racket[#f] if the regexp
 did not match the string. A successful match produces a list of
 @deftech{index pairs}.}
-@racket[regexp-match-positions]函数接受一个@tech{正则表达（regexp）}模式和一个@tech{文本字符串（text string）}，如果正则表达式匹配（某部分）@tech{文本字符串（text string）}则返回一个匹配，或如果正则表达式不匹配字符串则返回@racket[#f]。成功匹配生成一个@deftech{索引配对（index pairs）}列表。
+@racket[regexp-match-positions]函数接受一个@tech{正则表达（regexp）}模式和一个@tech{文本字符串（text string）}，如果正则表达式匹配（某部分）@tech{文本字符串}则返回一个匹配，或如果正则表达式不匹配字符串则返回@racket[#f]。成功匹配生成一个@deftech{索引点对（index pairs）}列表。
 
 @examples[
 #:eval rx-eval
@@ -117,7 +117,7 @@ did not match the string. A successful match produces a list of
 identify the substring that was matched. The @racket[4] is the
 starting (inclusive) index, and @racket[10] the ending (exclusive)
 index of the matching substring:}
-在第二个例子中，整数@racket[4]和@racket[10]确定匹配的子串。@racket[4]是起始（包含）索引，@racket[10]是匹配子字符串的结尾（不包含）索引：
+在第二个例子中，整数@racket[4]和@racket[10]确定被匹配的子字符串。@racket[4]是起始（包含）索引，@racket[10]是匹配子字符串的结尾（不包含）索引：
 
 @interaction[
 #:eval rx-eval
@@ -129,12 +129,12 @@ contains only one index pair, and that pair represents the entire
 substring matched by the regexp.  When we discuss @tech{subpatterns}
 later, we will see how a single match operation can yield a list of
 @tech{submatch}es.}
-第一个例子中，@racket[regexp-match-positions]的返回列表只包含一个索引对，和这索引对代表由正则表达式匹配整个字符串。当我们论述了@tech{子模式（subpatterns）}后，我们将看到一个匹配操作可以产生一个列表的@tech{子匹配（submatch）}。
+第一个例子中，@racket[regexp-match-positions]的返回列表只包含一个索引点对，并且那个索引点对代表由正则表达式匹配整个子字符串。当我们论述了@tech{子模式（subpatterns）}后，我们将看到一个匹配操作可以产生一个列表的@tech{子匹配（submatch）}。
 
 @;{The @racket[regexp-match-positions] function takes optional third and
 fourth arguments that specify the indices of the @tech{text string} within
 which the matching should take place.}
-@racket[regexp-match-positions]函数需要可选第三和第四个参数指定的@tech{文本字符串（text string）}的匹配应该发生的指标。
+@racket[regexp-match-positions]函数接受可选的第三和第四参数，这些参数指定应该在其中进行匹配的@tech{文本字符串}的索引。
 
 @interaction[
 #:eval rx-eval
@@ -146,12 +146,12 @@ which the matching should take place.}
 
 @;{Note that the returned indices are still reckoned relative to the full
 @tech{text string}.}
-注意，返回的索引仍然与全@tech{文字符串（text string）}相对应。
+注意，返回的索引仍然与全@tech{文本字符串}相对应。
 
 @;{The @racket[regexp-match] function is like
 @racket[regexp-match-positions], but instead of returning index pairs,
 it returns the matching substrings:}
-@racket[regexp-match]函数类似于@racket[regexp-match-positions]，但它不是返回索引对，它返回匹配的子字符串：
+@racket[regexp-match]函数类似于@racket[regexp-match-positions]，但它不是返回索引点对，它返回匹配的子字符串：
 
 @interaction[
 #:eval rx-eval
@@ -161,7 +161,7 @@ it returns the matching substrings:}
 
 @;{When @racket[regexp-match] is used with byte-string regexp, the result
 is a matching byte substring:}
-当@racket[regexp-match]使用字节字符串表达式，结果是一个匹配的字节串：
+当@racket[regexp-match]与字节字符串正则表达式一起使用，这个结果是一个匹配的字节串：
 
 @interaction[
 #:eval rx-eval
@@ -177,13 +177,13 @@ is a matching byte substring:}
              characters. For maximum efficiency, use byte-string
              matching instead of string, since matching bytes directly
              avoids UTF-8 encodings.}
-一个字节字符串的正则表达式可以被应用到一个字符串，而且一个字符串正则表达式可以应用到一个字节的字符串。在这两种情况下，结果都是一个字节字符串。在内部，所有的正则表达式匹配是以字节为单位，并且一个字符串正则表达式扩展到一个正则表达式，它匹配UTF-8编码的字符。为最大限度地提高效率，使用字节字符串匹配代替字符串，自此匹配字节直接避免了UTF-8编码。 
+一个字节字符串正则表达式可以被应用到一个字符串，而且一个字符串正则表达式可以应用到一个字节字符串。在这两种情况下，结果是一个字节字符串。在内部，所有的正则表达式匹配是以字节为单位，并且一个字符串正则表达式被扩展到一个匹配UTF-8字符编码的正则表达式。为最大限度地提高效率，使用字节字符串代替字符串匹配，自此匹配字节直接避免了UTF-8编码。 
 }
 
 @;{If you have data that is in a port, there's no need to first read it
 into a string. Functions like @racket[regexp-match] can match on the
 port directly:}
-如果在端口中有数据，则无需首先将其读取到字符串中。像@racket[regexp-match]函数可以直接匹配端口：
+如果在一个端口中有数据，则无需首先将其读取到一个字符串中。像@racket[regexp-match]那样的函数可以直接匹配端口：
 
 @interaction[
 (define-values (i o) (make-pipe))
@@ -207,7 +207,7 @@ indicating whether the match succeeded:}
 @tech{regexp} pattern and a text string, and it returns a list of
 substrings of the text string; the pattern identifies the delimiter
 separating the substrings.}
-@racket[regexp-split]函数有两个参数，一个@tech{正则表达式（regexp）}模式和一个文本字符串，并返回一个文本字符串的子串列表；这个模式识别分隔子字符串的分隔符。
+@racket[regexp-split]函数有两个参数，一个@tech{正则表达式}模式和一个文本字符串，同时返回一个文本字符串的子字符串列表；这个模式识别分隔子字符串的分隔符。
 
 @interaction[
 #:eval rx-eval
@@ -217,7 +217,7 @@ separating the substrings.}
 
 @;{If the first argument matches empty strings, then the list of all the
 single-character substrings is returned.}
-如果第一个参数匹配空字符串，那么返回所有的单个字符的子字符串列表。
+如果第一个参数匹配空字符串，那么所有的单个字符的子字符串列表被返回。
 
 @interaction[
 #:eval rx-eval
@@ -238,7 +238,7 @@ use the regexp @racket[#rx"\u20+"], not @racket[#rx"\u20*"].}
 the text string by another string.  The first argument is the pattern,
 the second the text string, and the third is either the string to be
 inserted or a procedure to convert matches to the insert string.}
-@racket[regexp-replace]函数用另一个字符串替换文本字符串匹配的部分。第一个参数是模式，第二个参数是文本字符串，第三个参数是要插入的字符串，或者一个将匹配转换为插入字符串的过程。
+@racket[regexp-replace]函数用另一个字符串替换文本字符串匹配的部分。第一个参数是模式，第二个参数是文本字符串，第三个参数要么是要插入的字符串要么是将匹配转换为插入字符串的一个过程。
 
 @interaction[
 #:eval rx-eval
@@ -248,11 +248,11 @@ inserted or a procedure to convert matches to the insert string.}
 
 @;{If the pattern doesn't occur in the text string, the returned string
 is identical to the text string.}
-如果该模式没有出现在这个文本字符串中，返回的字符串与文本字符串相同。
+如果该模式在这个文本字符串中没有出现，这个返回的字符串与文本字符串相同。
 
 @;{The @racket[regexp-replace*] function replaces @emph{all} matches in
 the text string by the insert string:}
-@racket[regexp-replace*]函数通过字符串插入代替@emph{所有（all）}在字符串的匹配：
+@racket[regexp-replace*]函数通过字符串插入代替@emph{所有}字符串中的匹配：
 
 @interaction[
 #:eval rx-eval
@@ -269,7 +269,7 @@ the text string by the insert string:}
 beginning and the end of the text string, respectively.  They ensure
 that their adjoining regexps match at one or other end of the text
 string:}
-论断@deftech{assertions} @litchar{^}和@litchar{$}分别标识文本字符串的开头和结尾，它们确保对它们临近的一个或其它文本字符串的结束正则表达式匹配：
+@deftech{申明}@litchar{^}和@litchar{$}分别标识文本字符串的开头和结尾，它们确保相邻的正则表达式在文本字符串的一个或另一个末尾匹配：
 
 @interaction[
 #:eval rx-eval
@@ -278,7 +278,7 @@ string:}
 
 @;{The @tech{regexp} above fails to match because @litchar{contact} does
 not occur at the beginning of the text string. In}
-以上@tech{正则表达式（regexp）}匹配失败是因为@litchar{contact}没有出现在文本字符串的开始。在
+以上@tech{正则表达式}匹配失败是因为@litchar{contact}没有出现在文本字符串的开始。在
 
 @interaction[
 #:eval rx-eval
@@ -286,11 +286,11 @@ not occur at the beginning of the text string. In}
 ]
 
 @;{the regexp matches the @emph{last} @litchar{laugh}.}
-中，正则表达式匹配的@emph{最后（last）}的@litchar{laugh}。
+中，正则表达式匹配的@emph{最后}的@litchar{laugh}。
 
 @;{The metasequence @litchar{\b} asserts that a word boundary exists, but
 this metasequence works only with @litchar{#px} syntax. In}
-元序列@litchar{\b}坚称一个字的范围存在，但这元序列只能与@litchar{#px}语法一起工作。在
+元序列@litchar{\b}申明一个字的边界存在，但这元序列只能与@litchar{#px}语法一起工作。在
 
 @interaction[
 #:eval rx-eval
@@ -299,12 +299,12 @@ this metasequence works only with @litchar{#px} syntax. In}
 
 @;{the @litchar{yack} in @litchar{yackety} doesn't end at a word boundary
 so it isn't matched.  The second @litchar{yack} does and is.}
-里，@litchar{yackety}中的@litchar{yack}不在字边界结束，所以不匹配。第二@litchar{yack}在字边界结束，所以匹配。
+里，@litchar{yackety}中的@litchar{yack}不在一个字边界结束，所以不匹配。第二@litchar{yack}在字边界结束，所以匹配。
 
 @;{The metasequence @litchar{\B} (also @litchar{#px} only) has the
 opposite effect to @litchar{\b}; it asserts that a word boundary does
 not exist. In}
-元序列@litchar{\B}（也只有@litchar{#px}）对@litchar{\b}有相反的影响；它断言字边界不存在。在
+元序列@litchar{\B}（也只有@litchar{#px}）对@litchar{\b}有相反的影响；它申明一个字边界不存在。在
 
 @interaction[
 #:eval rx-eval
@@ -312,10 +312,10 @@ not exist. In}
 ]
 
 @;{the @litchar{an} that doesn't end in a word boundary is matched.}
-里，@litchar{an}不在字边界结束，是匹配的。
+里，@litchar{an}不在一个字的边界结束，是匹配的。
 
 @; ----------------------------------------
-
+@;?????????????????????????????????????????????????????????????
 @;{@section[#:tag "regexp-chars"]{Characters and Character Classes}}
 @section[#:tag "regexp-chars"]{字符和字符类}
 
