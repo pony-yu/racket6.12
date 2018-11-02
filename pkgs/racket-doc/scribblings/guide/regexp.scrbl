@@ -315,7 +315,7 @@ not exist. In}
 里，@litchar{an}不在一个字的边界结束，是匹配的。
 
 @; ----------------------------------------
-@;?????????????????????????????????????????????????????????????
+
 @;{@section[#:tag "regexp-chars"]{Characters and Character Classes}}
 @section[#:tag "regexp-chars"]{字符和字符类}
 
@@ -323,12 +323,12 @@ not exist. In}
 text string.  Sometimes it is necessary or convenient to use a regexp
 @tech{metasequence} to refer to a single character. For example, the
 metasequence @litchar{\.} matches the period character.}
-通常，在正则表达式中的字符匹配相同文本字符串中的字符。有时使用正则表达式@tech{元序列（metasequence）}引用单个字符是有必要的或方便的。例如，元序列@litchar{\.}匹配句点字符。
+通常，在正则表达式中的一个字符匹配文本字符串中的相同字符。有时使用正则表达式@tech{元序列（metasequence）}引用一个单个字符是有必要的或方便的。例如，元序列@litchar{\.}匹配句点字符。
 
 @;{The @tech{metacharacter} @litchar{.} matches @emph{any} character
 (other than newline in @tech{multi-line mode}; see
 @secref["regexp-cloister"]):}
-@tech{元字符（metacharacter）}@litchar{.}匹配@emph{任意（any）}字符（除了在@tech{多行模式（multi-line mode）}中换行，参见《@secref["regexp-cloister"]》（Cloisters））：
+@tech{元字符（metacharacter）}@litchar{.}匹配@emph{任意}字符（除了在@tech{多行模式（multi-line mode）}中换行，参见《@secref["regexp-cloister"]（Cloisters）》）：
 
 @interaction[
 #:eval rx-eval
@@ -347,22 +347,22 @@ character from the non-empty sequence of characters enclosed within
 the brackets.  Thus, @racket[#rx"p[aeiou]t"] matches @litchar{pat},
 @litchar{pet}, @litchar{pit}, @litchar{pot}, @litchar{put}, and
 nothing else.}
-@deftech{字符类（character class）}匹配来自于一组字符中的任何一个字符。一个典型的格式，这是@deftech{括号字符类（bracketed
-character class）}@litchar{[}...@litchar{]}，它匹配任何一个来自包含在括号内的非空序列的字符。因此，@racket[#rx"p[aeiou]t"]匹配@litchar{pat}、@litchar{pet}、@litchar{pit}、@litchar{pot}、@litchar{put}，别的都不匹配。
+一个@deftech{字符类（character class）}匹配来自一组字符中的任何一个字符。对此的一个典型的格式是@deftech{括号字符类（bracketed
+character class）}@litchar{[}...@litchar{]}，它匹配来自包含在括号内的非空序列的任何一个字符。因此，@racket[#rx"p[aeiou]t"]匹配@litchar{pat}、@litchar{pet}、@litchar{pit}、@litchar{pot}、@litchar{put}，别的都不匹配。
 
 @;{Inside the brackets, a @litchar{-} between two characters specifies
 the Unicode range between the characters.  For example,
 @racket[#rx"ta[b-dgn-p]"] matches @litchar{tab}, @litchar{tac},
 @litchar{tad}, @litchar{tag}, @litchar{tan}, @litchar{tao}, and
 @litchar{tap}.}
-在括号内，一个@litchar{-}介于两个字符之间指定字符之间的Unicode范围。例如，@racket[#rx"ta[b-dgn-p]"]匹配@litchar{tab}、@litchar{tac}、@litchar{tad}、@litchar{tag}、@litchar{tan}、@litchar{tao}和@litchar{tap}。
+在括号内，介于两个字符之间的一个@litchar{-}指定字符之间的Unicode范围。例如，@racket[#rx"ta[b-dgn-p]"]匹配@litchar{tab}、@litchar{tac}、@litchar{tad}、@litchar{tag}、@litchar{tan}、@litchar{tao}和@litchar{tap}。
 
 @;{An initial @litchar{^} after the left bracket inverts the set
 specified by the rest of the contents; i.e., it specifies the set of
 characters @emph{other than} those identified in the brackets. For
 example, @racket[#rx"do[^g]"] matches all three-character sequences
 starting with @litchar{do} except @litchar{dog}.}
-在左括号后一个初始的@litchar{^}将通过剩下的内容反转指定的集合；@emph{也就是说}，它指定识别在括号内字符集以外的字符集。例如，@racket[#rx"do[^g]"]匹配所有以 @litchar{do}开始但不是@litchar{dog}的三字符序列。
+在左括号后的一个初始@litchar{^}将通过剩下的内容反转指定的集合；@emph{也就是说}，它指定识别括号内的字符集以外的字符集。例如，@racket[#rx"do[^g]"]匹配所有以 @litchar{do}开始但不是@litchar{dog}的三字符序列。
 
 @;{Note that the @tech{metacharacter} @litchar{^} inside brackets means
 something quite different from what it means outside.  Most other
@@ -372,7 +372,7 @@ brackets, although you may still escape them for peace of mind. A
 @litchar{-} is a @tech{metacharacter} only when it's inside brackets,
 and when it is neither the first nor the last character between the
 brackets.}
-注意括号内的@tech{元字符（metacharacter）}@litchar{^}，它在括号里边的意义与在外边的意义截然不同。大多数其它的@tech{元字符（metacharacters）}（@litchar{.}、@litchar{*}、@litchar{+}、@litchar{?}，等等）当在括号内的时候不再是@tech{元字符（metacharacters）}，即使你一直不予承认以求得内心平静。一个@litchar{-}是一个@tech{元字符（metacharacter）}，仅当它在括号内并且当它既不是括号之间的第一个字符也不是最后一个字符时。
+注意括号内的@tech{元字符（metacharacter）}@litchar{^}，它在括号里边的意义与在外边的意义截然不同。大多数其它的@tech{元字符}（@litchar{.}、@litchar{*}、@litchar{+}、@litchar{?}，等等）当在括号内的时候不再是@tech{元字符}，即使你一直不予承认以求得内心平静。一个@litchar{-}是一个@tech{元字符}，仅当它在括号内并且当它既不是括号之间的第一个字符也不是最后一个字符时。
 
 @;{Bracketed character classes cannot contain other bracketed character
 classes (although they contain certain other types of character
@@ -386,7 +386,7 @@ For example, @racket[#rx"[a[b]"] matches @litchar{a}, @litchar{[}, and
 @litchar{]} immediately occurring after the opening left bracket also
 doesn't need to be a metacharacter.  For example, @racket[#rx"[]ab]"]
 matches @litchar{]}, @litchar{a}, and @litchar{b}.}
-此外，由于空括号字符类是不允许的，一个@litchar{]}在开左括号后立即出现也不比是一个元字符。比如，@racket[#rx"[]ab]"]匹配@litchar{]}、@litchar{a}和@litchar{b}。
+此外，由于空括号字符类是不允许的，一个@litchar{]}在开的左括号后立即出现也不必是一个元字符。比如，@racket[#rx"[]ab]"]匹配@litchar{]}、@litchar{a}和@litchar{b}。
 
 @;{@subsection{Some Frequently Used Character Classes}}
 @subsection[#:tag "Some-Frequently-Used-Character-Classes"]{常用的字符类}
@@ -410,7 +410,7 @@ a Racketeer might consider a ``word.''}
 inversions of the corresponding character classes: @litchar{\D}
 matches a non-digit, @litchar{\S} a non-whitespace character, and
 @litchar{\W} a non-``word'' character.}
-这些元序列的大写版本代表相应的字符类的反转：@litchar{\D}匹配一个非数字，@litchar{\S}匹配一个非空格字符，而@litchar{\W}匹配一个非“字（word）”字符。
+这些元序列的大写版本代表相应的字符类的转化：@litchar{\D}匹配一个非数字，@litchar{\S}匹配一个非空格字符，而@litchar{\W}匹配一个非“字（word）”字符。
 
 @;{Remember to include a double backslash when putting these
 metasequences in a Racket string:}
@@ -425,8 +425,9 @@ metasequences in a Racket string:}
 @;{These character classes can be used inside a bracketed expression. For
 example, @racket[#px"[a-z\\d]"] matches a lower-case letter or a
 digit.}
-这些字符类可以在括号表达式中使用。比如，@racket[#px"[a-z\\d]"]匹配一个小写字母或数字。
+这些字符类可以在一个括号表达式中使用。比如，@racket[#px"[a-z\\d]"]匹配一个小写字母或数字。
 
+@;????????????????????????????????????????????????????????????
 @;{@subsection{POSIX character classes}}
 @subsection[#:tag "POSIX-character-classes"]{POSIX字符类}
 
