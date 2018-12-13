@@ -280,7 +280,7 @@ function call, like @racket[(iter (list "b" "c") 1)], is exactly the
 result of some other function call, like @racket[(iter (list "c")
 2)], then the first one doesn't have to wait around for the second
 one, because that takes up space for no good reason.}
-修正后的@racket[my-length]在恒定的空间中运行，正如上面所建议的求值步骤那样。也就是说，当一个函数调用的结果，像@racket[(iter (list "b" "c") 1)]，恰恰是其它函数调用的结果，像@racket[(iter (list "c"))]，那么第一个函数不需要等待第二个函数回绕，因为那样会为了不恰当的原因占用空间。
+修正后的@racket[my-length]在恒定的空间中运行，正如上面所建议的求值步骤那样。也就是说，当一个函数调用的结果，像@racket[(iter (list "b" "c") 1)]，恰恰是其它函数调用的结果，像@racket[(iter (list "c") 2)]，那么第一个函数不需要等待第二个函数回绕，因为那样会为了不恰当的原因占用空间。
 
 @;{This evaluation behavior is sometimes called @idefterm{tail-call
 optimization}, but it's not merely an ``optimization'' in Racket; it's
